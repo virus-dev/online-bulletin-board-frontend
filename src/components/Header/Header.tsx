@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Container from '../Container/Container';
-import Button, { ButtonVariant } from '../Button/Button';
-import InputWithBtn from '../InputWithBtn/InputWithBtn';
-import IconIconMenu from '../Icons/IconIconMenu';
-import IconSearch from '../Icons/IconSearch';
+import Container from '../storybook/Container/Container';
+import Button, { ButtonVariant } from '../storybook/Button/Button';
+import InputWithBtn from '../storybook/InputWithBtn/InputWithBtn';
+import IconIconMenu from '../storybook/Icons/IconIconMenu';
+import IconSearch from '../storybook/Icons/IconSearch';
 import logo from './static/logo.png';
 
 import s from './Header.module.scss';
