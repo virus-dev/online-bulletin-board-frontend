@@ -1,0 +1,30 @@
+.inputWrapper {
+  position: relative;
+
+  .iconLeft {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 8px;
+  }
+
+  .input {
+    height: 32px;
+    border-radius: 8px;
+    border-color: rgb(235, 235, 235);
+    border-width: 1px;
+    padding: 0 12px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .inputWithLeftIcon {
+    padding-left: 28px;
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}

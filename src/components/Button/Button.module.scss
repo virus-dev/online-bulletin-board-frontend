@@ -1,0 +1,55 @@
+@import '../../styles/variables.scss';
+
+.button {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  border-width: 0px;
+  transition: background-color .2s ease, box-shadow .2s ease;
+  height: max-content;
+  padding: 4px 15px;
+  cursor: pointer;
+  z-index: 1;
+
+  .children {
+    line-height: 24px;
+    font-weight: $font-weight-base;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-height: 24px;
+  }
+
+  .iconLeft {
+    padding-right: 8px;
+  }
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, .1) 0px 4px 8px 0px;
+  }
+
+  &.blue {
+    background-color: $blue-500;
+
+    .children {
+      color: $gray-100;
+    }
+
+    &:hover {
+      background-color: $blue-400;
+    }
+  }
+
+  &.green {
+    background-color: $green-500;
+
+    .children {
+      color: $gray-100;
+    }
+
+    &:hover {
+      background-color: $green-400;
+    }
+  }
+}

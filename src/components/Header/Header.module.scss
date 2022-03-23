@@ -1,0 +1,23 @@
+.header {
+  position: fixed;
+  width: 100%;
+
+  .headerContainer {
+    background-color: aqua;
+    display: flex;
+    margin: 0 -16px;
+    align-items: center;
+  
+    & > * {
+      margin: 0 16px;
+    }
+  
+    & > *:first-child {
+      margin: 0 16px 0 0;
+    }
+  
+    & > *:last-child {
+      margin: 0 0 0 16px;
+    }
+  }
+}
