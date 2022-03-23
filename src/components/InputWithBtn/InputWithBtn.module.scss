@@ -1,0 +1,15 @@
+.inputWithBtnWrapper {
+  display: flex;
+
+  .inputWithBtnInput {
+    border-radius: 8px 0 0 8px;
+  }
+
+  .inputWithBtnButton {
+    border-radius: 0 8px 8px 0;
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}
