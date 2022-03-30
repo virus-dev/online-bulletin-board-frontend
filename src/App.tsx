@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from './components/Header/Header';
+import AppRouter from './pages/AppRouter';
 
 const App: React.FC = () => (
   <div className="App">
-    <Header />
+    <AppRouter />
   </div>
 );
 
