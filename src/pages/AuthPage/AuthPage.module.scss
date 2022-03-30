@@ -1,0 +1,11 @@
+.authPage {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .authBlock {
+    justify-content: center;
+    width: 500px;
+  }
+}

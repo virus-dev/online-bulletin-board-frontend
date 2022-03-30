@@ -55,7 +55,7 @@ const Header: React.FC = () => {
             onClick={ButtonEnterHandler}
             variant={ButtonVariant.gray}
           >
-            Войти
+            <Link to="/auth">Войти</Link>
           </Button>
         </div>
       </Container>
