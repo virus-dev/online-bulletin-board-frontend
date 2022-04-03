@@ -1,0 +1,27 @@
+@import '../../../styles/variables.scss';
+
+.navBar {
+  background-color: $gray-100;
+  padding: 4px 0;
+
+  .navBarContainer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .navBarLocation {
+    display: flex;
+  }
+
+  .location {
+    text-decoration: underline;
+  }
+
+  .navBarItem {
+    display: flex;
+
+    .navBarItemText {
+      text-decoration: underline;
+    }
+  }
+}

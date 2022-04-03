@@ -1,17 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import LoginAndRegistrationData from '../../models/LoginAndRegistrationData';
 
 export const login = createAsyncThunk(
   'user/login',
   async ({ email, password }: LoginAndRegistrationData, thunkAPI) => {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/user/login', {
+      const { data: { token } } = await axios.post('http://localhost:5000/api/user/login', {
         email,
         password,
       });
-      localStorage.setItem('JWT', data.token);
-      return data;
+      localStorage.setItem('JWT', token);
+      const decode = jwtDecode(token);
+      return decode;
     } catch (e) {
       return thunkAPI.rejectWithValue('Пользователь не найден');
     }

@@ -1,9 +1,13 @@
+@import '../../styles/variables.scss';
+
+$headerHeigth: 55px;
+
 .header {
-  position: fixed;
-  width: 100%;
+  background-color: $gray-100;
+  padding: 2px 16px;
+  height: $headerHeigth;
 
   .headerContainer {
-    background-color: aqua;
     display: flex;
     margin: 0 -16px;
     align-items: center;
@@ -20,4 +24,18 @@
       margin: 0 0 0 16px;
     }
   }
+
+  &.headerFixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, .1) 0px 4px 8px 0px;
+  }
+}
+
+.headerPlug {
+  height: $headerHeigth;
+  width: 100%;
+  background-color: $gray-100;
 }

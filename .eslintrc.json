@@ -33,6 +33,6 @@
                 "unnamedComponents": "arrow-function"
             }
         ],
-        "no-param-reassign": ["error", { "props": false, "ignorePropertyModificationsFor": ["state"] }]
+        "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }]
     }
 }
