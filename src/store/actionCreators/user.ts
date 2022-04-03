@@ -7,7 +7,7 @@ export const login = createAsyncThunk(
   'user/login',
   async ({ email, password }: LoginAndRegistrationData, thunkAPI) => {
     try {
-      const { data: { token } } = await axios.post('http://localhost:5000/api/user/login', {
+      const { data: { token } } = await axios.post(`${process.env.API_URL}user/login`, {
         email,
         password,
       });
@@ -24,7 +24,7 @@ export const registration = createAsyncThunk(
   'user/registration',
   async ({ email, password }: LoginAndRegistrationData, thunkAPI) => {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/user/registration', {
+      const { data } = await axios.post(`${process.env.API_URL}user/registration`, {
         email,
         password,
       });
