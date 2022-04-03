@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppDispatch } from '../../hooks/redux';
 import { login } from '../../store/actionCreators/user';
 import Input from '../storybook/Input/Input';
 import Button from '../storybook/Button/Button';
@@ -12,7 +12,6 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
   const dispatch = useAppDispatch();
-  const dwad = useAppSelector((state) => state.user.firstName);
 
   const [loginInputs, setLoginInputs] = useState({
     email: 'email1@mail.ru',
