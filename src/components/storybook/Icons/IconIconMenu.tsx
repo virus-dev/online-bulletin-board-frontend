@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconComponentsProps } from '../../models/IconComponent';
+import { IconComponentsProps } from '../../../models/IconComponent';
 
 const IconIconMenu: React.FC<IconComponentsProps> = ({ color = 'white', size }) => (
   <svg height={size} strokeWidth="1.5" viewBox="0 0 24 24" width={size}>

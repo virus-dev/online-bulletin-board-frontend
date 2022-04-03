@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 
 import s from './Container.module.scss';
@@ -8,7 +9,16 @@ interface ContainerProps {
 }
 
 const Container: React.FC<ContainerProps> = ({ children, className }) => (
-  <div className={`${s.container} ${className}`}>{children}</div>
+  <div
+    className={
+      classNames(
+        s.container,
+        className && className,
+      )
+    }
+  >
+    {children}
+  </div>
 );
 
 // Todo как избавиться от defaultProps без export'а интерфейса?
