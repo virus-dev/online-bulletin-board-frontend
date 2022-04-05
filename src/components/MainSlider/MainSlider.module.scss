@@ -1,0 +1,59 @@
+@import '../../styles/variables.scss';
+
+.mainSliderContainer {
+  position: relative;
+  margin-top: 16px;
+  overflow-x: hidden;
+
+  .mainSliderWrapper {
+    display: inline-flex;
+    transition: transform .3s ease;
+  
+    .sliderItem {
+      position: relative;
+      border-radius: 16px;
+      margin-right: 16px;
+      width: 608px;
+      height: 200px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+  
+      .mainSliderTextBlock {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+  
+        .title {
+          font-size: 20px;
+          font-weight: 500;
+        }
+    
+        .subtitle {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .arrowsWrapper {
+    width: 1264px;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+
+    .arrow {
+      background-color: $gray-100;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 8px;
+      box-shadow: rgba(0, 0, 0, .1) 0px 4px 8px 0px;
+      cursor: pointer;
+      border-width: 0;
+      outline: none;
+    }
+  }
+}
