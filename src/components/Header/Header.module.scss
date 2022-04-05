@@ -6,6 +6,7 @@ $headerHeigth: 55px;
   background-color: $gray-100;
   padding: 2px 16px;
   height: $headerHeigth;
+  z-index: 1000;
 
   .headerContainer {
     display: flex;
