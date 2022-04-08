@@ -1,9 +1,10 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import useIsAuth from '../hooks/useIsAuth';
 import { publicRoutes, privateRoutes, RouteNames } from './routes';
 
 const AppRouter = () => {
-  const isAuth = true;
+  const isAuth = useIsAuth();
   const { pathname } = window.location;
 
   return (
