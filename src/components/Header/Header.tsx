@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import Container from '../storybook/Container/Container';
 import useIsAuth from '../../hooks/useIsAuth';
-import { useAppDispatch } from '../../hooks/redux';
-import { userSlice } from '../../store/reducers/UserSlice';
+import IconProfile, { IconProfileTypeEnum } from '../IconProfile/IconProfile';
 import Button, { ButtonVariant } from '../storybook/Button/Button';
 import InputWithBtn from '../storybook/InputWithBtn/InputWithBtn';
 import IconIconMenu from '../storybook/Icons/IconIconMenu';
@@ -12,15 +11,17 @@ import IconSearch from '../storybook/Icons/IconSearch';
 import Links from './Links/Links';
 import NavBar from './NavBar/NavBar';
 import logo from './static/logo.png';
+import UserApi from '../../services/UserApi';
 
 import s from './Header.module.scss';
 
 const Header: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const {
+    data: { image, firstName, secondName } = {},
+  } = UserApi.useGetDataQuery();
   const isAuth = useIsAuth();
   const [isHeadeFixed, setIsHeaderFixed] = useState(false);
   const [inputSearch, setInputSearch] = useState('');
-  const { getUserDataFromJWT } = userSlice.actions;
 
   const scrollHandler = () => {
     setIsHeaderFixed(window.scrollY > 50);
@@ -32,11 +33,6 @@ const Header: React.FC = () => {
       window.removeEventListener('scroll', scrollHandler);
     };
   }, []);
-
-  useEffect(() => {
-    const jwt = localStorage.getItem('JWT');
-    dispatch(getUserDataFromJWT(jwt));
-  }, [dispatch, getUserDataFromJWT]);
 
   const ButtonCategoryHandler = () => {};
   const ButtonSearchHandler = () => {};
@@ -80,12 +76,24 @@ const Header: React.FC = () => {
             >
               Разместить объявление
             </Button>
-            <Button
-              onClick={ButtonEnterHandler}
-              variant={ButtonVariant.gray}
-            >
-              {isAuth ? <div>Выйти</div> : <Link to="/auth">Войти</Link>}
-            </Button>
+            {
+              isAuth
+                ? (
+                  <IconProfile
+                    image={image}
+                    firstName={firstName}
+                    secondName={secondName}
+                    type={IconProfileTypeEnum.link}
+                  />
+                ) : (
+                  <Button
+                    onClick={ButtonEnterHandler}
+                    variant={ButtonVariant.gray}
+                  >
+                    <Link to="/auth">Войти</Link>
+                  </Button>
+                )
+            }
           </div>
         </Container>
       </header>

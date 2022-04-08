@@ -16,6 +16,7 @@ const Registration: React.FC<RegistrationProps> = ({ changeIsLogin }) => {
   const [loginInputs, setLoginInputs] = useState({
     email: '',
     password: '',
+    firstName: 'Пользователь',
   });
 
   const inputHandler = ({ target }: React.ChangeEvent<HTMLInputElement>, key: string) => {

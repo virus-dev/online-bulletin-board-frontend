@@ -1,0 +1,24 @@
+@import '../../styles/variables.scss';
+
+.iconProfile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: $blue-400;
+  height: 32px;
+  width: 57px;
+  color: $gray-100;
+  font-size: 18px;
+  font-weight: 500;
+  outline: none;
+  border-width: 0;
+  text-decoration: none;
+  overflow: hidden;
+  border: 1px solid $gray-700;
+
+  .iconProfileImage {
+    height: 32px;
+    width: 57px;
+  }
+}

@@ -4,13 +4,12 @@ $headerHeigth: 55px;
 
 .header {
   background-color: $gray-100;
-  padding: 2px 16px;
+  padding: 2px 0;
   height: $headerHeigth;
   z-index: 1000;
 
   .headerContainer {
     display: flex;
-    margin: 0 -16px;
     align-items: center;
   
     & > * {

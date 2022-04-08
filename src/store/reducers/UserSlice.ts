@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import jwtDecode from 'jwt-decode';
-import { login, registration } from '../actionCreators/user';
+import {
+  login, registration, updateData, getData,
+} from '../actionCreators/user';
 import { User } from '../../models/User';
 
 const initialState: User = {
@@ -31,34 +32,16 @@ export const userSlice = createSlice((() => {
   return {
     name: 'user',
     initialState,
-    reducers: {
-      getUserDataFromJWT: (state: User, payload: PayloadAction<string | null>) => {
-        if (!payload || !payload.payload) {
-          return;
-        }
-
-        const {
-          email,
-          phone,
-          role,
-          firstName,
-          secondName,
-          image,
-        } = jwtDecode<User>(payload.payload);
-
-        state.email = email;
-        state.phone = phone;
-        state.role = role;
-        state.firstName = firstName;
-        state.secondName = secondName;
-        state.image = image;
-      },
-    },
+    reducers: {},
     extraReducers: {
       [login.fulfilled.type]: userDataAdd,
       [registration.fulfilled.type]: userDataAdd,
+      [updateData.fulfilled.type]: userDataAdd,
+      [getData.fulfilled.type]: userDataAdd,
       [login.rejected.type]: userDataError,
       [registration.rejected.type]: userDataError,
+      [updateData.rejected.type]: userDataError,
+      [getData.rejected.type]: userDataError,
     },
   };
 })());

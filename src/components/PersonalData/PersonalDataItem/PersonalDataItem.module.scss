@@ -1,0 +1,16 @@
+@import '../../../styles/variables.scss';
+
+.item {
+  display: flex;
+  border-bottom: 1px solid $gray-300;
+  padding-bottom: 4px;
+  margin-top: 12px;
+
+  .itemName {
+    width: 120px;
+  }
+
+  .itemChildren {
+    width: 100%;
+  }
+}

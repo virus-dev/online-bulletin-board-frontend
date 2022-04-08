@@ -1,0 +1,13 @@
+@import '../../styles/variables.scss';
+
+.personalData {
+  padding: 16px;
+  border: solid 1px $gray-300;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, .1) 0px 4px 8px 0px;
+
+  .personalDataTitle {
+    font-size: 32px;
+    font-weight: $font-weigth-bold;
+  }
+}

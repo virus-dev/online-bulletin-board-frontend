@@ -1,5 +1,9 @@
-import { useAppSelector } from './redux';
+import UserApi from '../services/UserApi';
 
-const useIsAuth = () => !!useAppSelector(({ user }) => user.email);
+const useIsAuth = () => {
+  const { data, isLoading } = UserApi.useGetDataQuery();
+
+  return isLoading || !!data?.email;
+};
 
 export default useIsAuth;
