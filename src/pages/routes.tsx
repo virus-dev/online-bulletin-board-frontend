@@ -2,6 +2,7 @@ import React from 'react';
 import MainPage from './MainPage/MainPage';
 import ProfilePage from './ProfilePage/ProfilePage';
 import AuthPage from './AuthPage/AuthPage';
+import AdvertisementCreate from './AdvertisementCreate/AdvertisementCreate';
 
 export interface IRoute {
   path: string;
@@ -13,6 +14,7 @@ export enum RouteNames {
   PROFILE = '/profile/',
   PROFILE_ID = '/profile/:id/',
   AUTH = '/auth/',
+  ADVERTISEMENT_CREATE = '/advertisement/create',
 }
 
 export const publicRoutes: IRoute[] = [
@@ -23,4 +25,5 @@ export const publicRoutes: IRoute[] = [
 export const privateRoutes: IRoute[] = [
   { path: RouteNames.PROFILE, element: <ProfilePage /> },
   { path: RouteNames.PROFILE_ID, element: <ProfilePage /> },
+  { path: RouteNames.ADVERTISEMENT_CREATE, element: <AdvertisementCreate /> },
 ];

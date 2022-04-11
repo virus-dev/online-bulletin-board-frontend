@@ -1,8 +1,8 @@
 import React from 'react';
 import UserApi from '../../services/UserApi';
+import PersonalDataItem from './PersonalDataItem/PersonalDataItem';
 
 import s from './PersonalData.module.scss';
-import PersonalDataItem from './PersonalDataItem/PersonalDataItem';
 
 const PersonalData: React.FC = () => {
   const {
@@ -37,6 +37,7 @@ const PersonalData: React.FC = () => {
             <PersonalDataItem name="email">{email}</PersonalDataItem>
             <PersonalDataItem name="phone">{phone}</PersonalDataItem>
             <PersonalDataItem name="role">{role}</PersonalDataItem>
+            <p>Загрузить аватар</p>
             <input type="file" onChange={onChangeHandler} />
           </>
         )
