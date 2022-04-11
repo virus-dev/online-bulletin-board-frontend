@@ -74,7 +74,7 @@ const Header: React.FC = () => {
               onClick={ButtonPlaceAdHandler}
               variant={ButtonVariant.green}
             >
-              Разместить объявление
+              <Link to="/advertisement/create">Разместить объявление</Link>
             </Button>
             {
               isAuth
