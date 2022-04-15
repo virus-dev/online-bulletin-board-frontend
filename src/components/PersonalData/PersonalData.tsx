@@ -3,8 +3,11 @@ import UserApi from '../../services/UserApi';
 import PersonalDataItem from './PersonalDataItem/PersonalDataItem';
 
 import s from './PersonalData.module.scss';
+import { updateData } from '../../store/actionCreators/user';
+import { useAppDispatch } from '../../hooks/redux';
 
 const PersonalData: React.FC = () => {
+  const dispatch = useAppDispatch();
   const {
     data: {
       email, firstName, secondName, phone, role,
@@ -12,7 +15,7 @@ const PersonalData: React.FC = () => {
     isLoading,
   } = UserApi.useGetDataQuery();
 
-  const [update] = UserApi.useUpdateMutation();
+  // const [update] = UserApi.useUpdateMutation();
 
   const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -20,7 +23,8 @@ const PersonalData: React.FC = () => {
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
-      update(formData);
+      // update(formData);
+      dispatch(updateData(formData));
     }
   };
 
