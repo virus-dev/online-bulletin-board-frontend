@@ -1,0 +1,30 @@
+@import '../../styles/variables.scss';
+
+.advertisementSlider {
+  position: relative;
+  border: 1px solid $gray-300;
+  border-radius: 2px;
+
+  .wrapper {
+    overflow-x: hidden;
+  
+    .slides {
+      display: flex;
+      transition: transform .3s ease;
+  
+      img {
+        max-height: 400px;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .arrowsWrapper {
+    position: absolute;
+    width: 102%;
+    display: flex;
+    justify-content: space-between;
+    top: 50%;
+    transform: translateY(-50%) translateX(-2%);
+  }
+}

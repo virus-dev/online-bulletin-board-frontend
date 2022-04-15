@@ -1,12 +1,14 @@
 @import '../../styles/variables.scss';
 
-$headerHeigth: 55px;
+$headerHeigth: 60px;
 
 .header {
   background-color: $gray-100;
   padding: 2px 0;
   height: $headerHeigth;
   z-index: 1000;
+  margin-bottom: 20px;
+  box-shadow: $default-box-shadow;
 
   .headerContainer {
     display: flex;
@@ -38,4 +40,5 @@ $headerHeigth: 55px;
   height: $headerHeigth;
   width: 100%;
   background-color: $gray-100;
+  margin-bottom: 20px;
 }

@@ -1,0 +1,19 @@
+@import '../../styles/variables.scss';
+
+.advertisement {
+  box-shadow: $default-box-shadow;
+  padding: 12px 16px;
+  border-radius: 8px;
+
+  .status {
+    color: red;
+    font-weight: $font-weigth-bold;
+    font-size: 28px;
+    text-decoration: underline;
+  }
+
+  .title {
+    font-weight: $font-weigth-bold;
+    font-size: 32px;
+  }
+}
