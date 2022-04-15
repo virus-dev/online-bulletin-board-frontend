@@ -26,8 +26,8 @@ const AdvertisementCreate = () => {
   const isLoading = isLoadingCategories || isLoadingBrands;
 
   const [advertisementData, setAdvertisementData] = useState<AdvertisementData>({
-    categoryId: null,
-    brandId: null,
+    categoryId: '1',
+    brandId: '1',
     title: 'Продам Срочно!',
     price: '5000',
     description: 'Возможен торг, товар отличный',
