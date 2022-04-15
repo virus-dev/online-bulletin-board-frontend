@@ -1,4 +1,5 @@
 import React from 'react';
+import AdvertisementsRibbon from '../../components/AdvertisementsRibbon/AdvertisementsRibbon';
 import Header from '../../components/Header/Header';
 import MainSlider from '../../components/MainSlider/MainSlider';
 
@@ -8,6 +9,7 @@ const MainPage = () => (
   <>
     <Header />
     <MainSlider />
+    <AdvertisementsRibbon />
   </>
 );
 

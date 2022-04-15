@@ -34,11 +34,6 @@ const Header: React.FC = () => {
     };
   }, []);
 
-  const ButtonCategoryHandler = () => {};
-  const ButtonSearchHandler = () => {};
-  const ButtonPlaceAdHandler = () => {};
-  const ButtonEnterHandler = () => {};
-
   const InputHandler = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     setInputSearch(target.value);
   };
@@ -54,7 +49,6 @@ const Header: React.FC = () => {
               <img src={logo} alt="*" />
             </Link>
             <Button
-              onClick={ButtonCategoryHandler}
               iconLeft={<IconIconMenu size="20px" />}
               className={s.buttonCategory}
             >
@@ -62,7 +56,6 @@ const Header: React.FC = () => {
             </Button>
             <InputWithBtn
               onChange={InputHandler}
-              onClick={() => ButtonSearchHandler}
               value={inputSearch}
               iconLeftInput={<IconSearch size="16px" />}
               variant={ButtonVariant.gray}
@@ -71,7 +64,7 @@ const Header: React.FC = () => {
               Найти
             </InputWithBtn>
             <Button
-              onClick={ButtonPlaceAdHandler}
+              href="/advertisement/create"
               variant={ButtonVariant.green}
             >
               Разместить объявление
@@ -87,10 +80,10 @@ const Header: React.FC = () => {
                   />
                 ) : (
                   <Button
-                    onClick={ButtonEnterHandler}
                     variant={ButtonVariant.gray}
+                    href="/auth"
                   >
-                    <Link to="/auth">Войти</Link>
+                    Войти
                   </Button>
                 )
             }

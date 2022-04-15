@@ -1,15 +1,26 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import UserApi from '../services/UserApi';
+import AdvertisementAPI from '../services/AdvertisementAPI';
+import CategoriesAPI from '../services/CategoriesAPI';
+import BrandsAPI from '../services/BrandsAPI';
 import userReducer from './reducers/UserSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,
   [UserApi.reducerPath]: UserApi.reducer,
+  [AdvertisementAPI.reducerPath]: AdvertisementAPI.reducer,
+  [CategoriesAPI.reducerPath]: CategoriesAPI.reducer,
+  [BrandsAPI.reducerPath]: BrandsAPI.reducer,
 });
 
 const setupStore = () => configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(UserApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([
+    UserApi.middleware,
+    AdvertisementAPI.middleware,
+    CategoriesAPI.middleware,
+    BrandsAPI.middleware,
+  ]),
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -1,0 +1,9 @@
+.advertisementsContainer {
+  margin-top: 32px;
+
+  .advertisementsRibbon {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 20px;
+  }
+}

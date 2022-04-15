@@ -1,0 +1,32 @@
+@import '../../styles/variables.scss';
+
+.advertisementItem {
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: $default-box-shadow;
+  cursor: pointer;
+
+  .advertisementItemImg {
+    img {
+      max-height: 220px;
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .advertisementItemInfo {
+    padding: 4px 8px;
+
+    .title {
+      color: $gray-700;
+      font-size: 24px;
+    }
+
+    .price {
+      color: $gray-700;
+      font-size: 16px;
+    }
+  }
+}
