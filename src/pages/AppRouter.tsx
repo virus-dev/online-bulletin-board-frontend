@@ -9,7 +9,7 @@ import {
 } from './routes';
 
 const AppRouter = () => {
-  const isAuth = useIsAuth();
+  const { isAuthOrIsLoading } = useIsAuth();
 
   return (
     <Routes>
@@ -17,7 +17,7 @@ const AppRouter = () => {
         privateRoutes.map(({ path, element }) => (
           <Route
             path={path}
-            element={isAuth ? element : <Navigate to={RouteNames.AUTH} />}
+            element={isAuthOrIsLoading ? element : <Navigate to={RouteNames.AUTH} />}
             key={path}
           />
         ))

@@ -30,7 +30,7 @@ const AdvertisementItem: React.FC<AdvertisementItemProps> = ({ id, price, title 
             {data?.length ? (
               <img src={data[0]} alt="*" />
             ) : (
-              <div>awdaw</div>
+              <div>Фотографий нет</div>
             )}
           </div>
         )}

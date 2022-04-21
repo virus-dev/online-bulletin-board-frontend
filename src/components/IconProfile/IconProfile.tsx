@@ -28,7 +28,13 @@ const IconProfile: React.FC<IconProfileProps> = ({
     )}
   </Link>
 ) : (
-  <div>re</div>
+  <div className={s.iconProfile}>
+    {image ? (
+      <img className={s.iconProfileImage} src={image} alt="*" />
+    ) : (
+      firstName?.charAt(0)
+    )}
+  </div>
 ));
 
 IconProfile.defaultProps = {

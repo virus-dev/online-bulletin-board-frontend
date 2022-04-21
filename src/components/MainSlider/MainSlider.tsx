@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import sliderItems, { MainSliderItems } from './sliderItems';
 
 import s from './MainSlider.module.scss';
+import useWebSocket from '../../hooks/useWebSocket';
 
 const MainSlider: React.FC = () => {
   const [sliderCount, setSliderCount] = useState(0);

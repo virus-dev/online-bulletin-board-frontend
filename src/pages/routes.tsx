@@ -4,6 +4,7 @@ import ProfilePage from './ProfilePage/ProfilePage';
 import AuthPage from './AuthPage/AuthPage';
 import AdvertisementCreate from './AdvertisementCreate/AdvertisementCreate';
 import Advertisement from './Advertisement/Advertisement';
+import ChatPage from './ChatPage/ChatPage';
 
 export interface IRoute {
   path: string;
@@ -17,6 +18,7 @@ export enum RouteNames {
   AUTH = '/auth/',
   ADVERTISEMENT_CREATE = '/advertisement/create',
   ADVERTISEMENT_ID = '/advertisement/:advertisementId',
+  CHAT = '/chat',
 }
 
 export const unloginRoutes: IRoute[] = [
@@ -32,4 +34,5 @@ export const privateRoutes: IRoute[] = [
   { path: RouteNames.PROFILE, element: <ProfilePage /> },
   { path: RouteNames.PROFILE_ID, element: <ProfilePage /> },
   { path: RouteNames.ADVERTISEMENT_CREATE, element: <AdvertisementCreate /> },
+  { path: RouteNames.CHAT, element: <ChatPage /> },
 ];
