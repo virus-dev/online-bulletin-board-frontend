@@ -12,6 +12,7 @@ import Links from './Links/Links';
 import NavBar from './NavBar/NavBar';
 import logo from './static/logo.png';
 import UserApi from '../../services/UserApi';
+import useWebSocket from '../../hooks/useWebSocket';
 
 import s from './Header.module.scss';
 
@@ -19,7 +20,7 @@ const Header: React.FC = () => {
   const {
     data: { image, firstName, secondName } = {},
   } = UserApi.useGetDataQuery();
-  const isAuth = useIsAuth();
+  const { isAuth } = useIsAuth();
   const [isHeadeFixed, setIsHeaderFixed] = useState(false);
   const [inputSearch, setInputSearch] = useState('');
 

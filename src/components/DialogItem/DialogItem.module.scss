@@ -1,0 +1,44 @@
+@import '../../styles/variables.scss';
+
+.dialogItemWrapper {
+  border-bottom: 1px solid $gray-700;
+  padding: 4px;
+
+  .dialogItem {
+    position: relative;
+    width: 100%;
+
+    .iconAndName {
+      display: flex;
+      align-items: center;
+
+      .firstName, .secondName {
+        margin-left: 4px;
+      }
+    }
+
+    .message {
+      margin-top: 8px;
+    }
+
+    .unreadMessagesCount {
+      background-color: $red-400;
+      width: 24px;
+      height: 24px;
+      font-weight: $font-weigth-bold;
+      color: $gray-100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+    }
+
+    .date {
+      margin-top: 8px;
+    }
+  }
+}

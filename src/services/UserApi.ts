@@ -1,5 +1,10 @@
+import { SetStateAction } from 'react';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { User } from '../models/User';
+
+interface GetDataById {
+  id: number,
+}
 
 const UserApi = createApi({
   reducerPath: 'userAPI',
@@ -11,6 +16,15 @@ const UserApi = createApi({
         url: '/getData',
         headers: {
           authorization: `Bearer ${localStorage.getItem('JWT')}`,
+        },
+      }),
+      providesTags: () => ['User'],
+    }),
+    getDataById: build.query<User, number | SetStateAction<number | null>>({
+      query: (id) => ({
+        url: '/getDataById',
+        params: {
+          id,
         },
       }),
       providesTags: () => ['User'],
