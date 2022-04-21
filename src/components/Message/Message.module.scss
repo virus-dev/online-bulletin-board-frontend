@@ -1,0 +1,55 @@
+@import '../../styles/variables.scss';
+
+.messageWrapper {
+  display: flex;
+  align-items: flex-end;
+
+  .messageCloud {
+    background: $blue-400;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-left: 8px;
+
+    .name {
+      color: $gray-700;
+      font-weight: $font-weigth-bold;
+      font-size: 18px;
+    }
+
+    .message {
+      color: $gray-100;
+      word-break: break-all;
+    }
+
+    .date {
+      font-size: 12px;
+      color: $gray-700;
+      margin-top: 4px;
+    }
+
+    .status {
+      font-size: 16px;
+      color: $gray-700;
+      margin-top: 4px;
+    }
+  }
+
+  .yourMessageCloud {
+    background: $green-400;
+    text-align: right;
+    margin-right: 8px;
+  }
+
+  & ~ & {
+    margin-top: 8px;
+  }
+}
+
+.yourMessage {
+  justify-content: right;
+  flex-flow: row-reverse;
+}
+
+.interlocutorMessage {
+  justify-content: left;
+}

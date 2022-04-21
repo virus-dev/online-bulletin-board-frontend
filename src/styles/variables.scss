@@ -14,4 +14,14 @@ $blue-500: rgb(112, 146, 254);
 $green-400: rgb(129, 197, 55);
 $green-500: rgb(119, 192, 38);
 
+$red-400: #EE204D;
+
 $default-box-shadow: rgba(0, 0, 0, .1) 0px 4px 8px 0px;
+
+@mixin ButtonStulesDelete() {
+  background-color: none;
+  text-align: left;
+  display: block;
+}
+
+$heightPanel: 100px;

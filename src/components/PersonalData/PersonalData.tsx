@@ -3,6 +3,7 @@ import UserApi from '../../services/UserApi';
 import PersonalDataItem from './PersonalDataItem/PersonalDataItem';
 
 import s from './PersonalData.module.scss';
+import Button from '../storybook/Button/Button';
 
 const PersonalData: React.FC = () => {
   const {
@@ -10,6 +11,7 @@ const PersonalData: React.FC = () => {
       email, firstName, secondName, phone, role,
     } = {},
     isLoading,
+    refetch,
   } = UserApi.useGetDataQuery();
 
   const [update] = UserApi.useUpdateMutation();
@@ -22,6 +24,11 @@ const PersonalData: React.FC = () => {
       formData.append('file', file);
       update(formData);
     }
+  };
+
+  const onClickHandler = () => {
+    localStorage.removeItem('JWT');
+    window.location.href = '/';
   };
 
   return (
@@ -39,6 +46,7 @@ const PersonalData: React.FC = () => {
             <PersonalDataItem name="role">{role}</PersonalDataItem>
             <p>Загрузить аватар</p>
             <input type="file" onChange={onChangeHandler} />
+            <Button onClick={onClickHandler}>Выйти</Button>
           </>
         )
       }

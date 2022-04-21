@@ -4,7 +4,6 @@ body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  height: 1000px;
 }
 
 * {
@@ -18,4 +17,9 @@ p {
 
 svg, img {
   display: block;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
 }
