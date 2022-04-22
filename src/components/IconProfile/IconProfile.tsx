@@ -15,7 +15,7 @@ interface IconProfileType {
 
 type IconProfileProps = Pick<User, 'image'> & Pick<User, 'firstName'> & Pick<User, 'secondName'> & IconProfileType;
 
-// TODO: в Raact.memo
+// TODO: в React.memo
 
 const IconProfile: React.FC<IconProfileProps> = ({
   image, firstName, secondName, type = IconProfileTypeEnum.div,

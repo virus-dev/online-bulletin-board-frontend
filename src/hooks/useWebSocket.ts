@@ -25,6 +25,10 @@ const useWebSocket = () => {
       return;
     }
 
+    if (socket.current) {
+      return;
+    }
+
     socket.current = new WebSocket(webSocketURL);
 
     socket.current.onopen = () => {
@@ -32,6 +36,7 @@ const useWebSocket = () => {
       const sendObj = {
         method: 'connection',
         userId: id,
+        token: `Bearer ${localStorage.getItem('JWT')}`,
       };
       socket.current?.send(JSON.stringify(sendObj));
     };
