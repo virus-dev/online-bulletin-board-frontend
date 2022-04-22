@@ -1,22 +1,33 @@
 import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { getChat } from '../../store/actionCreators/messagesActionCreators';
+import { messagesSlice } from '../../store/reducers/messagesSlice';
 import Message from '../Message/Message';
 import MessageSendPanel from '../MessageSendPanel/MessageSendPanel';
 
 import s from './ChatWindow.module.scss';
 
 const ChatWindow: React.FC = () => {
+  const { search } = useLocation();
   const diapatch = useAppDispatch();
   const { chatWithUserId, messages } = useAppSelector((state) => state.messages.chat);
 
   useEffect(() => {
-    if (!chatWithUserId) {
+    const query = new URLSearchParams(search);
+    const chatWithUserIdParam = query.get('chatWithUserId');
+
+    if (chatWithUserIdParam) {
+      const { setChatWithUserId } = messagesSlice.actions;
+      diapatch(setChatWithUserId(Number(chatWithUserIdParam)));
+    }
+
+    if (!chatWithUserId && !chatWithUserIdParam) {
       return;
     }
 
-    diapatch(getChat(chatWithUserId));
-  }, [chatWithUserId, diapatch]);
+    diapatch(getChat(chatWithUserId || Number(chatWithUserIdParam)));
+  }, [chatWithUserId, diapatch, search]);
 
   if (!chatWithUserId) {
     return <div>null</div>;

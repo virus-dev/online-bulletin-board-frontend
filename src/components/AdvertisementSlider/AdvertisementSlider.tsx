@@ -7,7 +7,6 @@ import s from './AdvertisementSlider.module.scss';
 
 interface AdvertisementSliderProps {
   data: string[] | undefined,
-  isLoading: boolean,
 }
 
 const getMaxTranslateX = (
@@ -33,15 +32,11 @@ const getMaxTranslateX = (
   wrapperMaxTranslateX.current = lastElLeft - (wrapperRefLeft + wrapperRefWidth - lastElWidth);
 };
 
-const AdvertisementSlider: React.FC<AdvertisementSliderProps> = ({ data, isLoading }) => {
+const AdvertisementSlider: React.FC<AdvertisementSliderProps> = ({ data }) => {
   const wrapperRef = useRef(null);
   const [countSlide, cetCountSlide] = useState(0);
   const [wrapperTranslateX, setWrapperTranslateX] = useState(0);
   const wrapperMaxTranslateX = useRef(0);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   if (!data?.length) {
     return <div>Фотографий нет</div>;

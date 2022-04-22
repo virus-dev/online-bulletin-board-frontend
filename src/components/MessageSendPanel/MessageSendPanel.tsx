@@ -22,6 +22,7 @@ const MessageSendPanel = () => {
       fromUserId: id,
       toUserId: chatWithUserId,
       message,
+      token: `Bearer ${localStorage.getItem('JWT')}`,
     };
 
     socket?.current?.send(JSON.stringify(sendObj));

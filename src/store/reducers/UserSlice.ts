@@ -5,6 +5,7 @@ import {
 import { User } from '../../models/User';
 
 const initialState: User = {
+  id: null,
   email: null,
   phone: null,
   role: null,
