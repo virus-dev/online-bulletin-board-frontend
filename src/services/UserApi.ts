@@ -2,10 +2,6 @@ import { SetStateAction } from 'react';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { User } from '../models/User';
 
-interface GetDataById {
-  id: number,
-}
-
 const UserApi = createApi({
   reducerPath: 'userAPI',
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_API_URL}user/` }),
