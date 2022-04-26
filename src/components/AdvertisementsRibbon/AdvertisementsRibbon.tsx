@@ -2,15 +2,16 @@ import React from 'react';
 import AdvertisementAPI from '../../services/AdvertisementAPI';
 import AdvertisementItem from '../AdvertisementItem/AdvertisementItem';
 import Container from '../storybook/Container/Container';
+import { Advertisement } from '../../models/Advertisement';
 
 import s from './AdvertisementsRibbon.module.scss';
 
-const AdvertisementsRibbon = () => {
-  const {
-    data,
-    isLoading,
-  } = AdvertisementAPI.useGetAllQuery({ limit: 20, page: 1 });
+interface AdvertisementsRibbonProps {
+  data: Advertisement[] | undefined,
+  isLoading: boolean,
+}
 
+const AdvertisementsRibbon: React.FC<AdvertisementsRibbonProps> = ({ data, isLoading }) => {
   if (isLoading) {
     return <div>Loading...</div>;
   }

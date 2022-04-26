@@ -19,6 +19,20 @@ const AdvertisementApi = createApi({
           page,
         },
       }),
+      providesTags: ['Advertisement'],
+    }),
+    getAllOnModeration: build.query<Advertisement[], GetAll>({
+      query: ({ limit, page }) => ({
+        url: '/getAllOnModeration',
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('JWT')}`,
+        },
+        params: {
+          limit,
+          page,
+        },
+      }),
+      providesTags: ['Advertisement'],
     }),
     getOne: build.query<Advertisement, number>({
       query: (id) => ({
@@ -28,11 +42,25 @@ const AdvertisementApi = createApi({
         },
       }),
     }),
+    getOneMaybeNotPublic: build.query<Advertisement, number>({
+      query: (id) => ({
+        url: '/getOneMaybeNotPublic',
+        params: {
+          id,
+        },
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('JWT')}`,
+        },
+      }),
+    }),
     getImages: build.query<string[], number>({
       query: (advertisementId) => ({
         url: '/getImages',
         params: {
           advertisementId,
+        },
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('JWT')}`,
         },
       }),
     }),
@@ -41,6 +69,28 @@ const AdvertisementApi = createApi({
         url: 'create',
         method: 'POST',
         body: formData,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('JWT')}`,
+        },
+      }),
+      invalidatesTags: ['Advertisement'],
+    }),
+    confirmModeration: build.mutation({
+      query: (advertisementId: number | undefined) => ({
+        url: 'confirmModeration',
+        method: 'PUT',
+        body: { advertisementId },
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('JWT')}`,
+        },
+      }),
+      invalidatesTags: ['Advertisement'],
+    }),
+    disconfirmModeration: build.mutation({
+      query: (advertisementId: number | undefined) => ({
+        url: 'disconfirmModeration',
+        method: 'PUT',
+        body: { advertisementId },
         headers: {
           authorization: `Bearer ${localStorage.getItem('JWT')}`,
         },
