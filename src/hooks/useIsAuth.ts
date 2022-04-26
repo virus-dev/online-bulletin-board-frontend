@@ -1,14 +1,22 @@
 import UserApi from '../services/UserApi';
+import { Role } from '../models/User';
 
 const useIsAuth = () => {
-  const { data, isLoading } = UserApi.useGetDataQuery();
+  const { data: { email, role } = {}, isLoading } = UserApi.useGetDataQuery();
 
-  const isAuth = !!data?.email;
+  const isAuth = email;
+
+  const isAdminRole = isLoading || Role.ADMIN === role;
+  const isModeratorRole = isLoading || Role.MODERATOR === role || isAdminRole;
+  const isUserRole = isLoading || Role.USER === role || isModeratorRole || isAdminRole;
 
   return {
     isAuth,
     isLoading,
     isAuthOrIsLoading: isAuth || isLoading,
+    isAdminRole,
+    isModeratorRole,
+    isUserRole,
   };
 };
 

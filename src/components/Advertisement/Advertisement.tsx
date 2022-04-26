@@ -1,40 +1,47 @@
-import React, { useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import AdvertisementApi from '../../services/AdvertisementAPI';
-import BrandsApi from '../../services/BrandsAPI';
-import CategoriesApi from '../../services/CategoriesAPI';
+import React from 'react';
 import AdvertisementSlider from '../AdvertisementSlider/AdvertisementSlider';
 import Container from '../storybook/Container/Container';
-import SocketContext from '../../context/SocketContext';
-import IconProfile from '../IconProfile/IconProfile';
-import UserApi from '../../services/UserApi';
+import AdvertisementOwner from '../AdvertisementOwner/AdvertisementOwner';
+import { Brands } from '../../models/Brands';
+import { Categories } from '../../models/Categories';
+import ConfirmModerateButtons from './components/ConfirmModerateButtons/ConfirmModerateButtons';
 
 import s from './Advertisement.module.scss';
-import useFetchDataAdvertisement from './useFetchDataAdvertisement';
-import AdvertisementOwner from '../AdvertisementOwner/AdvertisementOwner';
 
-const Advertisement: React.FC = () => {
-  const { socket, isConnected } = useContext(SocketContext);
+interface AdvertisementProps {
+  isLoading: boolean | undefined,
+  brandId: number | undefined,
+  categoryId: number | undefined,
+  createdAt: string | undefined,
+  description: string | undefined,
+  price: number | undefined,
+  status: string | undefined,
+  title: string | undefined,
+  userId: number | undefined,
+  dataImagesAdvertisement: string[] | undefined,
+  dataCategories: Categories[] | undefined,
+  dataBrands: Brands[] | undefined,
+  isCanModerate: boolean | undefined,
+}
 
-  const fetchData = useFetchDataAdvertisement();
-
-  if (fetchData.isLoading) {
+const Advertisement: React.FC<AdvertisementProps> = ({
+  isLoading,
+  brandId,
+  categoryId,
+  createdAt,
+  description,
+  price,
+  status,
+  title,
+  userId,
+  dataImagesAdvertisement,
+  dataCategories,
+  dataBrands,
+  isCanModerate,
+}) => {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
-
-  const {
-    brandId,
-    categoryId,
-    createdAt,
-    description,
-    price,
-    status,
-    title,
-    userId,
-    dataImagesAdvertisement,
-    dataCategories,
-    dataBrands,
-  } = fetchData;
 
   return (
     <Container>
@@ -61,6 +68,7 @@ const Advertisement: React.FC = () => {
           <span>{description}</span>
         </div>
         <AdvertisementOwner userId={userId} />
+        {isCanModerate && <ConfirmModerateButtons />}
       </div>
     </Container>
   );

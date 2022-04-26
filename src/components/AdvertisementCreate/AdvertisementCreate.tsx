@@ -34,8 +34,6 @@ const AdvertisementCreate = () => {
     files: [],
   });
 
-  console.log('advertisementData', advertisementData);
-
   const onChangeSelecthandler = (
     { target }: React.ChangeEvent<HTMLSelectElement>,
     name: string,
