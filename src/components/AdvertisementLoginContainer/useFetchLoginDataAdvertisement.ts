@@ -3,14 +3,15 @@ import AdvertisementApi from '../../services/AdvertisementAPI';
 import BrandsApi from '../../services/BrandsAPI';
 import CategoriesApi from '../../services/CategoriesAPI';
 
-const useFetchDataAdvertisement = () => {
+const useFetchLoginDataAdvertisement = () => {
   const { advertisementId } = useParams();
+
   const {
     data: {
       brandId, categoryId, createdAt, description, price, status, title, userId,
     } = {},
     isLoading: isLoadingAdvertisement,
-  } = AdvertisementApi.useGetOneQuery(Number(advertisementId));
+  } = AdvertisementApi.useGetOneMaybeNotPublicQuery(Number(advertisementId));
   const {
     data: dataImagesAdvertisement = [],
     isLoading: isLoadingImagesAdvertisement,
@@ -22,16 +23,7 @@ const useFetchDataAdvertisement = () => {
     data: dataBrands, isLoading: isLoadingBrands,
   } = BrandsApi.useGetBrandsQuery();
 
-  if (
-    isLoadingAdvertisement
-    && isLoadingImagesAdvertisement
-    && isLoadingBrands
-    && isLoadingCategories
-  ) {
-    return { isLoading: true };
-  }
-
-  return {
+  const res = {
     brandId,
     categoryId,
     createdAt,
@@ -43,7 +35,19 @@ const useFetchDataAdvertisement = () => {
     dataImagesAdvertisement,
     dataCategories,
     dataBrands,
+    isLoading: false,
   };
+
+  if (
+    isLoadingAdvertisement
+    && isLoadingImagesAdvertisement
+    && isLoadingBrands
+    && isLoadingCategories
+  ) {
+    return { ...res, isLoading: true };
+  }
+
+  return res;
 };
 
-export default useFetchDataAdvertisement;
+export default useFetchLoginDataAdvertisement;
