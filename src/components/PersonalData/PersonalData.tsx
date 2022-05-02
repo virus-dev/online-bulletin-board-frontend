@@ -1,17 +1,20 @@
 import React from 'react';
 import UserApi from '../../services/UserApi';
 import PersonalDataItem from './PersonalDataItem/PersonalDataItem';
+import Button, { ButtonVariant } from '../storybook/Button/Button';
+import useIsAuth from '../../hooks/useIsAuth';
+import { RouteNames } from '../../models/Route';
 
 import s from './PersonalData.module.scss';
-import Button from '../storybook/Button/Button';
 
 const PersonalData: React.FC = () => {
+  const { isModeratorRole, isLoading: isLoadingAuth } = useIsAuth();
+
   const {
     data: {
       email, firstName, secondName, phone, role,
     } = {},
     isLoading,
-    refetch,
   } = UserApi.useGetDataQuery();
 
   const [update] = UserApi.useUpdateMutation();
@@ -50,6 +53,22 @@ const PersonalData: React.FC = () => {
           </>
         )
       }
+      {
+        isModeratorRole && !isLoadingAuth && (
+          <Button
+            variant={ButtonVariant.green}
+            href={RouteNames.ADVERTISEMENT_MODERATION}
+          >
+            Модерация
+          </Button>
+        )
+      }
+      <Button
+        href={RouteNames.ADVERTISEMENT_MY_ADVERTISEMENTS}
+        variant={ButtonVariant.blue}
+      >
+        Мои объявления
+      </Button>
     </div>
   );
 };

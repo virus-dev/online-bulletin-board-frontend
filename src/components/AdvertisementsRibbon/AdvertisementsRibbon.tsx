@@ -1,17 +1,22 @@
-import React from 'react';
-import AdvertisementAPI from '../../services/AdvertisementAPI';
+import React, { useRef, useEffect, useMemo } from 'react';
 import AdvertisementItem from '../AdvertisementItem/AdvertisementItem';
 import Container from '../storybook/Container/Container';
 import { Advertisement } from '../../models/Advertisement';
 
 import s from './AdvertisementsRibbon.module.scss';
+import LoadTrigger from './LoadTrigger/LoadTrigger';
 
 interface AdvertisementsRibbonProps {
+  onScrollEnd?: () => void,
   data: Advertisement[] | undefined,
   isLoading: boolean,
 }
 
-const AdvertisementsRibbon: React.FC<AdvertisementsRibbonProps> = ({ data, isLoading }) => {
+const AdvertisementsRibbon: React.FC<AdvertisementsRibbonProps> = ({
+  data,
+  isLoading,
+  onScrollEnd,
+}) => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -27,8 +32,13 @@ const AdvertisementsRibbon: React.FC<AdvertisementsRibbonProps> = ({ data, isLoa
           <AdvertisementItem key={id} id={id} title={title} price={price} />
         ))}
       </div>
+      <LoadTrigger callback={onScrollEnd} />
     </Container>
   );
+};
+
+AdvertisementsRibbon.defaultProps = {
+  onScrollEnd: undefined,
 };
 
 export default AdvertisementsRibbon;

@@ -47,6 +47,7 @@ const Advertisement: React.FC<AdvertisementProps> = ({
     <Container>
       <div className={s.advertisement}>
         <div className={s.status}>{status === 'moderation' && 'Объявление еще находится на модерации'}</div>
+        <div className={s.status}>{status === 'close' && 'Объявление не прошло модерацию'}</div>
         <div className={s.title}>{title}</div>
         <div className={s.price}>
           <span>{price}</span>
@@ -68,7 +69,7 @@ const Advertisement: React.FC<AdvertisementProps> = ({
           <span>{description}</span>
         </div>
         <AdvertisementOwner userId={userId} />
-        {isCanModerate && <ConfirmModerateButtons />}
+        {isCanModerate && status !== 'open' && <ConfirmModerateButtons />}
       </div>
     </Container>
   );

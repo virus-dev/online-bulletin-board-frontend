@@ -6,23 +6,24 @@ import useIsAuth from '../../hooks/useIsAuth';
 import IconProfile, { IconProfileTypeEnum } from '../IconProfile/IconProfile';
 import Button, { ButtonVariant } from '../storybook/Button/Button';
 import InputWithBtn from '../storybook/InputWithBtn/InputWithBtn';
-import IconIconMenu from '../storybook/Icons/IconIconMenu';
 import IconSearch from '../storybook/Icons/IconSearch';
 import Links from './Links/Links';
 import NavBar from './NavBar/NavBar';
 import logo from './static/logo.png';
 import UserApi from '../../services/UserApi';
-import useWebSocket from '../../hooks/useWebSocket';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { inputsSlice, Field } from '../../store/reducers/inputsSlice';
 
 import s from './Header.module.scss';
 
 const Header: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const advertisementSearch = useAppSelector(({ inputs }) => inputs.inputs.advertisementSearch);
   const {
     data: { image, firstName, secondName } = {},
   } = UserApi.useGetDataQuery();
   const { isAuth } = useIsAuth();
   const [isHeadeFixed, setIsHeaderFixed] = useState(false);
-  const [inputSearch, setInputSearch] = useState('');
 
   const scrollHandler = () => {
     setIsHeaderFixed(window.scrollY > 50);
@@ -35,8 +36,8 @@ const Header: React.FC = () => {
     };
   }, []);
 
-  const InputHandler = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    setInputSearch(target.value);
+  const InputHandler = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(inputsSlice.actions.setChangeInput({ field: Field.advertisementSearch, value }));
   };
 
   return (
@@ -49,15 +50,15 @@ const Header: React.FC = () => {
             <Link to="/">
               <img src={logo} alt="*" />
             </Link>
-            <Button
+            {/* <Button
               iconLeft={<IconIconMenu size="20px" />}
               className={s.buttonCategory}
             >
               Категории
-            </Button>
+            </Button> */}
             <InputWithBtn
               onChange={InputHandler}
-              value={inputSearch}
+              value={advertisementSearch}
               iconLeftInput={<IconSearch size="16px" />}
               variant={ButtonVariant.gray}
               fullWidth

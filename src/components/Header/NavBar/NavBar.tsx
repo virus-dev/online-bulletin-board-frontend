@@ -36,10 +36,10 @@ const NavBar: React.FC = () => {
               {unreadMessages}
             </p>
           </Link>
-          <div className={s.navBarItem}>
+          {/* <div className={s.navBarItem}>
             <IconFavorites size="16px" color="#333" />
             <p className={s.navBarItemText}>Избранное</p>
-          </div>
+          </div> */}
         </div>
       </Container>
     </div>

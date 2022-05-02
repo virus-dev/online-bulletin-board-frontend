@@ -2,7 +2,7 @@ import React from 'react';
 import Advertisement from '../Advertisement/Advertisement';
 import useFetchUnloginDataAdvertisement from './useFetchUnloginDataAdvertisement';
 
-const AdvertisementContainer = () => {
+const AdvertisementUnloginContainer = () => {
   const {
     brandId,
     categoryId,
@@ -37,4 +37,4 @@ const AdvertisementContainer = () => {
   );
 };
 
-export default AdvertisementContainer;
+export default AdvertisementUnloginContainer;

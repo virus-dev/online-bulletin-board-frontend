@@ -4,7 +4,12 @@ import { Advertisement } from '../models/Advertisement';
 interface GetAll {
   limit: number,
   page: number,
+  title: string,
 }
+
+// TODO: Найти некостыльное решение
+let prevProvidesTags: Advertisement[] = [];
+let prevTitle = '';
 
 const AdvertisementApi = createApi({
   reducerPath: 'advertisementAPI',
@@ -12,11 +17,38 @@ const AdvertisementApi = createApi({
   tagTypes: ['Advertisement'],
   endpoints: (build) => ({
     getAll: build.query<Advertisement[], GetAll>({
-      query: ({ limit, page }) => ({
+      query: ({ limit, page, title }) => ({
         url: '/getAll',
+        method: 'POST',
         params: {
           limit,
           page,
+        },
+        body: {
+          title,
+        },
+      }),
+      providesTags: ['Advertisement'],
+      transformResponse: (res, _, { title }) => {
+        if (title !== prevTitle) {
+          prevTitle = title;
+          prevProvidesTags = [];
+        }
+
+        if (Array.isArray(res)) {
+          const transformRes = [...prevProvidesTags, ...res];
+          prevProvidesTags = transformRes;
+          return transformRes;
+        }
+
+        return prevProvidesTags;
+      },
+    }),
+    getAllMyAdvertisement: build.query<Advertisement[], void>({
+      query: () => ({
+        url: '/getAllMyAdvertisement',
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('JWT')}`,
         },
       }),
       providesTags: ['Advertisement'],
