@@ -12,6 +12,7 @@ const ChatWindow: React.FC = () => {
   const { search } = useLocation();
   const diapatch = useAppDispatch();
   const { chatWithUserId, messages } = useAppSelector((state) => state.messages.chat);
+  console.log('messages', messages);
 
   useEffect(() => {
     const query = new URLSearchParams(search);

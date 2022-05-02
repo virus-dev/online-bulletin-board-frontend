@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../hooks/redux';
-import { login } from '../../store/actionCreators/user';
 import Input from '../storybook/Input/Input';
 import Button from '../storybook/Button/Button';
 
 import s from './Login.module.scss';
+import UserApi from '../../services/UserApi';
 
 interface LoginProps {
   changeIsLogin: () => void;
 }
 
 const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
-  const dispatch = useAppDispatch();
+  const [login] = UserApi.useLoginMutation();
 
   const [loginInputs, setLoginInputs] = useState({
     email: 'email1@mail.ru',
@@ -23,7 +22,7 @@ const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
   };
 
   const onLogin = () => {
-    dispatch(login(loginInputs));
+    login(loginInputs);
   };
 
   return (

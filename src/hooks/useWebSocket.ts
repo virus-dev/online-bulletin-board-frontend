@@ -25,21 +25,19 @@ const useWebSocket = () => {
       return;
     }
 
-    if (socket.current) {
-      return;
-    }
+    if (!socket.current) {
+      socket.current = new WebSocket(webSocketURL);
 
-    socket.current = new WebSocket(webSocketURL);
-
-    socket.current.onopen = () => {
-      setIsConnected(true);
-      const sendObj = {
-        method: 'connection',
-        userId: id,
-        token: `Bearer ${localStorage.getItem('JWT')}`,
+      socket.current.onopen = () => {
+        setIsConnected(true);
+        const sendObj = {
+          method: 'connection',
+          userId: id,
+          token: `Bearer ${localStorage.getItem('JWT')}`,
+        };
+        socket.current?.send(JSON.stringify(sendObj));
       };
-      socket.current?.send(JSON.stringify(sendObj));
-    };
+    }
 
     socket.current.onmessage = (e: MessageEvent) => {
       const data = JSON.parse(e.data);

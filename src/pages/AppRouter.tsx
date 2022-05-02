@@ -1,16 +1,16 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import useIsAuth from '../hooks/useIsAuth';
+import { RouteNames } from '../models/Route';
 import {
   publicRoutes,
   privateRoutes,
   moderatorRoutes,
   unloginRoutes,
-  RouteNames,
 } from './routes';
 
 const AppRouter = () => {
-  const { isAuthOrIsLoading, isModeratorRole } = useIsAuth();
+  const { isAuthOrIsLoading, isModeratorRole, isAuth } = useIsAuth();
 
   return (
     <Routes>
@@ -36,7 +36,7 @@ const AppRouter = () => {
         unloginRoutes.map(({ path, element }) => (
           <Route
             path={path}
-            element={element}
+            element={isAuth ? <Navigate to={RouteNames.MAIN} /> : element}
             key={path}
           />
         ))
