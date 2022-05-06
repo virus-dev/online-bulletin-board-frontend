@@ -1,3 +1,5 @@
+@import '../../../styles/variables.scss';
+
 .inputWrapper {
   position: relative;
 
@@ -15,6 +17,7 @@
     border-color: rgb(235, 235, 235);
     border-width: 1px;
     padding: 0 12px;
+    font-size: 16px;
 
     &:focus {
       outline: none;
@@ -24,6 +27,12 @@
   .inputWithLeftIcon {
     padding-left: 28px;
   }
+}
+
+.error {
+  font-weight: $font-weigth-bold;
+  color: $red-400;
+  margin-top: 4px;
 }
 
 .fullWidth {

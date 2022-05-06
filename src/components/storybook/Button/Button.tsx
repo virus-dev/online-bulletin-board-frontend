@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import classnames from 'classnames';
 
 import s from './Button.module.scss';
+import Loader from '../Loader/Loader';
 
 export enum ButtonVariant {
   blue = 'blue',
@@ -18,14 +19,30 @@ export interface ButtonProps {
   iconRigth?: React.ReactNode,
   onClick?: () => void,
   href?: string,
+  isLoading?: boolean,
+  loadingRenderProps?: () => React.ReactElement | React.ReactNode,
 }
 
+const loadingRenderPropsInitial = () => <Loader color="#fff" width="24px" height="24px" />;
+
 const Button: React.FC<ButtonProps> = ({
-  children, variant = ButtonVariant.blue, className, iconLeft, iconRigth, onClick, href,
+  children,
+  variant = ButtonVariant.blue,
+  className,
+  iconLeft,
+  iconRigth,
+  onClick,
+  href,
+  isLoading,
+  loadingRenderProps = loadingRenderPropsInitial,
 }) => {
   const navigate = useNavigate();
 
   const onClickHandler = () => {
+    if (isLoading) {
+      return;
+    }
+
     onClick?.();
 
     if (href) {
@@ -45,13 +62,19 @@ const Button: React.FC<ButtonProps> = ({
         variant === ButtonVariant.gray && s.gray,
       )}
     >
-      {iconLeft && (
-        <span className={s.iconLeft}>{iconLeft}</span>
-      )}
-      <span className={s.children}>{children}</span>
-      {iconRigth && (
-        <span className={s.iconRigth}>{iconRigth}</span>
-      )}
+      {
+        isLoading && loadingRenderProps ? loadingRenderProps() : (
+          <>
+            {iconLeft && (
+              <span className={s.iconLeft}>{iconLeft}</span>
+            )}
+            <span className={s.children}>{children}</span>
+            {iconRigth && (
+              <span className={s.iconRigth}>{iconRigth}</span>
+            )}
+          </>
+        )
+      }
     </button>
   );
 };

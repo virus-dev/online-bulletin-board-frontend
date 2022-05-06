@@ -61,6 +61,7 @@ const Header: React.FC = () => {
               value={advertisementSearch}
               iconLeftInput={<IconSearch size="16px" />}
               variant={ButtonVariant.gray}
+              name="search"
               fullWidth
             >
               Найти
