@@ -1,0 +1,34 @@
+@import '../../styles/variables.scss';
+
+.registration {
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    font-size: 24px;
+    font-weight: $font-weigth-bold;
+    color: $gray-900;
+    margin-bottom: 12px;
+  }
+
+  .link {
+    margin: 8px 0;
+  }
+
+  .button {
+    justify-content: center;
+  }
+
+  .input {
+    margin-top: 4px;
+  }
+
+  .label {
+    margin-top: 8px;
+  }
+
+  .error {
+    color: $red-400;
+    margin-top: 8px;
+  }
+}

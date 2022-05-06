@@ -29,6 +29,7 @@ const InputWithBtn: React.FC<InputWithBtnProps> = ({
   iconLeftInput,
   classNameInput,
   fullWidth,
+  name,
   // Button
   onClick,
   classNameButton,
@@ -46,6 +47,7 @@ const InputWithBtn: React.FC<InputWithBtnProps> = ({
     <Input
       onChange={onChange}
       value={value}
+      name={name}
       iconLeft={iconLeftInput}
       fullWidth={fullWidth}
       className={classNames(
