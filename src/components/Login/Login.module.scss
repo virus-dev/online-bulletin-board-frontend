@@ -1,0 +1,39 @@
+
+@import '../../styles/variables.scss';
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .title {
+    font-size: 24px;
+    font-weight: $font-weigth-bold;
+    color: $gray-900;
+    margin-bottom: 12px;
+  }
+
+  .link {
+    margin-top: 8px;
+  }
+}
+
+.input {
+  margin-top: 4px;
+}
+
+.label {
+  display: block;
+  margin-top: 12px;
+}
+
+.button {
+  text-align: center;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.error {
+  color: $red-400;
+  margin-top: 8px;
+}

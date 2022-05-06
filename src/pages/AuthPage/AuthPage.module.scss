@@ -1,11 +1,16 @@
+@import '../../styles/variables.scss';
+
 .authPage {
   height: 100vh;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
 
   .authBlock {
     justify-content: center;
-    width: 500px;
+    width: 300px;
+    border: 1px solid $gray-400;
+    padding: 16px;
+    border-radius: $defaultBorderRadius;
   }
 }
