@@ -34,9 +34,11 @@ const DialogItem: React.FC<DialogItemProps> = ({
         <div className={s.message}>
           {lastMessage}
         </div>
-        <div className={s.unreadMessagesCount}>
-          {unreadMessagesCount}
-        </div>
+        {!!unreadMessagesCount && (
+          <div className={s.unreadMessagesCount}>
+            {unreadMessagesCount}
+          </div>
+        )}
         <div className={s.date}>
           {createdAt}
         </div>

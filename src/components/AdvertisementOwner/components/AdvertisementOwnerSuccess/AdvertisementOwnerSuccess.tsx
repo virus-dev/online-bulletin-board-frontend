@@ -20,7 +20,7 @@ const AdvertisementOwnerSuccess: React.FC<AdvertisementOwnerSuccessProps> = ({
   const navigate = useNavigate();
   const { isAuth } = useIsAuth();
   const { socket } = useContext(SocketContext);
-  const dialogs = useAppSelector(({ messages }) => messages.dialogs);
+  const dialogs = useAppSelector(({ messages }) => messages.dialogs.data);
 
   const {
     data: { image, firstName, secondName } = {}, isLoading,

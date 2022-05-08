@@ -5,20 +5,21 @@ import s from './Label.module.scss';
 
 interface LabelProps {
   children: React.ReactElement | React.ReactNode,
-  htmlFor: string,
+  htmlFor?: string,
   className?: string,
 }
 
 const Label: React.FC<LabelProps> = ({ children, htmlFor, className }) => (
   <label
     htmlFor={htmlFor}
-    className={classNames(className, s.label)}
+    className={classNames(className && className, s.label)}
   >
     {children}
   </label>
 );
 
 Label.defaultProps = {
+  htmlFor: undefined,
   className: undefined,
 };
 
