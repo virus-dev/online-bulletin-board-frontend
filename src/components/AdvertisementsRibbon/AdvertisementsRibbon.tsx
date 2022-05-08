@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React from 'react';
 import AdvertisementItem from '../AdvertisementItem/AdvertisementItem';
 import Container from '../storybook/Container/Container';
 import { Advertisement } from '../../models/Advertisement';

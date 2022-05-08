@@ -10,7 +10,11 @@ const useWebSocket = () => {
   const { isAuth } = useIsAuth();
   const { data: { id } = {} } = UserApi.useGetDataQuery();
 
-  const { unreadMessages, chat, dialogs } = useAppSelector(({ messages }) => messages);
+  const {
+    unreadMessages,
+    chat,
+    dialogs: { data: dialogs },
+  } = useAppSelector(({ messages }) => messages);
 
   const socket = useRef<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
@@ -41,14 +45,20 @@ const useWebSocket = () => {
 
     socket.current.onmessage = (e: MessageEvent) => {
       const data = JSON.parse(e.data);
-      const { pushMessage, updateDialog } = messagesSlice.actions;
+      const {
+        pushMessage, updateDialog, youReadedMessage, yourMessageWasRead,
+      } = messagesSlice.actions;
+
       switch (data.method) {
         case 'youSendMessage':
           if (chat.chatWithUserId === data.message.toUserId) {
             dispath(pushMessage(data.message));
           }
           if (dialogs.length) {
-            dispath(updateDialog(data.message));
+            dispath(updateDialog({
+              message: data.message,
+              isYouSendMessage: true,
+            }));
           }
           dispath(getCountUnreadMessages());
           break;
@@ -57,9 +67,18 @@ const useWebSocket = () => {
             dispath(pushMessage(data.message));
           }
           if (dialogs.length) {
-            dispath(updateDialog(data.message));
+            dispath(updateDialog({
+              message: data.message,
+              isYouSendMessage: false,
+            }));
           }
           dispath(getCountUnreadMessages());
+          break;
+        case 'youReadedMessage':
+          dispath(youReadedMessage(data));
+          break;
+        case 'yourMessageWasRead':
+          dispath(yourMessageWasRead(data));
           break;
         default:
           break;

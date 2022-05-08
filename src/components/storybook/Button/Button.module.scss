@@ -29,6 +29,18 @@
     box-shadow: rgba(0, 0, 0, .1) 0px 4px 8px 0px;
   }
 
+  &.gray {
+    background-color: $gray-300;
+
+    .children {
+      color: $gray-700;
+    }
+
+    &:hover {
+      background-color: $gray-400;
+    }
+  }
+
   &.blue {
     background-color: $blue-500;
 
