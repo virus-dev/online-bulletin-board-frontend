@@ -5,14 +5,14 @@ import { getChat } from '../../store/actionCreators/messagesActionCreators';
 import { messagesSlice } from '../../store/reducers/messagesSlice';
 import Message from '../Message/Message';
 import MessageSendPanel from '../MessageSendPanel/MessageSendPanel';
+import Loader from '../storybook/Loader/Loader';
 
 import s from './ChatWindow.module.scss';
 
 const ChatWindow: React.FC = () => {
   const { search } = useLocation();
   const diapatch = useAppDispatch();
-  const { chatWithUserId, messages } = useAppSelector((state) => state.messages.chat);
-  console.log('messages', messages);
+  const { chatWithUserId, messages, isLoading } = useAppSelector((state) => state.messages.chat);
 
   useEffect(() => {
     const query = new URLSearchParams(search);
@@ -30,30 +30,44 @@ const ChatWindow: React.FC = () => {
     diapatch(getChat(chatWithUserId || Number(chatWithUserIdParam)));
   }, [chatWithUserId, diapatch, search]);
 
-  if (!chatWithUserId) {
-    return <div>null</div>;
-  }
+  const jsxInner = () => {
+    if (!chatWithUserId) {
+      return <div />;
+    }
+
+    if (isLoading) {
+      return <div className={s.loaderWrapper}><Loader size="250px" /></div>;
+    }
+
+    return (
+      <>
+        <div className={s.chatWindowWrapper}>
+          <div className={s.chatWindow}>
+            {messages.map(({
+              id, message, createdAt, fromUserId, status, toUserId,
+            }) => (
+              <Message
+                key={id}
+                isYourMessage={chatWithUserId !== fromUserId}
+                chatWithUserId={chatWithUserId}
+                message={message}
+                createdAt={createdAt}
+                fromUserId={fromUserId}
+                id={id}
+                status={status}
+                toUserId={toUserId}
+              />
+            ))}
+          </div>
+        </div>
+        <MessageSendPanel />
+      </>
+    );
+  };
 
   return (
     <div className={s.chatWrapper}>
-      <div className={s.chatWindow}>
-        {messages.map(({
-          id, message, createdAt, fromUserId, status, toUserId,
-        }) => (
-          <Message
-            key={id}
-            isYourMessage={chatWithUserId !== fromUserId}
-            chatWithUserId={chatWithUserId}
-            message={message}
-            createdAt={createdAt}
-            fromUserId={fromUserId}
-            id={id}
-            status={status}
-            toUserId={toUserId}
-          />
-        ))}
-      </div>
-      <MessageSendPanel />
+      {jsxInner()}
     </div>
   );
 };

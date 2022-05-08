@@ -4,5 +4,11 @@
   min-width: 300px;
   overflow-y: auto;
   border: 1px solid $gray-700;
-  border-right: none;
+
+  .loaderWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 70%;
+  }
 }

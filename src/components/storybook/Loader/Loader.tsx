@@ -1,12 +1,11 @@
 import React from 'react';
 
 interface LoaderProps {
-  width?: string,
-  height?: string,
+  size?: string,
   color?: string,
 }
 
-const Loader: React.FC<LoaderProps> = ({ width = 100, height = 100, color = '#7092fe' }) => (
+const Loader: React.FC<LoaderProps> = ({ size = '100px', color = '#7092fe' }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     style={{
@@ -15,8 +14,8 @@ const Loader: React.FC<LoaderProps> = ({ width = 100, height = 100, color = '#70
       display: 'block',
       shapeRendering: 'auto',
     }}
-    width={width}
-    height={height}
+    width={size}
+    height={size}
     viewBox="0 0 100 100"
     preserveAspectRatio="xMidYMid"
   >
@@ -27,8 +26,7 @@ const Loader: React.FC<LoaderProps> = ({ width = 100, height = 100, color = '#70
 );
 
 Loader.defaultProps = {
-  width: undefined,
-  height: undefined,
+  size: undefined,
   color: undefined,
 };
 

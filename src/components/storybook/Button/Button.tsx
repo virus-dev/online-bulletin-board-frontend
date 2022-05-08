@@ -23,7 +23,7 @@ export interface ButtonProps {
   loadingRenderProps?: () => React.ReactElement | React.ReactNode,
 }
 
-const loadingRenderPropsInitial = () => <Loader color="#fff" width="24px" height="24px" />;
+const loadingRenderPropsInitial = () => <Loader color="#fff" size="24px" />;
 
 const Button: React.FC<ButtonProps> = ({
   children,
