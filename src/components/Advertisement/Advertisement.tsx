@@ -7,6 +7,7 @@ import { Categories } from '../../models/Categories';
 import ConfirmModerateButtons from './components/ConfirmModerateButtons/ConfirmModerateButtons';
 
 import s from './Advertisement.module.scss';
+import i18 from '../../utils/i18';
 
 interface AdvertisementProps {
   isLoading: boolean | undefined,
@@ -58,11 +59,11 @@ const Advertisement: React.FC<AdvertisementProps> = ({
         />
         <div>
           <span>Категория: </span>
-          <span>{dataCategories?.find(({ id }) => categoryId === id)?.name}</span>
+          <span>{i18(dataCategories?.find(({ id }) => categoryId === id)?.name)}</span>
         </div>
         <div>
           <span>Бренд: </span>
-          <span>{dataBrands?.find(({ id }) => brandId === id)?.name}</span>
+          <span>{i18(dataBrands?.find(({ id }) => brandId === id)?.name)}</span>
         </div>
         <div>
           <span>Описание: </span>
