@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BrandsApi from '../../services/BrandsAPI';
 import CategoriesApi from '../../services/CategoriesAPI';
 import AdvertisementAPI from '../../services/AdvertisementAPI';
@@ -7,10 +8,15 @@ import Container from '../storybook/Container/Container';
 import { checkFileForImgBB } from '../../utils/getCheckFileFunc';
 
 import s from './AdvertisementCreate.module.scss';
+import { RouteNames } from '../../models/Route';
+import Input from '../storybook/Input/Input';
+import ValidationError from '../storybook/ValidationError/ValidationError';
+import getErrorValidationMessage from '../../utils/getErrorMessage';
+import i18 from '../../utils/i18';
 
 interface AdvertisementData {
-  categoryId: string | null,
-  brandId: string | null,
+  categoryId: string,
+  brandId: string,
   title: string,
   price: string,
   description: string,
@@ -18,21 +24,42 @@ interface AdvertisementData {
 }
 
 const AdvertisementCreate = () => {
+  const navigate = useNavigate();
   const {
     data: dataCategories = [], isLoading: isLoadingCategories,
   } = CategoriesApi.useGetCategoriesQuery();
-  const { data: dataBrands = [], isLoading: isLoadingBrands } = BrandsApi.useGetBrandsQuery();
-  const [create] = AdvertisementAPI.useCreateMutation();
-  const isLoading = isLoadingCategories || isLoadingBrands;
+  const [
+    trigger,
+    { isLoading: isLoadingBrands, data: dataBrands = [] },
+  ] = BrandsApi.useLazyGetBrandsQuery();
+  const [
+    create,
+    { isLoading: isLoadingCreate, isSuccess, error },
+  ] = AdvertisementAPI.useCreateMutation();
+  const isLoading = isLoadingCategories;
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(RouteNames.ADVERTISEMENT_MY_ADVERTISEMENTS);
+    }
+  }, [isSuccess, navigate]);
 
   const [advertisementData, setAdvertisementData] = useState<AdvertisementData>({
-    categoryId: '1',
-    brandId: '1',
-    title: 'Продам Срочно!',
-    price: '5000',
-    description: 'Возможен торг, товар отличный',
+    categoryId: '0',
+    brandId: '0',
+    title: '',
+    price: '',
+    description: '',
     files: [],
   });
+
+  useEffect(() => {
+    if (!advertisementData.categoryId) {
+      return;
+    }
+
+    trigger(Number(advertisementData.categoryId));
+  }, [advertisementData.categoryId, trigger]);
 
   const onChangeSelecthandler = (
     { target }: React.ChangeEvent<HTMLSelectElement>,
@@ -75,10 +102,6 @@ const AdvertisementCreate = () => {
       files,
     } = advertisementData;
 
-    if (!brandId || !categoryId || !description || !price || !title) {
-      return;
-    }
-
     const formData = new FormData();
     formData.append('brandId', brandId);
     formData.append('categoryId', categoryId);
@@ -95,6 +118,18 @@ const AdvertisementCreate = () => {
     create(formData);
   };
 
+  const textInBrandsSelect = () => {
+    if (isLoadingBrands) {
+      return 'Загрузка';
+    }
+
+    if (advertisementData.categoryId === '0') {
+      return 'Выберите сначала категорию';
+    }
+
+    return 'Выберите вариант';
+  };
+
   return (
     <Container className={s.advertisementCreateWrapper}>
       {
@@ -104,33 +139,38 @@ const AdvertisementCreate = () => {
           <div>
             <p>Категория</p>
             <select onChange={(e) => onChangeSelecthandler(e, 'categoryId')}>
-              <option value={0}>Выберите вариант</option>
+              <option value="0">Выберите вариант</option>
               {dataCategories.map(({ id, name }) => (
-                <option value={String(id)} key={name}>{name}</option>
+                <option value={String(id)} key={name}>{i18(name)}</option>
               ))}
             </select>
+            <ValidationError error={getErrorValidationMessage(error, 'categoryId')} />
             <div className={s.br} />
             <p>Бренд</p>
             <select onChange={(e) => onChangeSelecthandler(e, 'brandId')}>
-              <option value={0}>Выберите вариант</option>
+              <option value="0">{textInBrandsSelect()}</option>
               {dataBrands.map(({ id, name }) => (
-                <option value={String(id)} key={name}>{name}</option>
+                <option value={String(id)} key={name}>{i18(name)}</option>
               ))}
             </select>
+            <ValidationError error={getErrorValidationMessage(error, 'brandId')} />
             <div className={s.br} />
             <p>Название товара</p>
-            <input type="text" onChange={(e) => onChangeInputHandler(e, 'title')} />
+            <Input onChange={(e) => onChangeInputHandler(e, 'title')} name="title" value={advertisementData.title} />
+            <ValidationError error={getErrorValidationMessage(error, 'title')} />
             <div className={s.br} />
             <p>Цена</p>
             <input type="text" onChange={(e) => onChangeInputHandler(e, 'price')} />
+            <ValidationError error={getErrorValidationMessage(error, 'price')} />
             <div className={s.br} />
             <p>Описание</p>
             <textarea onChange={onChangeTextareaHandler} />
+            <ValidationError error={getErrorValidationMessage(error, 'description')} />
             <div className={s.br} />
             <p>Фотографии</p>
             <input type="file" multiple onChange={onChangeFileHandler} />
             <div className={s.br} />
-            <Button onClick={onClickButtonHandler}>Создать</Button>
+            <Button onClick={onClickButtonHandler} isLoading={isLoadingCreate}>Создать</Button>
           </div>
         )
       }

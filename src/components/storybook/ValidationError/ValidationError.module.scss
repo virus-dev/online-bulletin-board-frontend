@@ -1,0 +1,7 @@
+@import '../../../styles/variables.scss';
+
+.validationError {
+  font-weight: $font-weigth-bold;
+  color: $red-400;
+  margin-top: 4px;
+}
