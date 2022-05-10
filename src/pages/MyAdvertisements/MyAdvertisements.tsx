@@ -4,6 +4,8 @@ import Header from '../../components/Header/Header';
 import Container from '../../components/storybook/Container/Container';
 import AdvertisementApi from '../../services/AdvertisementAPI';
 
+import s from './MyAdvertisements.module.scss';
+
 const MyAdvertisements = () => {
   const { data, isLoading } = AdvertisementApi.useGetAllMyAdvertisementQuery();
 
@@ -11,6 +13,7 @@ const MyAdvertisements = () => {
     <>
       <Header />
       <Container>
+        <h1 className={s.title}>Мои объявления</h1>
         <AdvertisementsRibbon data={data} isLoading={isLoading} />
       </Container>
     </>

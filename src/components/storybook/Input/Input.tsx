@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import s from './Input.module.scss';
+import ValidationError from '../ValidationError/ValidationError';
 
 export interface InputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
@@ -42,9 +43,7 @@ const Input: React.FC<InputProps> = ({
         value={value}
       />
     </div>
-    {error && (
-      <div className={s.error}>{error}</div>
-    )}
+    <ValidationError error={error} />
   </>
 );
 

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import AdvertisementApi from '../../services/AdvertisementAPI';
 import BrandsApi from '../../services/BrandsAPI';
@@ -19,9 +20,16 @@ const useFetchLoginDataAdvertisement = () => {
   const {
     data: dataCategories, isLoading: isLoadingCategories,
   } = CategoriesApi.useGetCategoriesQuery();
-  const {
-    data: dataBrands, isLoading: isLoadingBrands,
-  } = BrandsApi.useGetBrandsQuery();
+  const [
+    target,
+    { data: dataBrands, isSuccess: isSuccessBrands },
+  ] = BrandsApi.useLazyGetBrandsQuery();
+
+  useEffect(() => {
+    if (categoryId) {
+      target(categoryId);
+    }
+  }, [categoryId, target]);
 
   const res = {
     brandId,
@@ -41,7 +49,7 @@ const useFetchLoginDataAdvertisement = () => {
   if (
     isLoadingAdvertisement
     && isLoadingImagesAdvertisement
-    && isLoadingBrands
+    && isSuccessBrands
     && isLoadingCategories
   ) {
     return { ...res, isLoading: true };
