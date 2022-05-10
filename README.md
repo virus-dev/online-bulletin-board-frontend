@@ -2,7 +2,7 @@
 
 # Backend: https://github.com/virus-dev/online-bulletin-board-backend
 
-## стек:
+# стек:
 
 # Frontend
 - TypeScript
