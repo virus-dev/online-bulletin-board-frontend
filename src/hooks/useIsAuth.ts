@@ -1,8 +1,8 @@
-import UserApi from '../services/UserApi';
-import { Role } from '../models/User';
+import UserAPI from 'Services/UserAPI';
+import { Role } from 'Models/User';
 
 const useIsAuth = () => {
-  const { data: { email, role } = {}, isLoading } = UserApi.useGetDataQuery();
+  const { data: { email, role } = {}, isLoading } = UserAPI.useGetDataQuery();
 
   if (!localStorage.getItem('JWT')) {
     return {

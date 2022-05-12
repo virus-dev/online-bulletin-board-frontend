@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Login from '../../components/Login/Login';
-import Registration from '../../components/Registration/Registration';
+import Login from 'Components/Login/Login';
+import Registration from 'Components/Registration/Registration';
 
 import s from './AuthPage.module.scss';
 

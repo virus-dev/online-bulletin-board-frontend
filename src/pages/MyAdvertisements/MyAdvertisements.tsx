@@ -1,13 +1,13 @@
 import React from 'react';
-import AdvertisementsRibbon from '../../components/AdvertisementsRibbon/AdvertisementsRibbon';
-import Header from '../../components/Header/Header';
-import Container from '../../components/storybook/Container/Container';
-import AdvertisementApi from '../../services/AdvertisementAPI';
+import AdvertisementsRibbon from 'Components/AdvertisementsRibbon/AdvertisementsRibbon';
+import Header from 'Components/Header/Header';
+import Container from 'Storybook/Container/Container';
+import AdvertisementAPI from 'Services/AdvertisementAPI';
 
 import s from './MyAdvertisements.module.scss';
 
 const MyAdvertisements = () => {
-  const { data, isLoading } = AdvertisementApi.useGetAllMyAdvertisementQuery();
+  const { data, isLoading } = AdvertisementAPI.useGetAllMyAdvertisementQuery();
 
   return (
     <>

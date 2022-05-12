@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import AdvertisementApi from '../../services/AdvertisementAPI';
-import BrandsApi from '../../services/BrandsAPI';
-import CategoriesApi from '../../services/CategoriesAPI';
+import AdvertisementAPI from 'Services/AdvertisementAPI';
+import BrandsAPI from 'Services/BrandsAPI';
+import CategoriesAPI from 'Services/CategoriesAPI';
 
 const useFetchUnloginDataAdvertisement = () => {
   const { advertisementId } = useParams();
@@ -12,18 +12,18 @@ const useFetchUnloginDataAdvertisement = () => {
       brandId, categoryId, createdAt, description, price, status, title, userId,
     } = {},
     isLoading: isLoadingAdvertisement,
-  } = AdvertisementApi.useGetOneQuery(Number(advertisementId));
+  } = AdvertisementAPI.useGetOneQuery(Number(advertisementId));
   const {
     data: dataImagesAdvertisement = [],
     isLoading: isLoadingImagesAdvertisement,
-  } = AdvertisementApi.useGetImagesQuery(Number(advertisementId));
+  } = AdvertisementAPI.useGetImagesQuery(Number(advertisementId));
   const {
     data: dataCategories, isLoading: isLoadingCategories,
-  } = CategoriesApi.useGetCategoriesQuery();
+  } = CategoriesAPI.useGetCategoriesQuery();
   const [
     target,
     { data: dataBrands, isSuccess: isSuccessBrands },
-  ] = BrandsApi.useLazyGetBrandsQuery();
+  ] = BrandsAPI.useLazyGetBrandsQuery();
 
   useEffect(() => {
     if (categoryId) {

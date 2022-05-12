@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { Suspense as S } from 'react';
-import { IRoute, RouteNames } from '../models/Route';
+import { IRoute, RouteNames } from 'Models/Route';
 
 const MainPage = React.lazy(() => import('./MainPage/MainPage'));
 const ProfilePage = React.lazy(() => import('./ProfilePage/ProfilePage'));

@@ -1,9 +1,9 @@
 import React from 'react';
-import UserApi from '../../services/UserApi';
+import UserAPI from 'Services/UserAPI';
+import Button, { ButtonVariant } from 'Storybook/Button/Button';
+import useIsAuth from 'Hooks/useIsAuth';
+import { RouteNames } from 'Models/Route';
 import PersonalDataItem from './PersonalDataItem/PersonalDataItem';
-import Button, { ButtonVariant } from '../storybook/Button/Button';
-import useIsAuth from '../../hooks/useIsAuth';
-import { RouteNames } from '../../models/Route';
 
 import s from './PersonalData.module.scss';
 
@@ -15,9 +15,9 @@ const PersonalData: React.FC = () => {
       email, firstName, secondName, phone, role,
     } = {},
     isLoading,
-  } = UserApi.useGetDataQuery();
+  } = UserAPI.useGetDataQuery();
 
-  const [update] = UserApi.useUpdateMutation();
+  const [update] = UserAPI.useUpdateMutation();
 
   const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

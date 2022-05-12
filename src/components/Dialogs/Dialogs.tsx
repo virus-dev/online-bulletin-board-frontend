@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import UserApi from '../../services/UserApi';
-import { getDialogs } from '../../store/actionCreators/messagesActionCreators';
-import { messagesSlice } from '../../store/reducers/messagesSlice';
+import Loader from 'Storybook/Loader/Loader';
+import { useAppDispatch, useAppSelector } from 'Hooks/redux';
+import UserAPI from 'Services/UserAPI';
+import { getDialogs } from 'Store/actionCreators/messagesActionCreators';
+import { messagesSlice } from 'Store/reducers/messagesSlice';
 import DialogItem from '../DialogItem/DialogItem';
-import Loader from '../storybook/Loader/Loader';
 
 import s from './Dialogs.module.scss';
 
 const Dialogs: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { data: { id } = {}, isLoading } = UserApi.useGetDataQuery();
+  const { data: { id } = {}, isLoading } = UserAPI.useGetDataQuery();
   const {
     data: dialogs,
     isLoading: isLoadingDialogs,

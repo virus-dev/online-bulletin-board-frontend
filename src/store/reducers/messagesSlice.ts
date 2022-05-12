@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Message, Status } from '../../models/Message';
-import { ReadMessageResponse } from '../../models/WebSocket';
-import getStateCopy from '../../utils/getStateCopy';
+import { Message, Status } from 'Models/Message';
+import { ReadMessageResponse } from 'Models/WebSocket';
+import getStateCopy from 'Utils/getStateCopy';
 import { getCountUnreadMessages, getDialogs, getChat } from '../actionCreators/messagesActionCreators';
 
 interface Dialog {

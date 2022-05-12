@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { getChat } from '../../store/actionCreators/messagesActionCreators';
-import { messagesSlice } from '../../store/reducers/messagesSlice';
+import Loader from 'Storybook/Loader/Loader';
+import { useAppDispatch, useAppSelector } from 'Hooks/redux';
+import { getChat } from 'Store/actionCreators/messagesActionCreators';
+import { messagesSlice } from 'Store/reducers/messagesSlice';
 import Message from '../Message/Message';
 import MessageSendPanel from '../MessageSendPanel/MessageSendPanel';
-import Loader from '../storybook/Loader/Loader';
 
 import s from './ChatWindow.module.scss';
 

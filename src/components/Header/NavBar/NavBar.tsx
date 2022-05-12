@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Container from '../../storybook/Container/Container';
-import IconGpsArrow from '../../storybook/Icons/GpsArrow';
-import IconFavorites from '../../storybook/Icons/Favorites';
-import SocketContext from '../../../context/SocketContext';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { getCountUnreadMessages } from '../../../store/actionCreators/messagesActionCreators';
+import Container from 'Storybook/Container/Container';
+import IconGpsArrow from 'Storybook/Icons/GpsArrow';
+import IconMessage from 'Storybook/Icons/IconMessage';
+import SocketContext from 'Context/SocketContext';
+import { useAppDispatch, useAppSelector } from 'Hooks/redux';
+import { getCountUnreadMessages } from 'Store/actionCreators/messagesActionCreators';
 
 import s from './NavBar.module.scss';
 
@@ -29,6 +29,7 @@ const NavBar: React.FC = () => {
           <p className={s.location}>Земля</p>
         </div>
         <div className={s.navBarItems}>
+          <IconMessage color="#333" size="16px" />
           <Link to="/chat" className={s.navBarItem}>
             <p className={s.navBarItemText}>
               Непрочитанных сообщений:

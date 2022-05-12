@@ -1,6 +1,6 @@
 import { SetStateAction } from 'react';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { User } from '../models/User';
+import { User } from 'Models/User';
 
 interface LoginParams {
   email: string,
@@ -13,7 +13,7 @@ interface RegistrationParams {
   firstName: string,
 }
 
-const UserApi = createApi({
+const UserAPI = createApi({
   reducerPath: 'userAPI',
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_API_URL}user/` }),
   tagTypes: ['User'],
@@ -100,4 +100,4 @@ const UserApi = createApi({
   }),
 });
 
-export default UserApi;
+export default UserAPI;
