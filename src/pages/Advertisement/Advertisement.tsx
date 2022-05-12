@@ -1,8 +1,8 @@
 import React from 'react';
-import AdvertisementUnloginContainer from '../../components/AdvertisementUnloginContainer/AdvertisementUnloginContainer';
-import AdvertisementLoginContainer from '../../components/AdvertisementLoginContainer/AdvertisementLoginContainer';
-import Header from '../../components/Header/Header';
-import useIsAuth from '../../hooks/useIsAuth';
+import AdvertisementUnloginContainer from 'Components/AdvertisementUnloginContainer/AdvertisementUnloginContainer';
+import AdvertisementLoginContainer from 'Components/AdvertisementLoginContainer/AdvertisementLoginContainer';
+import Header from 'Components/Header/Header';
+import useIsAuth from 'Hooks/useIsAuth';
 
 const AdvertisementPage = () => {
   const { isAuth, isLoading } = useIsAuth();

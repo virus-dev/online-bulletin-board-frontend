@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconComponentsProps } from '../../../models/IconComponent';
+import { IconComponentsProps } from 'Models/IconComponent';
 
 // TODO найти норм иконку, эта не очень
 

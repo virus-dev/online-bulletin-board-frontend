@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import UserApi from '../services/UserApi';
-import { messagesSlice } from '../store/reducers/messagesSlice';
-import { getCountUnreadMessages } from '../store/actionCreators/messagesActionCreators';
+import UserAPI from 'Services/UserAPI';
+import { messagesSlice } from 'Store/reducers/messagesSlice';
+import { getCountUnreadMessages } from 'Store/actionCreators/messagesActionCreators';
 import { useAppDispatch, useAppSelector } from './redux';
 import useIsAuth from './useIsAuth';
 
 const useWebSocket = () => {
   const dispath = useAppDispatch();
   const { isAuth } = useIsAuth();
-  const { data: { id } = {} } = UserApi.useGetDataQuery();
+  const { data: { id } = {} } = UserAPI.useGetDataQuery();
 
   const {
     unreadMessages,

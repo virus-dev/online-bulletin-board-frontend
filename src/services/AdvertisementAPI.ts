@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { Advertisement } from '../models/Advertisement';
+import { Advertisement } from 'Models/Advertisement';
 
 interface GetAll {
   limit: number,
@@ -11,7 +11,7 @@ interface GetAll {
 let prevProvidesTags: Advertisement[] = [];
 let prevTitle = '';
 
-const AdvertisementApi = createApi({
+const AdvertisementAPI = createApi({
   reducerPath: 'advertisementAPI',
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_API_URL}advertisement/` }),
   tagTypes: ['Advertisement'],
@@ -132,4 +132,4 @@ const AdvertisementApi = createApi({
   }),
 });
 
-export default AdvertisementApi;
+export default AdvertisementAPI;

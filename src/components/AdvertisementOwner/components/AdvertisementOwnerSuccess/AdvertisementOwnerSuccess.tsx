@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useIsAuth from '../../../../hooks/useIsAuth';
-import UserApi from '../../../../services/UserApi';
-import { getDialogs } from '../../../../store/actionCreators/messagesActionCreators';
-import IconProfile from '../../../IconProfile/IconProfile';
-import Button from '../../../storybook/Button/Button';
+import useIsAuth from 'Hooks/useIsAuth';
+import UserAPI from 'Services/UserAPI';
+import { getDialogs } from 'Store/actionCreators/messagesActionCreators';
+import IconProfile from 'Components/IconProfile/IconProfile';
+import Button from 'Storybook/Button/Button';
+import SocketContext from 'Context/SocketContext';
+import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import AdvertisementOwnerLoading from '../AdvertisementOwnerLoading/AdvertisementOwnerLoading';
-import SocketContext from '../../../../context/SocketContext';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 
 interface AdvertisementOwnerSuccessProps {
   userId: number,
@@ -24,8 +24,8 @@ const AdvertisementOwnerSuccess: React.FC<AdvertisementOwnerSuccessProps> = ({
 
   const {
     data: { image, firstName, secondName } = {}, isLoading,
-  } = UserApi.useGetDataByIdQuery(userId);
-  const { data: { id: yourId } = {} } = UserApi.useGetDataQuery();
+  } = UserAPI.useGetDataByIdQuery(userId);
+  const { data: { id: yourId } = {} } = UserAPI.useGetDataQuery();
 
   useEffect(() => {
     dispath(getDialogs());

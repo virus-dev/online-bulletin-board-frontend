@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { Categories } from '../models/Categories';
+import { Categories } from 'Models/Categories';
 
-const CategoriesApi = createApi({
+const CategoriesAPI = createApi({
   reducerPath: 'CategoriesAPI',
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_API_URL}categories/` }),
   tagTypes: ['Categories'],
@@ -15,4 +15,4 @@ const CategoriesApi = createApi({
   }),
 });
 
-export default CategoriesApi;
+export default CategoriesAPI;

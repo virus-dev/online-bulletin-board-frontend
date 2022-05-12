@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 // @ts-nocheck
 import React, { useRef, useState } from 'react';
-import Button, { ButtonVariant } from '../storybook/Button/Button';
+import Button, { ButtonVariant } from 'Storybook/Button/Button';
 
 import s from './AdvertisementSlider.module.scss';
 

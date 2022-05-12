@@ -1,7 +1,7 @@
 import React from 'react';
+import Container from 'Storybook/Container/Container';
+import { Advertisement } from 'Models/Advertisement';
 import AdvertisementItem from '../AdvertisementItem/AdvertisementItem';
-import Container from '../storybook/Container/Container';
-import { Advertisement } from '../../models/Advertisement';
 
 import s from './AdvertisementsRibbon.module.scss';
 import LoadTrigger from './LoadTrigger/LoadTrigger';

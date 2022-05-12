@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import AdvertisementApi from '../../services/AdvertisementAPI';
+import AdvertisementAPI from 'Services/AdvertisementAPI';
 
 import s from './AdvertisementItem.module.scss';
 
@@ -12,7 +12,7 @@ interface AdvertisementItemProps {
 
 const AdvertisementItem: React.FC<AdvertisementItemProps> = ({ id, price, title }) => {
   const navigate = useNavigate();
-  const { data, isLoading } = AdvertisementApi.useGetImagesQuery(id);
+  const { data, isLoading } = AdvertisementAPI.useGetImagesQuery(id);
 
   const onClickHandler = () => {
     navigate(`/advertisement/${id}`);

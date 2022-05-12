@@ -1,9 +1,8 @@
 import React from 'react';
-import ChatWindow from '../../components/ChatWindow/ChatWindow';
-import Dialogs from '../../components/Dialogs/Dialogs';
-import Header from '../../components/Header/Header';
-import Container from '../../components/storybook/Container/Container';
-import { messagesSlice } from '../../store/reducers/messagesSlice';
+import ChatWindow from 'Components/ChatWindow/ChatWindow';
+import Dialogs from 'Components/Dialogs/Dialogs';
+import Header from 'Components/Header/Header';
+import Container from 'Storybook/Container/Container';
 
 import s from './ChatPage.module.scss';
 

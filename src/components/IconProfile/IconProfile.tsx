@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { User } from '../../models/User';
+import { User } from 'Models/User';
 
 import s from './IconProfile.module.scss';
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import AdvertisementApi from '../../../../services/AdvertisementAPI';
-import Button, { ButtonVariant } from '../../../storybook/Button/Button';
+import AdvertisementAPI from 'Services/AdvertisementAPI';
+import Button, { ButtonVariant } from 'Storybook/Button/Button';
 
 import s from './ConfirmModerateButtons.module.scss';
 
@@ -11,11 +11,11 @@ const ConfirmModerateButtons = () => {
   const [
     confirm,
     { isSuccess: isSuccessConfirm },
-  ] = AdvertisementApi.useConfirmModerationMutation();
+  ] = AdvertisementAPI.useConfirmModerationMutation();
   const [
     disconfirm,
     { isSuccess: isSuccessDisonfirm },
-  ] = AdvertisementApi.useDisconfirmModerationMutation();
+  ] = AdvertisementAPI.useDisconfirmModerationMutation();
 
   const onClickConfirmHandler = async () => {
     try {

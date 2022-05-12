@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { SocketContext as ISocketContext } from '../models/SocketContext';
+import { SocketContext as ISocketContext } from 'Models/SocketContext';
 
 const initialState: ISocketContext = {
   socket: null,

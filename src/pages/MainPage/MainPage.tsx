@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import AdvertisementsRibbon from '../../components/AdvertisementsRibbon/AdvertisementsRibbon';
-import Header from '../../components/Header/Header';
-import MainSlider from '../../components/MainSlider/MainSlider';
-import { useAppSelector } from '../../hooks/redux';
-import AdvertisementAPI from '../../services/AdvertisementAPI';
+import Header from 'Components/Header/Header';
+import AdvertisementsRibbon from 'Components/AdvertisementsRibbon/AdvertisementsRibbon';
+import MainSlider from 'Components/MainSlider/MainSlider';
+import { useAppSelector } from 'Hooks/redux';
+import AdvertisementAPI from 'Services/AdvertisementAPI';
+import isProduction from 'Utils/isProduction';
 
 import s from './MainPage.module.scss';
 
@@ -29,7 +30,7 @@ const MainPage = () => {
   return (
     <>
       <Header />
-      <MainSlider />
+      {isProduction() && <MainSlider />}
       <AdvertisementsRibbon data={data} isLoading={isLoading} onScrollEnd={callback} />
     </>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import useIsAuth from '../../hooks/useIsAuth';
+import useIsAuth from 'Hooks/useIsAuth';
 import Advertisement from '../Advertisement/Advertisement';
 import useFetchLoginDataAdvertisement from './useFetchLoginDataAdvertisement';
 
