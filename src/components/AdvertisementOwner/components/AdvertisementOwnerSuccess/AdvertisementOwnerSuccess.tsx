@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useIsAuth from 'Hooks/useIsAuth';
-import UserApi from 'Services/UserApi';
+import UserAPI from 'Services/UserAPI';
 import { getDialogs } from 'Store/actionCreators/messagesActionCreators';
 import IconProfile from 'Components/IconProfile/IconProfile';
 import Button from 'Storybook/Button/Button';
-import SocketContext from 'Context/SocketContext/SocketContext';
+import SocketContext from 'Context/SocketContext';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import AdvertisementOwnerLoading from '../AdvertisementOwnerLoading/AdvertisementOwnerLoading';
 
@@ -24,8 +24,8 @@ const AdvertisementOwnerSuccess: React.FC<AdvertisementOwnerSuccessProps> = ({
 
   const {
     data: { image, firstName, secondName } = {}, isLoading,
-  } = UserApi.useGetDataByIdQuery(userId);
-  const { data: { id: yourId } = {} } = UserApi.useGetDataQuery();
+  } = UserAPI.useGetDataByIdQuery(userId);
+  const { data: { id: yourId } = {} } = UserAPI.useGetDataQuery();
 
   useEffect(() => {
     dispath(getDialogs());

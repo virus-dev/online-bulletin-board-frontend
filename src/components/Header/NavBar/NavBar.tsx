@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Container from 'Storybook/Container/Container';
 import IconGpsArrow from 'Storybook/Icons/GpsArrow';
 import IconMessage from 'Storybook/Icons/IconMessage';
-import SocketContext from 'Context/SocketContext/SocketContext';
+import SocketContext from 'Context/SocketContext';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import { getCountUnreadMessages } from 'Store/actionCreators/messagesActionCreators';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import UserApi from 'Services/UserApi';
+import UserAPI from 'Services/UserAPI';
 import IconProfile from '../IconProfile/IconProfile';
 
 import s from './DialogItem.module.scss';
@@ -21,7 +21,7 @@ const DialogItem: React.FC<DialogItemProps> = ({
 
   const {
     data: { firstName, secondName, image } = {},
-  } = UserApi.useGetDataByIdQuery(isYourMessageTheLastOne ? toUserId : fromUserId);
+  } = UserAPI.useGetDataByIdQuery(isYourMessageTheLastOne ? toUserId : fromUserId);
 
   return (
     <div className={s.dialogItemWrapper}>

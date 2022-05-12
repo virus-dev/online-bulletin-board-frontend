@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Input from 'Storybook/Input/Input';
 import Button from 'Storybook/Button/Button';
-import UserApi from 'Services/UserApi';
+import UserAPI from 'Services/UserAPI';
 import Label from 'Storybook/Label/Label';
 import StyledLink from 'Storybook/StyledLink/StyledLink';
 import getErrorValidationMessage from 'Utils/getErrorMessage';
@@ -13,7 +13,7 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
-  const [login, { error, isLoading }] = UserApi.useLoginMutation();
+  const [login, { error, isLoading }] = UserAPI.useLoginMutation();
 
   const [loginInputs, setLoginInputs] = useState({
     email: '',

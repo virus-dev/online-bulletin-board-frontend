@@ -3,7 +3,7 @@ import AdvertisementsRibbon from 'Components/AdvertisementsRibbon/Advertisements
 import Header from 'Components/Header/Header';
 import Container from 'Storybook/Container/Container';
 import { useAppSelector } from 'Hooks/redux';
-import AdvertisementApi from 'Services/AdvertisementAPI';
+import AdvertisementAPI from 'Services/AdvertisementAPI';
 
 import s from './AdvertisementModeration.module.scss';
 
@@ -12,7 +12,7 @@ const AdvertisementModeration: React.FC = () => {
   const {
     data,
     isLoading,
-  } = AdvertisementApi.useGetAllOnModerationQuery({
+  } = AdvertisementAPI.useGetAllOnModerationQuery({
     limit: 12,
     page: 1,
     title: advertisementSearch,

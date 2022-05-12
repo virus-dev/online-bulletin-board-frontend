@@ -1,7 +1,7 @@
 import React from 'react';
 import ErrorBoundary from 'Components/ErrorBoundary/ErrorBoundary';
 import useWebSocket from 'Hooks/useWebSocket';
-import SocketContext from 'Context/SocketContext/SocketContext';
+import SocketContext from 'Context/SocketContext';
 import AppRouter from './pages/AppRouter';
 
 const App: React.FC = () => {

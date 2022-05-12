@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Loader from 'Storybook/Loader/Loader';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
-import UserApi from 'Services/UserApi';
+import UserAPI from 'Services/UserAPI';
 import { getDialogs } from 'Store/actionCreators/messagesActionCreators';
 import { messagesSlice } from 'Store/reducers/messagesSlice';
 import DialogItem from '../DialogItem/DialogItem';
@@ -10,7 +10,7 @@ import s from './Dialogs.module.scss';
 
 const Dialogs: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { data: { id } = {}, isLoading } = UserApi.useGetDataQuery();
+  const { data: { id } = {}, isLoading } = UserAPI.useGetDataQuery();
   const {
     data: dialogs,
     isLoading: isLoadingDialogs,

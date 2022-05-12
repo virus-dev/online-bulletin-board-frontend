@@ -4,8 +4,8 @@ import Input from 'Storybook/Input/Input';
 import ValidationError from 'Storybook/ValidationError/ValidationError';
 import Button from 'Storybook/Button/Button';
 import Container from 'Storybook/Container/Container';
-import BrandsApi from 'Services/BrandsAPI';
-import CategoriesApi from 'Services/CategoriesAPI';
+import BrandsAPI from 'Services/BrandsAPI';
+import CategoriesAPI from 'Services/CategoriesAPI';
 import AdvertisementAPI from 'Services/AdvertisementAPI';
 import { checkFileForImgBB } from 'Utils/getCheckFileFunc';
 import { RouteNames } from 'Models/Route';
@@ -27,11 +27,11 @@ const AdvertisementCreate = () => {
   const navigate = useNavigate();
   const {
     data: dataCategories = [], isLoading: isLoadingCategories,
-  } = CategoriesApi.useGetCategoriesQuery();
+  } = CategoriesAPI.useGetCategoriesQuery();
   const [
     trigger,
     { isLoading: isLoadingBrands, data: dataBrands = [] },
-  ] = BrandsApi.useLazyGetBrandsQuery();
+  ] = BrandsAPI.useLazyGetBrandsQuery();
   const [
     create,
     { isLoading: isLoadingCreate, isSuccess, error },

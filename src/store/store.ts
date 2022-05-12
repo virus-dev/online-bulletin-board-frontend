@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import UserApi from 'Services/UserApi';
+import UserAPI from 'Services/UserAPI';
 import AdvertisementAPI from 'Services/AdvertisementAPI';
 import CategoriesAPI from 'Services/CategoriesAPI';
 import BrandsAPI from 'Services/BrandsAPI';
@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   messages: messagesReducer,
   inputs: inputsReducer,
-  [UserApi.reducerPath]: UserApi.reducer,
+  [UserAPI.reducerPath]: UserAPI.reducer,
   [AdvertisementAPI.reducerPath]: AdvertisementAPI.reducer,
   [CategoriesAPI.reducerPath]: CategoriesAPI.reducer,
   [BrandsAPI.reducerPath]: BrandsAPI.reducer,
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
 const setupStore = () => configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([
-    UserApi.middleware,
+    UserAPI.middleware,
     AdvertisementAPI.middleware,
     CategoriesAPI.middleware,
     BrandsAPI.middleware,

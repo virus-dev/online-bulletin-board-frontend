@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Button from 'Storybook/Button/Button';
-import SocketContext from 'Context/SocketContext/SocketContext';
-import UserApi from 'Services/UserApi';
+import SocketContext from 'Context/SocketContext';
+import UserAPI from 'Services/UserAPI';
 import { useAppSelector } from 'Hooks/redux';
 
 import s from './MessageSendPanel.module.scss';
@@ -9,7 +9,7 @@ import s from './MessageSendPanel.module.scss';
 const MessageSendPanel = () => {
   const { socket } = useContext(SocketContext);
   const [message, setMessage] = useState('');
-  const { data: { id } = {} } = UserApi.useGetDataQuery();
+  const { data: { id } = {} } = UserAPI.useGetDataQuery();
   const chatWithUserId = useAppSelector(({ messages }) => messages.chat.chatWithUserId);
 
   const onChangeHandler = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {

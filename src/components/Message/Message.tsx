@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import classNames from 'classnames';
 import { Message as IMessage, Status } from 'Models/Message';
-import UserApi from 'Services/UserApi';
-import SocketContext from 'Context/SocketContext/SocketContext';
+import UserAPI from 'Services/UserAPI';
+import SocketContext from 'Context/SocketContext';
 import IconProfile from '../IconProfile/IconProfile';
 
 import s from './Message.module.scss';
@@ -23,7 +23,7 @@ const Message: React.FC<MessageProps> = ({
 
   const {
     data: { image, firstName, secondName } = {},
-  } = UserApi.useGetDataByIdQuery(fromUserId);
+  } = UserAPI.useGetDataByIdQuery(fromUserId);
 
   const statusText = status === Status.read ? 'Прочитано' : 'Доставлено';
 

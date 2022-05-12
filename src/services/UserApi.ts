@@ -13,7 +13,7 @@ interface RegistrationParams {
   firstName: string,
 }
 
-const UserApi = createApi({
+const UserAPI = createApi({
   reducerPath: 'userAPI',
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_API_URL}user/` }),
   tagTypes: ['User'],
@@ -100,4 +100,4 @@ const UserApi = createApi({
   }),
 });
 
-export default UserApi;
+export default UserAPI;

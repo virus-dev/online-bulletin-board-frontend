@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { Brands } from 'Models/Brands';
 
-const BrandsApi = createApi({
+const BrandsAPI = createApi({
   reducerPath: 'BrandsAPI',
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_API_URL}brands/` }),
   tagTypes: ['Brands'],
@@ -18,4 +18,4 @@ const BrandsApi = createApi({
   }),
 });
 
-export default BrandsApi;
+export default BrandsAPI;

@@ -6,7 +6,7 @@ import IconSearch from 'Storybook/Icons/IconSearch';
 import Container from 'Storybook/Container/Container';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import useIsAuth from 'Hooks/useIsAuth';
-import UserApi from 'Services/UserApi';
+import UserAPI from 'Services/UserAPI';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import { inputsSlice, Field } from 'Store/reducers/inputsSlice';
 import IconProfile, { IconProfileTypeEnum } from 'Components/IconProfile/IconProfile';
@@ -21,7 +21,7 @@ const Header: React.FC = () => {
   const advertisementSearch = useAppSelector(({ inputs }) => inputs.inputs.advertisementSearch);
   const {
     data: { image, firstName, secondName } = {},
-  } = UserApi.useGetDataQuery();
+  } = UserAPI.useGetDataQuery();
   const { isAuth } = useIsAuth();
   const [isHeadeFixed, setIsHeaderFixed] = useState(false);
 
