@@ -1,3 +1,3 @@
-const isProduction = (): boolean => process.env.NODE_ENV === 'development';
+const isProduction = (): boolean => true;
 
 export default isProduction;
