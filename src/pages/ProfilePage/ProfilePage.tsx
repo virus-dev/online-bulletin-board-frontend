@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../../components/Header/Header';
-import ProfileInfo from '../../components/ProfileInfo/ProfileInfo';
+import Header from 'Components/Header/Header';
+import ProfileInfo from 'Components/ProfileInfo/ProfileInfo';
 
 import s from './ProfilePage.module.scss';
 

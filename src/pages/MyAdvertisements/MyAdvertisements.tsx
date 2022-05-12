@@ -1,7 +1,7 @@
 import React from 'react';
-import AdvertisementsRibbon from '../../components/AdvertisementsRibbon/AdvertisementsRibbon';
-import Header from '../../components/Header/Header';
-import Container from '../../components/storybook/Container/Container';
+import AdvertisementsRibbon from 'Components/AdvertisementsRibbon/AdvertisementsRibbon';
+import Header from 'Components/Header/Header';
+import Container from 'Components/storybook/Container/Container';
 import AdvertisementApi from '../../services/AdvertisementAPI';
 
 import s from './MyAdvertisements.module.scss';

@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../../components/Header/Header';
-import AdvertisementCreate from '../../components/AdvertisementCreate/AdvertisementCreate';
+import Header from 'Components/Header/Header';
+import AdvertisementCreate from 'Components/AdvertisementCreate/AdvertisementCreate';
 
 import s from './AdvertisementCreate.module.scss';
 
