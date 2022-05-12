@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import UserApi from '../services/UserApi';
-import AdvertisementAPI from '../services/AdvertisementAPI';
-import CategoriesAPI from '../services/CategoriesAPI';
-import BrandsAPI from '../services/BrandsAPI';
+import UserApi from 'Services/UserApi';
+import AdvertisementAPI from 'Services/AdvertisementAPI';
+import CategoriesAPI from 'Services/CategoriesAPI';
+import BrandsAPI from 'Services/BrandsAPI';
 import userReducer from './reducers/UserSlice';
 import messagesReducer from './reducers/messagesSlice';
 import inputsReducer from './reducers/inputsSlice';

@@ -1,5 +1,5 @@
 import React from 'react';
-import UserApi from '../../services/UserApi';
+import UserApi from 'Services/UserApi';
 import IconProfile from '../IconProfile/IconProfile';
 
 import s from './DialogItem.module.scss';

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { Advertisement } from '../models/Advertisement';
+import { Advertisement } from 'Models/Advertisement';
 
 interface GetAll {
   limit: number,

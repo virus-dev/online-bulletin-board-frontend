@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import useIsAuth from '../hooks/useIsAuth';
-import { RouteNames } from '../models/Route';
+import useIsAuth from 'Hooks/useIsAuth';
+import { RouteNames } from 'Models/Route';
 import {
   publicRoutes,
   privateRoutes,

@@ -1,9 +1,9 @@
 import React from 'react';
 import AdvertisementsRibbon from 'Components/AdvertisementsRibbon/AdvertisementsRibbon';
 import Header from 'Components/Header/Header';
-import Container from 'Components/storybook/Container/Container';
-import { useAppSelector } from '../../hooks/redux';
-import AdvertisementApi from '../../services/AdvertisementAPI';
+import Container from 'Storybook/Container/Container';
+import { useAppSelector } from 'Hooks/redux';
+import AdvertisementApi from 'Services/AdvertisementAPI';
 
 import s from './AdvertisementModeration.module.scss';
 

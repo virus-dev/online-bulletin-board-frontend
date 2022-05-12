@@ -1,9 +1,9 @@
 import React from 'react';
-import UserApi from '../../services/UserApi';
+import UserApi from 'Services/UserApi';
+import Button, { ButtonVariant } from 'Storybook/Button/Button';
+import useIsAuth from 'Hooks/useIsAuth';
+import { RouteNames } from 'Models/Route';
 import PersonalDataItem from './PersonalDataItem/PersonalDataItem';
-import Button, { ButtonVariant } from '../storybook/Button/Button';
-import useIsAuth from '../../hooks/useIsAuth';
-import { RouteNames } from '../../models/Route';
 
 import s from './PersonalData.module.scss';
 

@@ -1,6 +1,6 @@
 import { SetStateAction } from 'react';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { User } from '../models/User';
+import { User } from 'Models/User';
 
 interface LoginParams {
   email: string,

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import UserApi from '../services/UserApi';
-import { messagesSlice } from '../store/reducers/messagesSlice';
-import { getCountUnreadMessages } from '../store/actionCreators/messagesActionCreators';
+import UserApi from 'Services/UserApi';
+import { messagesSlice } from 'Store/reducers/messagesSlice';
+import { getCountUnreadMessages } from 'Store/actionCreators/messagesActionCreators';
 import { useAppDispatch, useAppSelector } from './redux';
 import useIsAuth from './useIsAuth';
 

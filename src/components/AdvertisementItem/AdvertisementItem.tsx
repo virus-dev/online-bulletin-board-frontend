@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import AdvertisementApi from '../../services/AdvertisementAPI';
+import AdvertisementApi from 'Services/AdvertisementAPI';
 
 import s from './AdvertisementItem.module.scss';
 

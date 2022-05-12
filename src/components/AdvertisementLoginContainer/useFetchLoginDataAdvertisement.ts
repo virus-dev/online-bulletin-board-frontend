@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import AdvertisementApi from '../../services/AdvertisementAPI';
-import BrandsApi from '../../services/BrandsAPI';
-import CategoriesApi from '../../services/CategoriesAPI';
+import AdvertisementApi from 'Services/AdvertisementAPI';
+import BrandsApi from 'Services/BrandsAPI';
+import CategoriesApi from 'Services/CategoriesAPI';
 
 const useFetchLoginDataAdvertisement = () => {
   const { advertisementId } = useParams();

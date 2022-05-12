@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import AdvertisementApi from '../../../../services/AdvertisementAPI';
-import Button, { ButtonVariant } from '../../../storybook/Button/Button';
+import AdvertisementApi from 'Services/AdvertisementAPI';
+import Button, { ButtonVariant } from 'Storybook/Button/Button';
 
 import s from './ConfirmModerateButtons.module.scss';
 

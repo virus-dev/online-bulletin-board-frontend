@@ -1,8 +1,8 @@
 import React from 'react';
 import ErrorBoundary from 'Components/ErrorBoundary/ErrorBoundary';
-import useWebSocket from './hooks/useWebSocket';
+import useWebSocket from 'Hooks/useWebSocket';
+import SocketContext from 'Context/SocketContext/SocketContext';
 import AppRouter from './pages/AppRouter';
-import SocketContext from './context/SocketContext';
 
 const App: React.FC = () => {
   const socket = useWebSocket();

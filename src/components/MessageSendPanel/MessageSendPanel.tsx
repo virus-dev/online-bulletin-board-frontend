@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import Button from '../storybook/Button/Button';
-import SocketContext from '../../context/SocketContext';
+import Button from 'Storybook/Button/Button';
+import SocketContext from 'Context/SocketContext/SocketContext';
+import UserApi from 'Services/UserApi';
+import { useAppSelector } from 'Hooks/redux';
 
 import s from './MessageSendPanel.module.scss';
-import UserApi from '../../services/UserApi';
-import { useAppSelector } from '../../hooks/redux';
 
 const MessageSendPanel = () => {
   const { socket } = useContext(SocketContext);

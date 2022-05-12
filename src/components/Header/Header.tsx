@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import Container from '../storybook/Container/Container';
-import useIsAuth from '../../hooks/useIsAuth';
-import IconProfile, { IconProfileTypeEnum } from '../IconProfile/IconProfile';
-import Button, { ButtonVariant } from '../storybook/Button/Button';
-import InputWithBtn from '../storybook/InputWithBtn/InputWithBtn';
-import IconSearch from '../storybook/Icons/IconSearch';
+import InputWithBtn from 'Storybook/InputWithBtn/InputWithBtn';
+import IconSearch from 'Storybook/Icons/IconSearch';
+import Container from 'Storybook/Container/Container';
+import Button, { ButtonVariant } from 'Storybook/Button/Button';
+import useIsAuth from 'Hooks/useIsAuth';
+import UserApi from 'Services/UserApi';
+import { useAppDispatch, useAppSelector } from 'Hooks/redux';
+import { inputsSlice, Field } from 'Store/reducers/inputsSlice';
+import IconProfile, { IconProfileTypeEnum } from 'Components/IconProfile/IconProfile';
 import Links from './Links/Links';
 import NavBar from './NavBar/NavBar';
 import logo from './static/logo.png';
-import UserApi from '../../services/UserApi';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { inputsSlice, Field } from '../../store/reducers/inputsSlice';
 
 import s from './Header.module.scss';
 

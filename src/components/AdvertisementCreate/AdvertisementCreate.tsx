@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BrandsApi from '../../services/BrandsAPI';
-import CategoriesApi from '../../services/CategoriesAPI';
-import AdvertisementAPI from '../../services/AdvertisementAPI';
-import Button from '../storybook/Button/Button';
-import Container from '../storybook/Container/Container';
-import { checkFileForImgBB } from '../../utils/getCheckFileFunc';
+import Input from 'Storybook/Input/Input';
+import ValidationError from 'Storybook/ValidationError/ValidationError';
+import Button from 'Storybook/Button/Button';
+import Container from 'Storybook/Container/Container';
+import BrandsApi from 'Services/BrandsAPI';
+import CategoriesApi from 'Services/CategoriesAPI';
+import AdvertisementAPI from 'Services/AdvertisementAPI';
+import { checkFileForImgBB } from 'Utils/getCheckFileFunc';
+import { RouteNames } from 'Models/Route';
+import getErrorValidationMessage from 'Utils/getErrorMessage';
+import i18 from 'Utils/i18';
 
 import s from './AdvertisementCreate.module.scss';
-import { RouteNames } from '../../models/Route';
-import Input from '../storybook/Input/Input';
-import ValidationError from '../storybook/ValidationError/ValidationError';
-import getErrorValidationMessage from '../../utils/getErrorMessage';
-import i18 from '../../utils/i18';
 
 interface AdvertisementData {
   categoryId: string,

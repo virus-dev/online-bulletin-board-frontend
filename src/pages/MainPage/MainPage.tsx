@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Header from 'Components/Header/Header';
 import AdvertisementsRibbon from 'Components/AdvertisementsRibbon/AdvertisementsRibbon';
 import MainSlider from 'Components/MainSlider/MainSlider';
-import { useAppSelector } from '../../hooks/redux';
-import AdvertisementAPI from '../../services/AdvertisementAPI';
-import isProduction from '../../utils/isProduction';
+import { useAppSelector } from 'Hooks/redux';
+import AdvertisementAPI from 'Services/AdvertisementAPI';
+import isProduction from 'Utils/isProduction';
 
 import s from './MainPage.module.scss';
 

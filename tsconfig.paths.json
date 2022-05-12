@@ -3,7 +3,15 @@
     "baseUrl": ".",
     "paths": {
       "Components/*": ["./src/components/*"],
-      "Storybook/*": ["./src/components/storybook"]
+      "Storybook/*": ["./src/components/storybook/*"],
+      "Icons/*": ["./src/components/storybook/Icons/*"],
+      "Hooks/*": ["./src/hooks/*"],
+      "Models/*": ["./src/models/*"],
+      "Store/*": ["./src/store/*"],
+      "Styles/*": ["./src/styles/*"],
+      "Utils/*": ["./src/utils/*"],
+      "Services/*": ["./src/services/*"],
+      "Context/*": ["./src/context/*"]
     }
   }
 }

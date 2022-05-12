@@ -1,6 +1,6 @@
 import React from 'react';
+import Container from 'Storybook/Container/Container';
 import PersonalData from '../PersonalData/PersonalData';
-import Container from '../storybook/Container/Container';
 
 const ProfileInfo: React.FC = () => (
   <Container>

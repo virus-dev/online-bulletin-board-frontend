@@ -1,13 +1,13 @@
 import React from 'react';
+import Container from 'Storybook/Container/Container';
 import AdvertisementSlider from '../AdvertisementSlider/AdvertisementSlider';
-import Container from '../storybook/Container/Container';
 import AdvertisementOwner from '../AdvertisementOwner/AdvertisementOwner';
-import { Brands } from '../../models/Brands';
-import { Categories } from '../../models/Categories';
+import { Brands } from 'Models/Brands';
+import { Categories } from 'Models/Categories';
 import ConfirmModerateButtons from './components/ConfirmModerateButtons/ConfirmModerateButtons';
 
 import s from './Advertisement.module.scss';
-import i18 from '../../utils/i18';
+import i18 from 'Utils/i18';
 
 interface AdvertisementProps {
   isLoading: boolean | undefined,

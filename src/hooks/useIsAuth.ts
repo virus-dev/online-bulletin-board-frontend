@@ -1,5 +1,5 @@
-import UserApi from '../services/UserApi';
-import { Role } from '../models/User';
+import UserApi from 'Services/UserApi';
+import { Role } from 'Models/User';
 
 const useIsAuth = () => {
   const { data: { email, role } = {}, isLoading } = UserApi.useGetDataQuery();

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User } from 'Models/User';
 import {
   login, registration, updateData, getData,
 } from '../actionCreators/user';
-import { User } from '../../models/User';
 
 const initialState: User = {
   id: null,

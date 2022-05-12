@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import Input from '../storybook/Input/Input';
-import Button from '../storybook/Button/Button';
+import Input from 'Storybook/Input/Input';
+import Button from 'Storybook/Button/Button';
+import UserApi from 'Services/UserApi';
+import Label from 'Storybook/Label/Label';
+import StyledLink from 'Storybook/StyledLink/StyledLink';
+import getErrorValidationMessage from 'Utils/getErrorMessage';
 
 import s from './Login.module.scss';
-import UserApi from '../../services/UserApi';
-import Label from '../storybook/Label/Label';
-import StyledLink from '../storybook/StyledLink/StyledLink';
-import getErrorValidationMessage from '../../utils/getErrorMessage';
 
 interface LoginProps {
   changeIsLogin: () => void;
