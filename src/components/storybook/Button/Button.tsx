@@ -27,7 +27,7 @@ const loadingRenderPropsInitial = () => <Loader color="#fff" size="24px" />;
 
 const Button: React.FC<ButtonProps> = ({
   children,
-  variant = ButtonVariant.blue,
+  variant,
   className,
   iconLeft,
   iconRigth,

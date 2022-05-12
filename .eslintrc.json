@@ -33,6 +33,7 @@
                 "unnamedComponents": "arrow-function"
             }
         ],
-        "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }]
+        "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
+        "react/prop-types": 0
     }
 }
