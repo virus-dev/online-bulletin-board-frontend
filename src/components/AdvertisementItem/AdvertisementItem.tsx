@@ -1,6 +1,9 @@
+import Price from 'Components/Price/Price';
+import Loader from 'Components/storybook/Loader/Loader';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdvertisementAPI from 'Services/AdvertisementAPI';
+import IconNoFoto from 'Storybook/Icons/IconNoFoto';
 
 import s from './AdvertisementItem.module.scss';
 
@@ -25,19 +28,19 @@ const AdvertisementItem: React.FC<AdvertisementItemProps> = ({ id, price, title 
       onClick={onClickHandler}
     >
       <div className={s.advertisementItemImg}>
-        {isLoading ? <div>isLoading</div> : (
+        {isLoading ? <div><Loader /></div> : (
           <div>
             {data?.length ? (
               <img src={data[0]} alt="*" />
             ) : (
-              <div>Фотографий нет</div>
+              <IconNoFoto size="100px" />
             )}
           </div>
         )}
       </div>
       <div className={s.advertisementItemInfo}>
+        <Price price={price} />
         <div className={s.title}>{title}</div>
-        <div className={s.price}>{`${price}₽`}</div>
       </div>
     </button>
   );

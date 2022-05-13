@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from 'Storybook/Input/Input';
 import ValidationError from 'Storybook/ValidationError/ValidationError';
-import Button from 'Storybook/Button/Button';
+import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import Container from 'Storybook/Container/Container';
 import BrandsAPI from 'Services/BrandsAPI';
 import CategoriesAPI from 'Services/CategoriesAPI';
@@ -11,6 +11,7 @@ import { checkFileForImgBB } from 'Utils/getCheckFileFunc';
 import { RouteNames } from 'Models/Route';
 import getErrorValidationMessage from 'Utils/getErrorMessage';
 import i18 from 'Utils/i18';
+import Select from 'Components/storybook/Select/Select';
 
 import s from './AdvertisementCreate.module.scss';
 
@@ -38,6 +39,14 @@ const AdvertisementCreate = () => {
   ] = AdvertisementAPI.useCreateMutation();
   const isLoading = isLoadingCategories;
 
+  const optionsCategories = useMemo(() => (
+    dataCategories.map(({ id, name }) => ({ value: id, mnemonic: name }))
+  ), [dataCategories]);
+
+  const optionsBrands = useMemo(() => (
+    dataBrands.map(({ id, name }) => ({ value: id, mnemonic: name }))
+  ), [dataBrands]);
+
   useEffect(() => {
     if (isSuccess) {
       navigate(RouteNames.ADVERTISEMENT_MY_ADVERTISEMENTS);
@@ -62,10 +71,10 @@ const AdvertisementCreate = () => {
   }, [advertisementData.categoryId, trigger]);
 
   const onChangeSelecthandler = (
-    { target }: React.ChangeEvent<HTMLSelectElement>,
+    value: unknown,
     name: string,
   ) => {
-    setAdvertisementData((prev) => ({ ...prev, [name]: target.value }));
+    setAdvertisementData((prev) => ({ ...prev, [name]: value }));
   };
 
   const onChangeInputHandler = ({ target }: React.ChangeEvent<HTMLInputElement>, name: string) => {
@@ -132,48 +141,46 @@ const AdvertisementCreate = () => {
 
   return (
     <Container className={s.advertisementCreateWrapper}>
-      {
-        isLoading ? (
-          <div>Loading...</div>
-        ) : (
-          <div>
-            <p>Категория</p>
-            <select onChange={(e) => onChangeSelecthandler(e, 'categoryId')}>
-              <option value="0">Выберите вариант</option>
-              {dataCategories.map(({ id, name }) => (
-                <option value={String(id)} key={name}>{i18(name)}</option>
-              ))}
-            </select>
-            <ValidationError error={getErrorValidationMessage(error, 'categoryId')} />
-            <div className={s.br} />
-            <p>Бренд</p>
-            <select onChange={(e) => onChangeSelecthandler(e, 'brandId')}>
-              <option value="0">{textInBrandsSelect()}</option>
-              {dataBrands.map(({ id, name }) => (
-                <option value={String(id)} key={name}>{i18(name)}</option>
-              ))}
-            </select>
-            <ValidationError error={getErrorValidationMessage(error, 'brandId')} />
-            <div className={s.br} />
-            <p>Название товара</p>
-            <Input onChange={(e) => onChangeInputHandler(e, 'title')} name="title" value={advertisementData.title} />
-            <ValidationError error={getErrorValidationMessage(error, 'title')} />
-            <div className={s.br} />
-            <p>Цена</p>
-            <input type="text" onChange={(e) => onChangeInputHandler(e, 'price')} />
-            <ValidationError error={getErrorValidationMessage(error, 'price')} />
-            <div className={s.br} />
-            <p>Описание</p>
-            <textarea onChange={onChangeTextareaHandler} />
-            <ValidationError error={getErrorValidationMessage(error, 'description')} />
-            <div className={s.br} />
-            <p>Фотографии</p>
-            <input type="file" multiple onChange={onChangeFileHandler} />
-            <div className={s.br} />
-            <Button onClick={onClickButtonHandler} isLoading={isLoadingCreate}>Создать</Button>
-          </div>
-        )
-      }
+      <div className={s.title}>Создание объявления</div>
+      <div>
+        <p>Категория</p>
+        <Select
+          options={optionsCategories}
+          onChange={(value) => { onChangeSelecthandler(value, 'categoryId'); }}
+        />
+        <ValidationError error={getErrorValidationMessage(error, 'categoryId')} />
+        <div className={s.br} />
+        <p>Бренд</p>
+        <Select
+          options={optionsBrands}
+          onChange={(value) => { onChangeSelecthandler(value, 'brandId'); }}
+          placeholder={textInBrandsSelect()}
+        />
+        <ValidationError error={getErrorValidationMessage(error, 'brandId')} />
+        <div className={s.br} />
+        <p>Название товара</p>
+        <Input onChange={(e) => onChangeInputHandler(e, 'title')} name="title" value={advertisementData.title} placeholder="Введите название товара" />
+        <ValidationError error={getErrorValidationMessage(error, 'title')} />
+        <div className={s.br} />
+        <p>Цена</p>
+        <Input name="price" value={advertisementData.price} onChange={(e) => onChangeInputHandler(e, 'price')} placeholder="Введите цену" />
+        <ValidationError error={getErrorValidationMessage(error, 'price')} />
+        <div className={s.br} />
+        <p>Описание</p>
+        <textarea value={advertisementData.description} onChange={onChangeTextareaHandler} />
+        <ValidationError error={getErrorValidationMessage(error, 'description')} />
+        <div className={s.br} />
+        <p>Фотографии</p>
+        <input type="file" multiple onChange={onChangeFileHandler} />
+        <div className={s.br} />
+        <Button
+          onClick={onClickButtonHandler}
+          isLoading={isLoadingCreate}
+          variant={ButtonVariant.blue}
+        >
+          Создать
+        </Button>
+      </div>
     </Container>
   );
 };
