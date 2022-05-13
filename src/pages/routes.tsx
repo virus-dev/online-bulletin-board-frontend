@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { Suspense as S } from 'react';
 import { IRoute, RouteNames } from 'Models/Route';
+import PageLoading from 'Components/PageLoading/PageLoading';
 
 const MainPage = React.lazy(() => import('./MainPage/MainPage'));
 const ProfilePage = React.lazy(() => import('./ProfilePage/ProfilePage'));
@@ -19,7 +20,7 @@ export const unloginRoutes: IRoute[] = [
 ];
 
 export const publicRoutes: IRoute[] = [
-  { path: RouteNames.MAIN, element: <S fallback={fallback}><MainPage /></S> },
+  { path: RouteNames.MAIN, element: <S fallback={<PageLoading />}><MainPage /></S> },
   { path: RouteNames.ADVERTISEMENT_ID, element: <S fallback={fallback}><Advertisement /></S> },
 ];
 

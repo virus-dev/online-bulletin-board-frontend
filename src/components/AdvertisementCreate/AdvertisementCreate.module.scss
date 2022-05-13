@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import 'Styles/variables.scss';
 
 .advertisementCreateWrapper {
   margin-top: 16px;
@@ -6,6 +6,12 @@
   box-shadow: rgba(0, 0, 0, .1) 0px 4px 8px 0px;
   border: 1px solid $gray-300;
   border-radius: 8px;
+
+  .title {
+    font-size: 32px;
+    font-weight: $font-weight-bold;
+    margin-bottom: 20px;
+  }
 
   .br {
     border-bottom: 1px solid $gray-300;
