@@ -5,6 +5,7 @@ import MainSlider from 'Components/MainSlider/MainSlider';
 import { useAppSelector } from 'Hooks/redux';
 import AdvertisementAPI from 'Services/AdvertisementAPI';
 import isProduction from 'Utils/isProduction';
+import Container from 'Components/storybook/Container/Container';
 
 import s from './MainPage.module.scss';
 
@@ -30,7 +31,10 @@ const MainPage = () => {
   return (
     <>
       <Header />
-      {isProduction() && <MainSlider />}
+      {!isProduction() && <MainSlider />}
+      <Container>
+        <div className={s.title}>Все объявления</div>
+      </Container>
       <AdvertisementsRibbon data={data} isLoading={isLoading} onScrollEnd={callback} />
     </>
   );

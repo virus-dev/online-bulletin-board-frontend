@@ -1,0 +1,63 @@
+@import 'Styles/variables.scss';
+
+.selectWrapper {
+  position: relative;
+  max-width: max-content;
+
+  .select {
+    border: 1px solid $gray-400;
+    border-radius: 4px;
+    padding: 4px 8px;
+
+    .selectText {
+      padding-right: 32px;
+    }
+
+    .triangle {
+      display: block;
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-40%);
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 8px 4px 0 4px;
+      border-color: #000000 transparent transparent transparent;
+      transition: transform .2s ease;
+    }
+
+    &.selectOpen {
+      .triangle {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .absolute {
+    display: flex;
+    flex-direction: column;
+    background-color: $gray-100;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    position: absolute;
+    border: 1px solid $gray-400;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 1;
+
+    .option {
+      padding: 4px 8px;
+      transition: background-color .1s linear;
+      
+      &:hover {
+        background-color: $gray-400;
+      }
+    }
+  }
+
+  .selectClose {
+    display: none;
+  }
+}
