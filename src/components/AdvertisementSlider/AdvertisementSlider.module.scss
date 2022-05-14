@@ -1,9 +1,11 @@
-@import '../../styles/variables.scss';
+@import 'Styles/variables.scss';
 
 .advertisementSlider {
   position: relative;
   border: 1px solid $gray-300;
   border-radius: 2px;
+  margin-top: 12px;
+  height: 400px;
 
   .wrapper {
     overflow-x: hidden;
@@ -11,6 +13,7 @@
     .slides {
       display: flex;
       transition: transform .3s ease;
+      width: min-content;
   
       img {
         max-height: 400px;
@@ -21,10 +24,25 @@
 
   .arrowsWrapper {
     position: absolute;
-    width: 102%;
+    width: 104%;
     display: flex;
     justify-content: space-between;
     top: 50%;
     transform: translateY(-50%) translateX(-2%);
+    transition: opacity .3s ease;
+
+    &.hideArrows {
+      display: none;
+    }
   }
+}
+
+.noFoto {
+  background-color: $gray-300;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: $defaultBorderRadius;
+  margin-top: 12px;
 }

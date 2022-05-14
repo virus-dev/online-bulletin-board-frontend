@@ -11,7 +11,6 @@ const useWebSocket = () => {
   const { data: { id } = {} } = UserAPI.useGetDataQuery();
 
   const {
-    unreadMessages,
     chat,
     dialogs: { data: dialogs },
   } = useAppSelector(({ messages }) => messages);
@@ -91,7 +90,7 @@ const useWebSocket = () => {
 
     socket.current.onerror = () => {
       setIsConnected(false);
-      console.log('Произошла ошибка при подключении к WebSocket');
+      // TODO: Добавить ошибку
     };
   }, [chat.chatWithUserId, dialogs.length, dispath, id, isAuth, webSocketURL]);
 

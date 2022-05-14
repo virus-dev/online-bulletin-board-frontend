@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { Message as IMessage, Status } from 'Models/Message';
 import UserAPI from 'Services/UserAPI';
 import SocketContext from 'Context/SocketContext';
+import dateFromZFormat, { VariantsFormsts } from 'Utils/dateFromZFormat';
 import IconProfile from '../IconProfile/IconProfile';
 
 import s from './Message.module.scss';
@@ -15,7 +16,7 @@ interface MessagePropsStill {
 type MessageProps = Omit<IMessage, ''> & Omit<MessagePropsStill, ''>;
 
 const Message: React.FC<MessageProps> = ({
-  createdAt, fromUserId, id, isYourMessage, message, status, toUserId, chatWithUserId,
+  createdAt, fromUserId, id, isYourMessage, message, status, toUserId,
 }) => {
   const observer = useRef<null | IntersectionObserver>(null);
   const refMessage = useRef(null);
@@ -67,7 +68,9 @@ const Message: React.FC<MessageProps> = ({
         <div className={s.name}>{isYourMessage ? 'Вы' : `${firstName} ${secondName || ''}`}</div>
         <div className={s.message} ref={refMessage}>{message}</div>
         <div className={s.status}>{statusText}</div>
-        <div className={s.date}>{createdAt}</div>
+        <div className={s.date}>
+          {dateFromZFormat({ date: createdAt, variantsFormsts: VariantsFormsts.time })}
+        </div>
       </div>
     </div>
   );

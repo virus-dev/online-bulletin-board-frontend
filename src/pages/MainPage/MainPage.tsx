@@ -28,8 +28,6 @@ const MainPage = () => {
     setGetAllQuery((prev) => ({ ...prev, page: prev.page + 1 }));
   };
 
-  console.log('dawd', process.env.NODE_ENV);
-
   return (
     <>
       <Header />

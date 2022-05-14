@@ -10,7 +10,6 @@ import AdvertisementAPI from 'Services/AdvertisementAPI';
 import { checkFileForImgBB } from 'Utils/getCheckFileFunc';
 import { RouteNames } from 'Models/Route';
 import getErrorValidationMessage from 'Utils/getErrorMessage';
-import i18 from 'Utils/i18';
 import Select from 'Components/storybook/Select/Select';
 
 import s from './AdvertisementCreate.module.scss';
@@ -27,7 +26,7 @@ interface AdvertisementData {
 const AdvertisementCreate = () => {
   const navigate = useNavigate();
   const {
-    data: dataCategories = [], isLoading: isLoadingCategories,
+    data: dataCategories = [],
   } = CategoriesAPI.useGetCategoriesQuery();
   const [
     trigger,
@@ -37,7 +36,6 @@ const AdvertisementCreate = () => {
     create,
     { isLoading: isLoadingCreate, isSuccess, error },
   ] = AdvertisementAPI.useCreateMutation();
-  const isLoading = isLoadingCategories;
 
   const optionsCategories = useMemo(() => (
     dataCategories.map(({ id, name }) => ({ value: id, mnemonic: name }))
@@ -91,6 +89,7 @@ const AdvertisementCreate = () => {
     [].forEach.call(files, (file) => {
       if (!checkFileForImgBB(file)) {
         // TODO: добавить ошибку
+        // eslint-disable-next-line
         console.log('Можно загружать файлы формата ".png", ".jpg", не превышающие размер 32МБ');
         return;
       }

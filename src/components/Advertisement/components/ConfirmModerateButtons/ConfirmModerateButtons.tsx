@@ -3,8 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AdvertisementAPI from 'Services/AdvertisementAPI';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
 
-import s from './ConfirmModerateButtons.module.scss';
-
 const ConfirmModerateButtons = () => {
   const { advertisementId } = useParams();
   const navigate = useNavigate();
@@ -21,7 +19,7 @@ const ConfirmModerateButtons = () => {
     try {
       confirm(Number(advertisementId));
     } catch (e) {
-      console.log(e);
+      // empty
     }
   };
 
@@ -29,7 +27,7 @@ const ConfirmModerateButtons = () => {
     try {
       disconfirm(Number(advertisementId));
     } catch (e) {
-      console.log(e);
+      // empty
     }
   };
 
