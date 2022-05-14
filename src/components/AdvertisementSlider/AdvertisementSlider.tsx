@@ -86,6 +86,7 @@ const AdvertisementSlider: React.FC<AdvertisementSliderProps> = ({ data }) => {
     }
 
     if (!countSlide) {
+      setWrapperTranslateX(0);
       return;
     }
 
@@ -104,7 +105,6 @@ const AdvertisementSlider: React.FC<AdvertisementSliderProps> = ({ data }) => {
   };
 
   const onClickRigthArrowHandler = () => {
-    // debugger
     if (!slidesRef.current) {
       return;
     }
