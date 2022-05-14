@@ -35,10 +35,6 @@ const Select: React.FC<SelectProps> = ({ placeholder = 'Выберете вар�
     setSelectOpen(false);
   };
 
-  console.log('======');
-  console.log('activeVariant', activeVariant);
-  console.log('options', options);
-
   useEffect(() => {
     setActiveVariant(null);
   }, [options]);

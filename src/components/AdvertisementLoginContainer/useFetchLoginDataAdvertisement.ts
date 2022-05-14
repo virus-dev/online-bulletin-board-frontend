@@ -9,7 +9,7 @@ const useFetchLoginDataAdvertisement = () => {
 
   const {
     data: {
-      brandId, categoryId, createdAt, description, price, status, title, userId,
+      brandId, categoryId, createdAt, description, price, status, title, userId, updatedAt,
     } = {},
     isLoading: isLoadingAdvertisement,
   } = AdvertisementAPI.useGetOneMaybeNotPublicQuery(Number(advertisementId));
@@ -44,6 +44,7 @@ const useFetchLoginDataAdvertisement = () => {
     dataCategories,
     dataBrands,
     isLoading: false,
+    updatedAt,
   };
 
   if (

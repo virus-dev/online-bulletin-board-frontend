@@ -9,5 +9,5 @@ export interface Message {
   toUserId: number,
   message: string,
   status: Status,
-  createdAt: number,
+  createdAt: string,
 }

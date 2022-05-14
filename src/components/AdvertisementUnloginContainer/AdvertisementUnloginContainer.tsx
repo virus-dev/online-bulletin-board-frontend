@@ -7,6 +7,7 @@ const AdvertisementUnloginContainer = () => {
     brandId,
     categoryId,
     createdAt,
+    updatedAt,
     dataBrands,
     dataCategories,
     dataImagesAdvertisement,
@@ -33,6 +34,7 @@ const AdvertisementUnloginContainer = () => {
       title={title}
       userId={userId}
       isCanModerate={false}
+      updatedAt={updatedAt}
     />
   );
 };

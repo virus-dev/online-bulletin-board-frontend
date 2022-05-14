@@ -4,10 +4,12 @@ import useIsAuth from 'Hooks/useIsAuth';
 import UserAPI from 'Services/UserAPI';
 import { getDialogs } from 'Store/actionCreators/messagesActionCreators';
 import IconProfile from 'Components/IconProfile/IconProfile';
-import Button from 'Storybook/Button/Button';
+import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import SocketContext from 'Context/SocketContext';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import AdvertisementOwnerLoading from '../AdvertisementOwnerLoading/AdvertisementOwnerLoading';
+
+import s from './AdvertisementOwnerSuccess.module.scss';
 
 interface AdvertisementOwnerSuccessProps {
   userId: number,
@@ -82,9 +84,19 @@ const AdvertisementOwnerSuccess: React.FC<AdvertisementOwnerSuccessProps> = ({
         isLoading
           ? <AdvertisementOwnerLoading />
           : (
-            <div>
-              <IconProfile image={image} firstName={firstName} secondName={secondName} />
-              <Button onClick={onClick}>{buttonText()}</Button>
+            <div className={s.owner}>
+              <div className={s.title}>Автор объявления</div>
+              <div className={s.ownerInfo}>
+                <IconProfile image={image} firstName={firstName} secondName={secondName} />
+                <div className={s.firstName}>{firstName}</div>
+                <div className={s.secondName}>{secondName}</div>
+              </div>
+              <Button
+                onClick={onClick}
+                variant={isYourAdvertisement ? ButtonVariant.gray : ButtonVariant.green}
+              >
+                {buttonText()}
+              </Button>
             </div>
           )
       }
