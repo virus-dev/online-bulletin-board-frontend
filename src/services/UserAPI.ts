@@ -74,7 +74,7 @@ const UserAPI = createApi({
           localStorage.setItem('JWT', token);
           window.location.href = '/';
         } catch (e) {
-          console.error(e);
+          // empty
         }
       },
     }),
@@ -93,7 +93,7 @@ const UserAPI = createApi({
           localStorage.setItem('JWT', token);
           window.location.href = '/';
         } catch (e) {
-          console.error(e);
+          // empty
         }
       },
     }),
