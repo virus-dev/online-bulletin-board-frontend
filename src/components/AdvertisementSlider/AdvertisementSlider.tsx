@@ -53,8 +53,6 @@ const AdvertisementSlider: React.FC<AdvertisementSliderProps> = ({ data }) => {
           width: widthWrapper,
         } = wrapperRef.current.getBoundingClientRect();
 
-        // console.log(widthWrapper)
-        // console.log(widthSlides)
         if (widthWrapper >= widthSlides) {
           setIsShowArrow(true);
         } else {

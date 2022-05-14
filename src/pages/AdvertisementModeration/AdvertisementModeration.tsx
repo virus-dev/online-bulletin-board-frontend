@@ -5,8 +5,6 @@ import Container from 'Storybook/Container/Container';
 import { useAppSelector } from 'Hooks/redux';
 import AdvertisementAPI from 'Services/AdvertisementAPI';
 
-import s from './AdvertisementModeration.module.scss';
-
 const AdvertisementModeration: React.FC = () => {
   const advertisementSearch = useAppSelector(({ inputs }) => inputs.inputs.advertisementSearch);
   const {
