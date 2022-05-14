@@ -9,7 +9,7 @@ const useFetchUnloginDataAdvertisement = () => {
 
   const {
     data: {
-      brandId, categoryId, createdAt, description, price, status, title, userId,
+      brandId, categoryId, createdAt, description, price, status, title, userId, updatedAt,
     } = {},
     isLoading: isLoadingAdvertisement,
   } = AdvertisementAPI.useGetOneQuery(Number(advertisementId));
@@ -35,6 +35,7 @@ const useFetchUnloginDataAdvertisement = () => {
     brandId,
     categoryId,
     createdAt,
+    updatedAt,
     description,
     price,
     status,

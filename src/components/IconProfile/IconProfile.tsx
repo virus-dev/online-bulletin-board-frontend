@@ -18,7 +18,7 @@ type IconProfileProps = Pick<User, 'image'> & Pick<User, 'firstName'> & Pick<Use
 // TODO: в React.memo
 
 const IconProfile: React.FC<IconProfileProps> = ({
-  image, firstName, secondName, type = IconProfileTypeEnum.div,
+  image, firstName, type = IconProfileTypeEnum.div,
 }) => (type === IconProfileTypeEnum.link ? (
   <Link className={s.iconProfile} to="/profile">
     {image ? (

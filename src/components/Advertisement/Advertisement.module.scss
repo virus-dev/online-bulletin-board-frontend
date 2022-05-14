@@ -5,6 +5,58 @@
   padding: 12px 16px;
   border-radius: 8px;
 
+  .blocksWrapper {
+    display: grid;
+    grid-template-areas: 
+    'category createdAt'
+    'brand updateAt'
+    'description description';
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+
+    .blockCategory {
+      grid-area: category;
+    }
+    .blockBrand {
+      grid-area: brand;
+    }
+    .blockCreatedAt {
+      grid-area: createdAt;
+    }
+    .blockUpdate {
+      grid-area: update;
+    }
+    .blockDescription {
+      grid-area: description;
+    }
+
+    .block {
+      & span:first-child {
+        font-size: 18px;
+        font-weight: $font-weight-bold;
+        color: $gray-700;
+      }
+      & span:last-child {
+        font-size: 18px;
+        font-weight: $font-weight-bold;
+        color: $gray-700;
+      }
+    }
+  }
+
+  .priceBlock {
+    display: flex;
+    margin-top: 12px;
+
+    .priceText {
+      font-size: 24px;
+      margin-right: 4px;
+      color: $gray-700;
+      font-weight: $font-weight-bold;
+    }
+  }
+
   .status {
     color: red;
     font-weight: $font-weight-bold;

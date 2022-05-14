@@ -10,6 +10,7 @@ const AdvertisementContainer = () => {
     brandId,
     categoryId,
     createdAt,
+    updatedAt,
     dataBrands,
     dataCategories,
     dataImagesAdvertisement,
@@ -36,6 +37,7 @@ const AdvertisementContainer = () => {
       title={title}
       userId={userId}
       isCanModerate={isAdminRole}
+      updatedAt={updatedAt}
     />
   );
 };

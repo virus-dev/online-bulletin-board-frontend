@@ -35,6 +35,8 @@
         ],
         "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
         "react/prop-types": 0,
-        "react/require-default-props": 0
+        "react/require-default-props": 0,
+        "no-console": "error",
+        "no-unused-vars": "error"
     }
 }
