@@ -32,7 +32,8 @@
     transition: opacity .3s ease;
 
     &.hideArrows {
-      display: none;
+      opacity: 0;
+      pointer-events: none;
     }
   }
 }
