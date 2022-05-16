@@ -14,6 +14,9 @@ const AdvertisementModeration: React.FC = () => {
     limit: 12,
     page: 1,
     title: advertisementSearch,
+    brandId: 0,
+    categoryId: 0,
+    sort: '',
   });
 
   return (

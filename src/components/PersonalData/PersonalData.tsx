@@ -3,6 +3,7 @@ import UserAPI from 'Services/UserAPI';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import useIsAuth from 'Hooks/useIsAuth';
 import { RouteNames } from 'Models/Route';
+import Loader from 'Components/storybook/Loader/Loader';
 import PersonalDataItem from './PersonalDataItem/PersonalDataItem';
 
 import s from './PersonalData.module.scss';
@@ -39,7 +40,7 @@ const PersonalData: React.FC = () => {
       <div className={s.personalDataTitle}>Личная информация</div>
       {
         isLoading ? (
-          <div>Loading...</div>
+          <Loader />
         ) : (
           <>
             <PersonalDataItem name="Имя">{firstName}</PersonalDataItem>
@@ -47,28 +48,32 @@ const PersonalData: React.FC = () => {
             <PersonalDataItem name="email">{email}</PersonalDataItem>
             <PersonalDataItem name="phone">{phone}</PersonalDataItem>
             <PersonalDataItem name="role">{role}</PersonalDataItem>
-            <p>Загрузить аватар</p>
-            <input type="file" onChange={onChangeHandler} />
-            <Button onClick={onClickHandler}>Выйти</Button>
+            <div className={s.downloadAvatar}>
+              <p className={s.likeLabel}>Загрузить аватар</p>
+              <input type="file" onChange={onChangeHandler} />
+            </div>
           </>
         )
       }
-      {
-        isModeratorRole && !isLoadingAuth && (
-          <Button
-            variant={ButtonVariant.green}
-            href={RouteNames.ADVERTISEMENT_MODERATION}
-          >
-            Модерация
-          </Button>
-        )
-      }
-      <Button
-        href={RouteNames.ADVERTISEMENT_MY_ADVERTISEMENTS}
-        variant={ButtonVariant.blue}
-      >
-        Мои объявления
-      </Button>
+      <div className={s.buttonsWrapper}>
+        <Button onClick={onClickHandler}>Выйти</Button>
+        {
+          isModeratorRole && !isLoadingAuth && (
+            <Button
+              variant={ButtonVariant.green}
+              href={RouteNames.ADVERTISEMENT_MODERATION}
+            >
+              Модерация
+            </Button>
+          )
+        }
+        <Button
+          href={RouteNames.ADVERTISEMENT_MY_ADVERTISEMENTS}
+          variant={ButtonVariant.blue}
+        >
+          Мои объявления
+        </Button>
+      </div>
     </div>
   );
 };

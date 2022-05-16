@@ -32,7 +32,7 @@ const ChatWindow: React.FC = () => {
 
   const jsxInner = () => {
     if (!chatWithUserId) {
-      return <div />;
+      return <div className={s.noChat}>Выберите диалог</div>;
     }
 
     if (isLoading) {

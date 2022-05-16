@@ -26,4 +26,13 @@
       word-break: break-all;
     }
   }
+
+  .noChat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+  }
 }

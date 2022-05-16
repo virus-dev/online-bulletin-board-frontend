@@ -6,12 +6,24 @@ import { useAppSelector } from 'Hooks/redux';
 import AdvertisementAPI from 'Services/AdvertisementAPI';
 import isProduction from 'Utils/isProduction';
 import Container from 'Components/storybook/Container/Container';
+import Filters from 'Components/Filters/Filters';
 
 import s from './MainPage.module.scss';
 
 const MainPage = () => {
   const advertisementSearch = useAppSelector(({ inputs }) => inputs.inputs.advertisementSearch);
-  const [getAllQuery, setGetAllQuery] = useState({ limit: 20, page: 1, title: '' });
+  const [getAllQuery, setGetAllQuery] = useState({
+    limit: 12,
+    page: 1,
+    title: '',
+    categoryId: 0,
+    brandId: 0,
+    sort: '',
+  });
+
+  const onChangeFilters = (value: unknown, field: string) => {
+    setGetAllQuery((prev) => ({ ...prev, [field]: value, page: 1 }));
+  };
 
   const {
     data,
@@ -34,6 +46,7 @@ const MainPage = () => {
       {!isProduction() && <MainSlider />}
       <Container>
         <div className={s.title}>Все объявления</div>
+        <Filters onChange={onChangeFilters} categoryId={getAllQuery.categoryId} />
       </Container>
       <AdvertisementsRibbon data={data} isLoading={isLoading} onScrollEnd={callback} />
     </>
