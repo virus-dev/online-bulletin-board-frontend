@@ -5,11 +5,18 @@ interface GetAll {
   limit: number,
   page: number,
   title: string,
+  sort: string,
+  categoryId: number,
+  brandId: number,
 }
 
 // TODO: Найти некостыльное решение
 let prevProvidesTags: Advertisement[] = [];
+let prevPage = 0;
 let prevTitle = '';
+let prevCategoryId = 0;
+let prevBrandId = 0;
+let prevSort = '';
 
 const AdvertisementAPI = createApi({
   reducerPath: 'advertisementAPI',
@@ -17,25 +24,60 @@ const AdvertisementAPI = createApi({
   tagTypes: ['Advertisement'],
   endpoints: (build) => ({
     getAll: build.query<Advertisement[], GetAll>({
-      query: ({ limit, page, title }) => ({
+      query: ({
+        limit, page, title, sort, categoryId, brandId,
+      }) => ({
         url: '/getAll',
         method: 'POST',
         params: {
           limit,
           page,
+          sort,
+          categoryId,
+          brandId,
         },
         body: {
           title,
         },
       }),
       providesTags: ['Advertisement'],
-      transformResponse: (res, _, { title }) => {
+      transformResponse: (
+        res,
+        _,
+        {
+          title,
+          brandId,
+          categoryId,
+          page,
+          sort,
+        },
+      ) => {
         if (title !== prevTitle) {
           prevTitle = title;
           prevProvidesTags = [];
         }
 
-        if (Array.isArray(res)) {
+        if (brandId !== prevBrandId) {
+          prevBrandId = brandId;
+          prevProvidesTags = [];
+        }
+
+        if (categoryId !== prevCategoryId) {
+          prevCategoryId = categoryId;
+          prevProvidesTags = [];
+        }
+
+        if (page <= prevPage) {
+          prevPage = page;
+          prevProvidesTags = [];
+        }
+
+        if (sort !== prevSort) {
+          prevSort = sort;
+          prevProvidesTags = [];
+        }
+
+        if (Array.isArray(res) && res.length) {
           const transformRes = [...prevProvidesTags, ...res];
           prevProvidesTags = transformRes;
           return transformRes;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Input from 'Storybook/Input/Input';
-import Button from 'Storybook/Button/Button';
+import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import UserAPI from 'Services/UserAPI';
 import Label from 'Storybook/Label/Label';
 import StyledLink from 'Storybook/StyledLink/StyledLink';
@@ -83,6 +83,7 @@ const Registration: React.FC<RegistrationProps> = ({ changeIsLogin }) => {
         onClick={registrationHandler}
         className={s.button}
         isLoading={isLoading}
+        variant={ButtonVariant.green}
       >
         Зарегистрироваться
       </Button>

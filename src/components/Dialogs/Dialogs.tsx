@@ -30,6 +30,10 @@ const Dialogs: React.FC = () => {
       return <div className={s.loaderWrapper}><Loader size="200px" /></div>;
     }
 
+    if (!dialogs.length) {
+      return <div className={s.noDialogs}>Диалогов нет</div>;
+    }
+
     return dialogs.map(({
       createdAt, fromUserId, message: lastMessage, toUserId, unreadMessagesCount,
     }) => (

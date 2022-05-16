@@ -10,4 +10,22 @@
     font-size: 32px;
     font-weight: $font-weight-bold;
   }
+
+  .downloadAvatar {
+    display: flex;
+    margin-top: 12px;
+
+    .likeLabel {
+      margin-right: 12px;
+    }
+  }
+
+  .buttonsWrapper {
+    display: flex;
+    margin-top: 12px;
+    
+    button ~ button {
+      margin-left: 12px;
+    }
+  }
 }
