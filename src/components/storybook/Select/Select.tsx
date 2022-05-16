@@ -15,7 +15,7 @@ interface SelectProps {
   onChange: (value: unknown) => void,
 }
 
-const Select: React.FC<SelectProps> = ({ placeholder = 'Выберете вариант', options, onChange }) => {
+const Select: React.FC<SelectProps> = ({ placeholder = 'Выберите вариант', options, onChange }) => {
   const refOptionsWrapper = useRef(null);
   const refButton = useRef(null);
   const [activeVariant, setActiveVariant] = useState<null | string>(null);

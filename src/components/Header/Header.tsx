@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import InputWithBtn from 'Storybook/InputWithBtn/InputWithBtn';
 import IconSearch from 'Storybook/Icons/IconSearch';
@@ -10,6 +10,7 @@ import UserAPI from 'Services/UserAPI';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import { inputsSlice, Field } from 'Store/reducers/inputsSlice';
 import IconProfile, { IconProfileTypeEnum } from 'Components/IconProfile/IconProfile';
+import { RouteNames } from 'Models/Route';
 import Links from './Links/Links';
 import NavBar from './NavBar/NavBar';
 import logo from './static/logo.png';
@@ -17,6 +18,7 @@ import logo from './static/logo.png';
 import s from './Header.module.scss';
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const advertisementSearch = useAppSelector(({ inputs }) => inputs.inputs.advertisementSearch);
   const {
@@ -38,6 +40,10 @@ const Header: React.FC = () => {
 
   const InputHandler = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(inputsSlice.actions.setChangeInput({ field: Field.advertisementSearch, value }));
+  };
+
+  const onClickButtonHandler = () => {
+    navigate(RouteNames.MAIN);
   };
 
   return (
@@ -63,6 +69,7 @@ const Header: React.FC = () => {
               variant={ButtonVariant.gray}
               name="search"
               fullWidth
+              onClick={onClickButtonHandler}
             >
               Найти
             </InputWithBtn>

@@ -11,4 +11,13 @@
     justify-content: start;
     height: 70%;
   }
+
+  .noDialogs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    font-size: 26px;
+    font-weight: $font-weight-bold;
+  }
 }
