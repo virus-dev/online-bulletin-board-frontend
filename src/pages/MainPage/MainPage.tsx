@@ -13,7 +13,7 @@ import s from './MainPage.module.scss';
 const MainPage = () => {
   const advertisementSearch = useAppSelector(({ inputs }) => inputs.inputs.advertisementSearch);
   const [getAllQuery, setGetAllQuery] = useState({
-    limit: 12,
+    limit: 14,
     page: 1,
     title: '',
     categoryId: 0,

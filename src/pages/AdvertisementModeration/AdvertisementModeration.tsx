@@ -11,7 +11,7 @@ const AdvertisementModeration: React.FC = () => {
     data,
     isLoading,
   } = AdvertisementAPI.useGetAllOnModerationQuery({
-    limit: 12,
+    limit: 14,
     page: 1,
     title: advertisementSearch,
     brandId: 0,
