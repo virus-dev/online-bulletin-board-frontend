@@ -142,8 +142,8 @@ const AdvertisementSlider: React.FC<AdvertisementSliderProps> = ({ data }) => {
           ref={slidesRef}
           style={{ transform: `translateX(-${wrapperTranslateX}px)` }}
         >
-          {data.map((src) => (
-            <img src={src} alt="*" key={src} />
+          {data.map((src, i) => (
+            <img src={src} alt="*" key={`${src + i}`} />
           ))}
         </div>
       </div>
