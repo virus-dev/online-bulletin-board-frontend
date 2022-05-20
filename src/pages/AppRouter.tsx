@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import useIsAuth from 'Hooks/useIsAuth';
 import { RouteNames } from 'Models/Route';
+import useIsMobileVersion from 'Hooks/useIsMobileVersion';
 import {
   publicRoutes,
   privateRoutes,
@@ -11,11 +12,12 @@ import {
 
 const AppRouter = () => {
   const { isAuthOrIsLoading, isModeratorRole, isAuth } = useIsAuth();
+  const isMobileVersion = useIsMobileVersion();
 
   return (
     <Routes>
       {
-        privateRoutes.map(({ path, element }) => (
+        privateRoutes(isMobileVersion).map(({ path, element }) => (
           <Route
             path={path}
             element={isAuthOrIsLoading ? element : <Navigate to={RouteNames.AUTH} />}
@@ -24,7 +26,7 @@ const AppRouter = () => {
         ))
       }
       {
-        moderatorRoutes.map(({ path, element }) => (
+        moderatorRoutes(isMobileVersion).map(({ path, element }) => (
           <Route
             path={path}
             element={isModeratorRole ? element : <Navigate to={RouteNames.PROFILE} />}
@@ -33,7 +35,7 @@ const AppRouter = () => {
         ))
       }
       {
-        unloginRoutes.map(({ path, element }) => (
+        unloginRoutes(isMobileVersion).map(({ path, element }) => (
           <Route
             path={path}
             element={isAuth ? <Navigate to={RouteNames.MAIN} /> : element}
@@ -42,7 +44,7 @@ const AppRouter = () => {
         ))
       }
       {
-        publicRoutes.map(({ path, element }) => (
+        publicRoutes(isMobileVersion).map(({ path, element }) => (
           <Route
             path={path}
             element={element}
