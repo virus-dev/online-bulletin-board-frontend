@@ -21,9 +21,4 @@ const Container: React.FC<ContainerProps> = ({ children, className }) => (
   </div>
 );
 
-// Todo как избавиться от defaultProps без export'а интерфейса?
-Container.defaultProps = {
-  className: undefined,
-};
-
 export default Container;
