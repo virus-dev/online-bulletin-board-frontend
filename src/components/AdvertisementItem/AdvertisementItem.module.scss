@@ -19,6 +19,7 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 4px;
+    position: relative;
     
     img {
       max-height: 220px;
@@ -27,6 +28,12 @@
       object-fit: cover;
     }
 
+  }
+  .advertisementItemFavorite{
+    position: absolute;
+    bottom: 0;
+    right: 1rem;
+    transform: translateY(50%);
   }
 
   .advertisementItemInfo {

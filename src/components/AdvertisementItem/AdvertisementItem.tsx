@@ -4,8 +4,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdvertisementAPI from 'Services/AdvertisementAPI';
 import IconNoFoto from 'Storybook/Icons/IconNoFoto';
+import ButtonIcon from "Storybook/ButtonIcon/ButtonIcon";
 
 import s from './AdvertisementItem.module.scss';
+
 
 interface AdvertisementItemProps {
   id: number,
@@ -37,6 +39,9 @@ const AdvertisementItem: React.FC<AdvertisementItemProps> = ({ id, price, title 
             )}
           </div>
         )}
+        <div onClick={event => event.stopPropagation()} className={s.advertisementItemFavorite}>
+          <ButtonIcon />
+        </div>
       </div>
       <div className={s.advertisementItemInfo}>
         <Price price={price} />
