@@ -9,6 +9,7 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary>
+      {/*  Test*/}
       <SocketContext.Provider value={socket}>
         <div className="App">
           <AppRouter />
