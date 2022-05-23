@@ -18,6 +18,7 @@ import logo from './static/logo.png';
 import s from './Header.module.scss';
 
 const Header: React.FC = () => {
+  console.log('123');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const advertisementSearch = useAppSelector(({ inputs }) => inputs.inputs.advertisementSearch);
