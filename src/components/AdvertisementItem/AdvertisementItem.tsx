@@ -1,13 +1,14 @@
 import Price from 'Components/Price/Price';
 import Loader from 'Components/storybook/Loader/Loader';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdvertisementAPI from 'Services/AdvertisementAPI';
 import IconNoFoto from 'Storybook/Icons/IconNoFoto';
-import ButtonIcon from "Storybook/ButtonIcon/ButtonIcon";
+import ButtonIcon from 'Storybook/ButtonIcon/ButtonIcon';
+import IconFavorite from 'Icons/IconFavorite';
+import isProduction from 'Utils/isProduction';
 
 import s from './AdvertisementItem.module.scss';
-
 
 interface AdvertisementItemProps {
   id: number,
@@ -18,6 +19,7 @@ interface AdvertisementItemProps {
 const AdvertisementItem: React.FC<AdvertisementItemProps> = ({ id, price, title }) => {
   const navigate = useNavigate();
   const { data, isLoading } = AdvertisementAPI.useGetImagesQuery(id);
+  const [buttonIconActive, setButtonIconActive] = useState(false);
 
   const onClickHandler = () => {
     navigate(`/advertisement/${id}`);
@@ -39,8 +41,8 @@ const AdvertisementItem: React.FC<AdvertisementItemProps> = ({ id, price, title 
             )}
           </div>
         )}
-        <div onClick={event => event.stopPropagation()} className={s.advertisementItemFavorite}>
-          <ButtonIcon />
+        <div className={s.advertisementItemFavorite}>
+          {!isProduction() && <ButtonIcon active={buttonIconActive} setActive={setButtonIconActive} icon={<IconFavorite color={buttonIconActive ? 'red' : 'white'} />} />}
         </div>
       </div>
       <div className={s.advertisementItemInfo}>
