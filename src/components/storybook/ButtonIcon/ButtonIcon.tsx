@@ -5,43 +5,33 @@ import classnames from 'classnames';
 import s from './ButtonIcon.module.scss';
 
 export interface ButtonIconProps {
-  setActive: (prevState: any) => void,
   className?: string,
-  active: boolean,
   icon?: React.ReactNode,
-  onClick?: () => void,
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
   isLoading?: boolean,
   loadingRenderProps?: () => React.ReactElement | React.ReactNode,
 }
-
 const loadingRenderPropsInitial = () => <Loader color="#fff" size="24px" />;
 
 const ButtonIcon: React.FC<ButtonIconProps> = ({
+  onClick,
   className,
-  active,
   icon,
   isLoading,
-  setActive,
   loadingRenderProps = loadingRenderPropsInitial,
-}) => {
-  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setActive(!active);
-    e.stopPropagation();
-  };
-  return (
-    <button
-      type="button"
-      onClick={(e) => onClickHandler(e)}
-      className={classnames(
-        className,
-        s.button,
-      )}
-    >
-      {
+}) => (
+  <button
+    type="button"
+    onClick={(e)=> onClick(e)}
+    className={classnames(
+      className,
+      s.button,
+    )}
+  >
+    {
         isLoading && loadingRenderProps ? loadingRenderProps()
           : (icon && <span className={s.icon}>{icon}</span>)
       }
-    </button>
-  );
-};
+  </button>
+);
 export default ButtonIcon;
