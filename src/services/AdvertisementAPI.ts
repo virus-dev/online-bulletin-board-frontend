@@ -1,22 +1,71 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { createApi, fetchBaseQuery, FetchBaseQueryMeta } from '@reduxjs/toolkit/dist/query/react';
 import { Advertisement } from 'Models/Advertisement';
 
 interface GetAll {
   limit: number,
   page: number,
-  title: string,
-  sort: string,
+  title?: string,
+  sort?: string,
   categoryId: number,
   brandId: number,
+}
+
+interface GetCurrentAdvertisement extends GetAll {
+  advertisementsViewed: string,
 }
 
 // TODO: Найти некостыльное решение
 let prevProvidesTags: Advertisement[] = [];
 let prevPage = 0;
-let prevTitle = '';
+let prevTitle: string | undefined;
 let prevCategoryId = 0;
 let prevBrandId = 0;
-let prevSort = '';
+let prevSort: string | undefined;
+
+const transformResponseRibbon = (
+  res: unknown,
+  _: FetchBaseQueryMeta | undefined,
+  {
+    title,
+    brandId,
+    categoryId,
+    page,
+    sort,
+  }: GetAll,
+) => {
+  if (title !== prevTitle) {
+    prevTitle = title;
+    prevProvidesTags = [];
+  }
+
+  if (brandId !== prevBrandId) {
+    prevBrandId = brandId;
+    prevProvidesTags = [];
+  }
+
+  if (categoryId !== prevCategoryId) {
+    prevCategoryId = categoryId;
+    prevProvidesTags = [];
+  }
+
+  if (page <= prevPage) {
+    prevPage = page;
+    prevProvidesTags = [];
+  }
+
+  if (sort !== prevSort) {
+    prevSort = sort;
+    prevProvidesTags = [];
+  }
+
+  if (Array.isArray(res) && res.length) {
+    const transformRes = [...prevProvidesTags, ...res];
+    prevProvidesTags = transformRes;
+    return transformRes;
+  }
+
+  return prevProvidesTags;
+};
 
 const AdvertisementAPI = createApi({
   reducerPath: 'advertisementAPI',
@@ -41,50 +90,7 @@ const AdvertisementAPI = createApi({
         },
       }),
       providesTags: ['Advertisement'],
-      transformResponse: (
-        res,
-        _,
-        {
-          title,
-          brandId,
-          categoryId,
-          page,
-          sort,
-        },
-      ) => {
-        if (title !== prevTitle) {
-          prevTitle = title;
-          prevProvidesTags = [];
-        }
-
-        if (brandId !== prevBrandId) {
-          prevBrandId = brandId;
-          prevProvidesTags = [];
-        }
-
-        if (categoryId !== prevCategoryId) {
-          prevCategoryId = categoryId;
-          prevProvidesTags = [];
-        }
-
-        if (page <= prevPage) {
-          prevPage = page;
-          prevProvidesTags = [];
-        }
-
-        if (sort !== prevSort) {
-          prevSort = sort;
-          prevProvidesTags = [];
-        }
-
-        if (Array.isArray(res) && res.length) {
-          const transformRes = [...prevProvidesTags, ...res];
-          prevProvidesTags = transformRes;
-          return transformRes;
-        }
-
-        return prevProvidesTags;
-      },
+      transformResponse: transformResponseRibbon,
     }),
     getAllMyAdvertisement: build.query<Advertisement[], void>({
       query: () => ({
@@ -94,6 +100,24 @@ const AdvertisementAPI = createApi({
         },
       }),
       providesTags: ['Advertisement'],
+    }),
+    getCurrentAdvertisement: build.query<Advertisement[], GetCurrentAdvertisement>({
+      query: ({
+        brandId, categoryId, limit, page, sort, advertisementsViewed,
+      }) => ({
+        url: '/getCurrentAdvertisement',
+        method: 'GET',
+        params: {
+          brandId,
+          categoryId,
+          limit,
+          page,
+          sort,
+          advertisementsViewed,
+        },
+      }),
+      providesTags: () => ['Advertisement'],
+      transformResponse: transformResponseRibbon,
     }),
     getAllOnModeration: build.query<Advertisement[], GetAll>({
       query: ({ limit, page }) => ({

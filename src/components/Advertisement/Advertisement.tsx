@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
+import { useParams } from 'react-router-dom';
 import Container from 'Storybook/Container/Container';
 import { Brands } from 'Models/Brands';
 import { Categories } from 'Models/Categories';
@@ -45,6 +46,30 @@ const Advertisement: React.FC<AdvertisementProps> = ({
   dataBrands,
   isCanModerate,
 }) => {
+  const { advertisementId } = useParams();
+
+  useEffect(() => {
+    if (advertisementId) {
+      const advertisementsViewed = localStorage.getItem('advertisementsViewed');
+
+      const advertisementsViewedArr = advertisementsViewed ? advertisementsViewed.split(',') : [];
+
+      const isAlreadyViewed = advertisementsViewedArr.some((el: string) => el === advertisementId);
+
+      if (isAlreadyViewed) {
+        const index = advertisementsViewedArr.indexOf(advertisementId);
+        advertisementsViewedArr.splice(index, 1);
+        advertisementsViewedArr.unshift(advertisementId);
+        const advertisementsViewedRes = advertisementsViewedArr.join(',');
+        localStorage.setItem('advertisementsViewed', advertisementsViewedRes);
+      } else {
+        advertisementsViewedArr.unshift(advertisementId);
+        const advertisementsViewedRes = advertisementsViewedArr.join(',');
+        localStorage.setItem('advertisementsViewed', advertisementsViewedRes);
+      }
+    }
+  }, [advertisementId]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }

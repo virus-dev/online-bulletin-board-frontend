@@ -36,7 +36,7 @@ const MainPage = () => {
     })();
   }, [advertisementSearch]);
 
-  const callback = () => {
+  const onScrollEnd = () => {
     setGetAllQuery((prev) => ({ ...prev, page: prev.page + 1 }));
   };
 
@@ -48,7 +48,7 @@ const MainPage = () => {
         <div className={s.title}>Все объявления</div>
         <Filters onChange={onChangeFilters} categoryId={getAllQuery.categoryId} />
       </Container>
-      <AdvertisementsRibbon data={data} isLoading={isLoading} onScrollEnd={callback} />
+      <AdvertisementsRibbon data={data} isLoading={isLoading} onScrollEnd={onScrollEnd} />
     </>
   );
 };
