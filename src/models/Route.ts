@@ -13,4 +13,5 @@ export enum RouteNames {
   CHAT = '/chat',
   ADVERTISEMENT_MODERATION = '/advertisement/moderation',
   ADVERTISEMENT_MY_ADVERTISEMENTS = '/advertisement/my_advertisements',
+  ADVERTISEMENT_VIEWED = '/advertisement_viewed',
 }

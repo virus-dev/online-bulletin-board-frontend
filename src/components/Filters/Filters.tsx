@@ -8,9 +8,10 @@ import s from './Filters.module.scss';
 interface FiltersProps {
   onChange: (value: unknown, field: string) => void,
   categoryId: number,
+  withoutSort?: boolean,
 }
 
-const Filters: React.FC<FiltersProps> = ({ onChange, categoryId }) => {
+const Filters: React.FC<FiltersProps> = ({ onChange, categoryId, withoutSort }) => {
   const {
     data: dataCategories = [],
   } = CategoriesAPI.useGetCategoriesQuery();
@@ -67,11 +68,13 @@ const Filters: React.FC<FiltersProps> = ({ onChange, categoryId }) => {
         onChange={(val) => onChange(val, 'brandId')}
         placeholder={!categoryId ? 'Сначала выберите категорию' : 'Выберите вариант'}
       />
-      <Select
-        options={optionsSorts}
-        onChange={(val) => onChange(val, 'sort')}
-        placeholder="Выберите сортировку"
-      />
+      {!withoutSort && (
+        <Select
+          options={optionsSorts}
+          onChange={(val) => onChange(val, 'sort')}
+          placeholder="Выберите сортировку"
+        />
+      )}
     </div>
   );
 };
