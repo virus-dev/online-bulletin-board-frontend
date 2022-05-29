@@ -22,7 +22,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
 }) => (
   <button
     type="button"
-    onClick={(e)=> onClick(e)}
+    onClick={(e) => onClick?.(e)}
     className={classnames(
       className,
       s.button,
