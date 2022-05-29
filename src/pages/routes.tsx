@@ -19,6 +19,8 @@ const PageMyAdvertisementsDesktop = React.lazy(() => import('./PageMyAdvertiseme
 const PageMyAdvertisementsMobile = React.lazy(() => import('./PageMyAdvertisements/mobile/PageMyAdvertisements'));
 const PageAdvertisementModerationDesktop = React.lazy(() => import('./PageAdvertisementModeration/desktop/PageAdvertisementModeration'));
 const PageAdvertisementModerationMobile = React.lazy(() => import('./PageAdvertisementModeration/mobile/PageAdvertisementModeration'));
+const PageAdvertisementsViewedDesktop = React.lazy(() => import('./PageAdvertisementsViewed/desktop/PageAdvertisementsViewed'));
+const PageAdvertisementsViewedMobile = React.lazy(() => import('./PageAdvertisementsViewed/mobile/PageAdvertisementsViewed'));
 
 
 type ElementComponentProps = {
@@ -40,6 +42,7 @@ export const unloginRoutes: RouteFunction = (isMobile) => ([
 export const publicRoutes: RouteFunction = (isMobile) => ([
   { path: RouteNames.MAIN, element: <ElementComponent Component={isMobile ? PageMainMobile : PageMainDesktop} /> },
   { path: RouteNames.ADVERTISEMENT_ID, element: <ElementComponent Component={isMobile ? PageAdvertisementMobile : PageAdvertisementDesktop} /> },
+  { path: RouteNames.ADVERTISEMENT_VIEWED, element: <ElementComponent Component={isMobile ? PageAdvertisementsViewedMobile : PageAdvertisementsViewedDesktop} /> },
 ]);
 
 export const moderatorRoutes: RouteFunction = (isMobile) => ([
