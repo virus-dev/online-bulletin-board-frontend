@@ -1,9 +1,12 @@
 import Price from 'Components/Price/Price';
 import Loader from 'Components/storybook/Loader/Loader';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import AdvertisementAPI from 'Services/AdvertisementAPI';
 import IconNoFoto from 'Storybook/Icons/IconNoFoto';
+import ButtonIcon from 'Storybook/ButtonIcon/ButtonIcon';
+import IconFavorite from 'Icons/IconFavorite';
+import isProduction from 'Utils/isProduction';
 
 import s from './AdvertisementItem.module.scss';
 
@@ -14,18 +17,18 @@ interface AdvertisementItemProps {
 }
 
 const AdvertisementItem: React.FC<AdvertisementItemProps> = ({ id, price, title }) => {
-  const navigate = useNavigate();
   const { data, isLoading } = AdvertisementAPI.useGetImagesQuery(id);
+  const [buttonIconActive, setButtonIconActive] = useState(false);
 
-  const onClickHandler = () => {
-    navigate(`/advertisement/${id}`);
+  const onClickHandler = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setButtonIconActive((prevState) => !prevState);
+    e.preventDefault();
   };
-
   return (
-    <button
+    <Link
       type="button"
       className={s.advertisementItem}
-      onClick={onClickHandler}
+      to={`/advertisement/${id}`}
     >
       <div className={s.advertisementItemImg}>
         {isLoading ? <div><Loader /></div> : (
@@ -37,12 +40,22 @@ const AdvertisementItem: React.FC<AdvertisementItemProps> = ({ id, price, title 
             )}
           </div>
         )}
+        {
+          !isProduction() && (
+            <div className={s.advertisementItemFavorite}>
+              <ButtonIcon
+                onClick={onClickHandler}
+                icon={<IconFavorite color={buttonIconActive ? 'red' : 'white'} />}
+              />
+            </div>
+          )
+        }
       </div>
       <div className={s.advertisementItemInfo}>
         <Price price={price} />
         <div className={s.title}>{title}</div>
       </div>
-    </button>
+    </Link>
   );
 };
 
