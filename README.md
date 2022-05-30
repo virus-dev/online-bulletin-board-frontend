@@ -19,3 +19,7 @@
 # Еще
 - База данных - postgresql (heroku postgresql)
 - Сервис, на который загружаютя картинки - https://imgbb.com/
+
+# .env
+REACT_APP_API_URL=https://online-bulletin-board-backend.herokuapp.com/api/
+REACT_APP_WS_URL=wss://online-bulletin-board-backend.herokuapp.com/wsMessages
