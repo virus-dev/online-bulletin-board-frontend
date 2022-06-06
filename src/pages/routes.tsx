@@ -22,13 +22,20 @@ const PageAdvertisementModerationMobile = React.lazy(() => import('./PageAdverti
 const PageAdvertisementsViewedDesktop = React.lazy(() => import('./PageAdvertisementsViewed/desktop/PageAdvertisementsViewed'));
 const PageAdvertisementsViewedMobile = React.lazy(() => import('./PageAdvertisementsViewed/mobile/PageAdvertisementsViewed'));
 
+// const getPage = (pageName: string, isMobile: boolean) => ({
+//   Component: React.lazy(() => import(`./${pageName}/${isMobile ? 'mobile' : 'desktop'}/${pageName}`)),
+//   reducers: require(`./${pageName}/${isMobile ? 'mobile' : 'desktop'}/reducers`).default,
+// })
+
+// console.log(getPage('PageMain', false));
 
 type ElementComponentProps = {
   Component: React.LazyExoticComponent<() => JSX.Element>,
+  withoutHeader?: boolean,
 }
 
-const ElementComponent: React.FC<ElementComponentProps> = ({ Component }) => (
-  <S fallback={<PageLoading />}>
+const ElementComponent: React.FC<ElementComponentProps> = ({ Component, withoutHeader }) => (
+  <S fallback={<PageLoading withoutHeader={!!withoutHeader} />}>
     <Component />
   </S>
 );
@@ -36,7 +43,7 @@ const ElementComponent: React.FC<ElementComponentProps> = ({ Component }) => (
 type RouteFunction = (isMobile: boolean) => IRoute[];
 
 export const unloginRoutes: RouteFunction = (isMobile) => ([
-  { path: RouteNames.AUTH, element: <ElementComponent Component={isMobile ? PageAuthMobile : PageAuthDesktop} /> },
+  { path: RouteNames.AUTH, element: <ElementComponent withoutHeader Component={isMobile ? PageAuthMobile : PageAuthDesktop} /> },
 ]);
 
 export const publicRoutes: RouteFunction = (isMobile) => ([
