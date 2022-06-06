@@ -2,11 +2,12 @@ import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useIsAuth from 'Hooks/useIsAuth';
 import UserAPI from 'Services/UserAPI';
-import { getDialogs } from 'Store/actionCreators/messagesActionCreators';
+import { fetchDialogs } from 'Store/messages/messagesAsyncActions';
 import IconProfile from 'Components/IconProfile/IconProfile';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import SocketContext from 'Context/SocketContext';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
+import { selectorMessagesDialogData } from 'Store/messages/messagesSelectors';
 import AdvertisementOwnerLoading from '../AdvertisementOwnerLoading/AdvertisementOwnerLoading';
 
 import s from './AdvertisementOwnerSuccess.module.scss';
@@ -22,7 +23,7 @@ const AdvertisementOwnerSuccess: React.FC<AdvertisementOwnerSuccessProps> = ({
   const navigate = useNavigate();
   const { isAuth } = useIsAuth();
   const { socket } = useContext(SocketContext);
-  const dialogs = useAppSelector(({ messages }) => messages.dialogs.data);
+  const dialogs = useAppSelector(selectorMessagesDialogData);
 
   const {
     data: { image, firstName, secondName } = {}, isLoading,
@@ -30,7 +31,7 @@ const AdvertisementOwnerSuccess: React.FC<AdvertisementOwnerSuccessProps> = ({
   const { data: { id: yourId } = {} } = UserAPI.useGetDataQuery();
 
   useEffect(() => {
-    dispath(getDialogs());
+    dispath(fetchDialogs());
   }, [dispath]);
 
   const isDialogAlreadyThere = dialogs.findIndex((el) => (

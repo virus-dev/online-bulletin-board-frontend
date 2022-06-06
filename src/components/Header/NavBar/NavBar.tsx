@@ -6,19 +6,20 @@ import IconMessage from 'Storybook/Icons/IconMessage';
 import IconEye from 'Storybook/Icons/IconEye';
 import SocketContext from 'Context/SocketContext';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
-import { getCountUnreadMessages } from 'Store/actionCreators/messagesActionCreators';
+import { fetchCountUnreadMessages } from 'Store/messages/messagesAsyncActions';
 import { RouteNames } from 'Models/Route';
+import { selectorMessagesUnreadMessagesCount } from 'Store/messages/messagesSelectors';
 
 import s from './NavBar.module.scss';
 
 const NavBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isConnected } = useContext(SocketContext);
-  const unreadMessages = useAppSelector(({ messages }) => messages.unreadMessages);
+  const unreadMessagesCount = useAppSelector(selectorMessagesUnreadMessagesCount);
 
   useEffect(() => {
     if (isConnected) {
-      dispatch(getCountUnreadMessages());
+      dispatch(fetchCountUnreadMessages());
     }
   }, [dispatch, isConnected]);
 
@@ -45,7 +46,7 @@ const NavBar: React.FC = () => {
               <p className={s.navBarItemText}>
                 Непрочитанных сообщений:
                 {' '}
-                {unreadMessages}
+                {unreadMessagesCount}
               </p>
             </Link>
           </div>

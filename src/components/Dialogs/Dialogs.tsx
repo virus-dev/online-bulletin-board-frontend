@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import Loader from 'Storybook/Loader/Loader';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import UserAPI from 'Services/UserAPI';
-import { getDialogs } from 'Store/actionCreators/messagesActionCreators';
-import { messagesSlice } from 'Store/reducers/messagesSlice';
+import { fetchDialogs } from 'Store/messages/messagesAsyncActions';
+import { messagesSlice } from 'Store/messages/messagesSlice';
+import { selectorMessagesDialogData, selectorMessagesDialogIsLoading } from 'Store/messages/messagesSelectors';
 import DialogItem from '../DialogItem/DialogItem';
 
 import s from './Dialogs.module.scss';
@@ -11,13 +12,11 @@ import s from './Dialogs.module.scss';
 const Dialogs: React.FC = () => {
   const dispatch = useAppDispatch();
   const { data: { id } = {}, isLoading } = UserAPI.useGetDataQuery();
-  const {
-    data: dialogs,
-    isLoading: isLoadingDialogs,
-  } = useAppSelector(({ messages }) => messages.dialogs);
+  const dialogs = useAppSelector(selectorMessagesDialogData);
+  const isLoadingDialogs = useAppSelector(selectorMessagesDialogIsLoading);
 
   useEffect(() => {
-    dispatch(getDialogs());
+    dispatch(fetchDialogs());
   }, [dispatch]);
 
   const onClickHandler = (chatWithUserId: number) => {

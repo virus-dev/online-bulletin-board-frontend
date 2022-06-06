@@ -1,41 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Message, Status } from 'Models/Message';
 import { ReadMessageResponse } from 'Models/WebSocket';
+import { Reducers } from 'Store/types';
 import getStateCopy from 'Utils/getStateCopy';
-import { getCountUnreadMessages, getDialogs, getChat } from '../actionCreators/messagesActionCreators';
-
-interface Dialog {
-  fromUserId: number,
-  toUserId: number,
-  message: string,
-  unreadMessagesCount: number,
-  createdAt: Date,
-}
-
-interface Chat {
-  chatWithUserId: number | null,
-  messages: Message[] | [],
-  isLoading: boolean,
-}
-
-interface Dialogs {
-  data: Dialog[],
-  isLoading: boolean,
-}
-
-interface InitialStateMessages {
-  unreadMessages: number,
-  dialogs: Dialogs,
-  chat: Chat,
-}
-
-interface UpdateDialogAction {
-  message: Message,
-  isYouSendMessage: boolean,
-}
+import { fetchCountUnreadMessages, fetchDialogs, fetchChat } from './messagesAsyncActions';
+import { InitialStateMessages, UpdateDialogAction, Dialog } from './messagesTypes';
 
 const initialState: InitialStateMessages = {
-  unreadMessages: 0,
+  unreadMessagesCount: 0,
   dialogs: {
     data: [],
     isLoading: false,
@@ -59,7 +31,7 @@ const getNewMessages = (messages: Message[], id: number, fromUserId: number, toU
 );
 
 export const messagesSlice = createSlice({
-  name: 'messages',
+  name: Reducers.MESSAGES_REDUCER,
   initialState,
   reducers: {
     setChatWithUserId(state, action: PayloadAction<number>) {
@@ -74,7 +46,7 @@ export const messagesSlice = createSlice({
     ) {
       const {
         dialogs: { data: newStateDialogs },
-        unreadMessages,
+        unreadMessagesCount,
       }: InitialStateMessages = getStateCopy(state);
 
       const dialogIndex = newStateDialogs.findIndex((dialog) => (
@@ -92,14 +64,15 @@ export const messagesSlice = createSlice({
         // @ts-ignore: Unreachable code error
         {
           ...message,
-          unreadMessagesCount: isYouSendMessage ? 0 : unreadMessages + 1,
+          unreadMessagesCount: isYouSendMessage ? 0 : unreadMessagesCount + 1,
         },
         // eslint-disable-next-line
         // @ts-ignore: Unreachable code error
         ...newStateDialogs,
       ];
 
-      // TODO: Что это? Удалить? Не, пока оставим
+      // TODO: 1. Что это? Удалить?
+      // TODO: 2. Не, пока оставим
       // state.dialogs = JSON.parse(JSON.stringify(state.dialogs)).map((dialog: Message) => {
       //   if (
       //     (action.payload.fromUserId === dialog.fromUserId
@@ -123,7 +96,7 @@ export const messagesSlice = createSlice({
       const {
         chat: { messages },
         dialogs: { data: dataDialogs },
-        unreadMessages,
+        unreadMessagesCount,
       }: InitialStateMessages = getStateCopy(state);
 
       state.chat.messages = getNewMessages(messages, id, fromUserId, toUserId);
@@ -141,7 +114,7 @@ export const messagesSlice = createSlice({
       state.dialogs.data = newDialogs;
 
       // Обновляем кол-во всех непрочитанных сообщений
-      state.unreadMessages = unreadMessages - 1;
+      state.unreadMessagesCount = unreadMessagesCount - 1;
     },
     yourMessageWasRead: (
       state,
@@ -155,29 +128,27 @@ export const messagesSlice = createSlice({
     },
   },
   extraReducers: {
-    // TODO: Может лучше fetch?
-    [getCountUnreadMessages.fulfilled.type]: (state, action: PayloadAction<number>) => {
-      state.unreadMessages = action.payload;
+    [fetchCountUnreadMessages.fulfilled.type]: (state, action: PayloadAction<number>) => {
+      state.unreadMessagesCount = action.payload;
     },
-    [getDialogs.fulfilled.type]: (state, action: PayloadAction<Dialog[]>) => {
+    [fetchDialogs.fulfilled.type]: (state, action: PayloadAction<Dialog[]>) => {
       state.dialogs.data = action.payload;
       state.dialogs.isLoading = false;
     },
-    [getDialogs.rejected.type]: (state) => {
+    [fetchDialogs.rejected.type]: (state) => {
       state.dialogs.isLoading = false;
     },
-    [getDialogs.pending.type]: (state) => {
+    [fetchDialogs.pending.type]: (state) => {
       state.dialogs.isLoading = true;
     },
-    // getChat
-    [getChat.fulfilled.type]: (state, action: PayloadAction<Message[]>) => {
+    [fetchChat.fulfilled.type]: (state, action: PayloadAction<Message[]>) => {
       state.chat.messages = action.payload;
       state.chat.isLoading = false;
     },
-    [getChat.pending.type]: (state) => {
+    [fetchChat.pending.type]: (state) => {
       state.chat.isLoading = true;
     },
-    [getChat.rejected.type]: (state) => {
+    [fetchChat.rejected.type]: (state) => {
       state.chat.isLoading = false;
     },
   },

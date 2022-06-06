@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Loader from 'Storybook/Loader/Loader';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
-import { getChat } from 'Store/actionCreators/messagesActionCreators';
-import { messagesSlice } from 'Store/reducers/messagesSlice';
+import { fetchChat } from 'Store/messages/messagesAsyncActions';
+import { messagesSlice } from 'Store/messages/messagesSlice';
 import Message from '../Message/Message';
 import MessageSendPanel from '../MessageSendPanel/MessageSendPanel';
 
@@ -27,7 +27,7 @@ const ChatWindow: React.FC = () => {
       return;
     }
 
-    diapatch(getChat(chatWithUserId || Number(chatWithUserIdParam)));
+    diapatch(fetchChat(chatWithUserId || Number(chatWithUserIdParam)));
   }, [chatWithUserId, diapatch, search]);
 
   const jsxInner = () => {
