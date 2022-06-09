@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import { useParams } from 'react-router-dom';
 import Container from 'Storybook/Container/Container';
@@ -6,47 +6,46 @@ import { Brands } from 'Models/Brands';
 import { Categories } from 'Models/Categories';
 import i18 from 'Utils/i18';
 import Price from 'Components/Price/Price';
+import { useAppDispatch, useAppSelector } from 'Hooks/redux';
+import { fetchAdvertisement } from 'Store/advertisement/advertisementAsyncActions';
+import { selectorAdvertisement } from 'Store/advertisement/advertisementSelectors';
+import useInjectAsyncReducers from 'Hooks/useInjectReducer';
+import { Undefineable } from 'Utils/typeScript';
 import dateFromZFormat, { VariantsFormsts } from 'Utils/dateFromZFormat';
 import AdvertisementSlider from '../AdvertisementSlider/AdvertisementSlider';
 import AdvertisementOwner from '../AdvertisementOwner/AdvertisementOwner';
 import ConfirmModerateButtons from './components/ConfirmModerateButtons/ConfirmModerateButtons';
+import asyncReducers from './asyncReducers';
 
 import s from './Advertisement.module.scss';
 
-interface AdvertisementProps {
-  isLoading: boolean | undefined,
-  brandId: number | undefined,
-  categoryId: number | undefined,
-  createdAt: string | undefined,
-  updatedAt: string | undefined,
-  description: string | undefined,
-  price: number | undefined,
-  status: string | undefined,
-  title: string | undefined,
-  userId: number | undefined,
-  dataImagesAdvertisement: string[] | undefined,
-  dataCategories: Categories[] | undefined,
-  dataBrands: Brands[] | undefined,
-  isCanModerate: boolean | undefined,
-}
+type AdvertisementProps = Undefineable<{
+  dataCategories: Categories[],
+  dataBrands: Brands[],
+  isCanModerate: boolean,
+}>;
 
 const Advertisement: React.FC<AdvertisementProps> = ({
-  isLoading,
-  brandId,
-  categoryId,
-  createdAt,
-  updatedAt,
-  description,
-  price,
-  status,
-  title,
-  userId,
-  dataImagesAdvertisement,
   dataCategories,
   dataBrands,
   isCanModerate,
 }) => {
+  useInjectAsyncReducers(asyncReducers);
   const { advertisementId } = useParams();
+  const dispatch = useAppDispatch();
+  const {
+    advertisementImages,
+    brandId,
+    categoryId,
+    createdAt,
+    description,
+    isLoading,
+    price,
+    status,
+    title,
+    updatedAt,
+    userId,
+  } = useAppSelector(selectorAdvertisement);
 
   useEffect(() => {
     if (advertisementId) {
@@ -70,6 +69,10 @@ const Advertisement: React.FC<AdvertisementProps> = ({
     }
   }, [advertisementId]);
 
+  useLayoutEffect(() => {
+    dispatch(fetchAdvertisement(Number(advertisementId)));
+  }, [advertisementId, dispatch]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -81,7 +84,7 @@ const Advertisement: React.FC<AdvertisementProps> = ({
         <div className={s.status}>{status === 'close' && 'Объявление не прошло модерацию'}</div>
         <div className={s.title}>{title}</div>
         <AdvertisementSlider
-          data={dataImagesAdvertisement}
+          data={advertisementImages}
         />
         {price && (
           <div className={s.priceBlock}>

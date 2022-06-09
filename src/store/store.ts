@@ -6,6 +6,7 @@ import BrandsAPI from 'Services/BrandsAPI';
 import userReducer from './reducers/UserSlice';
 import inputsReducer from './reducers/inputsSlice';
 import messagesReducer from './messages/messagesSlice';
+import { AsyncReducersInRootState } from './types';
 
 const staticReducers = {
   user: userReducer,
@@ -51,7 +52,7 @@ export const injectReducer = (key: string, asyncReducer: Reducer) => {
   }
 };
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof rootReducer> & AsyncReducersInRootState;
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore['dispatch'];
 

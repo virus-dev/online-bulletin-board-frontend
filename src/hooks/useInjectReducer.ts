@@ -2,12 +2,12 @@ import { AsyncReducers } from 'Models/AsyncReducers';
 import { injectReducer } from 'Store/store';
 import useOnce from './useOnce';
 
-const useInjectReducers = (reducers: AsyncReducers[]) => {
+const useInjectAsyncReducers = (asyncReducers: AsyncReducers[]) => {
   useOnce(() => {
-    reducers.forEach(([key, reducer]) => {
+    asyncReducers.forEach(([key, reducer]) => {
       injectReducer(key, reducer);
     });
   });
 };
 
-export default useInjectReducers;
+export default useInjectAsyncReducers;
