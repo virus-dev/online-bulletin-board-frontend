@@ -20,8 +20,6 @@ jobs:
         run: npm install
       - name: build project
         run: npm run build
-      - name: unit test
-        run: npm run test:unit
       - name: ESLint Checking
         if: ${{ always() && (steps.get_file_changes.outputs.files_added || steps.get_file_changes.outputs.files_modified) }}
         run: yarn eslint --config ./.eslintrc.js --ignore-path ./.eslintignore ${{ steps.get_file_changes.outputs.files_added }} ${{ steps.get_file_changes.outputs.files_modified }} --fix
