@@ -10,4 +10,6 @@ export interface InitialStateAdvertisements extends AdsAreOver {
   error: null | string,
 }
 
-export function IsAdsAreOver(x: any): x is AdsAreOver { return x.adsAreOver === true; }
+// eslint-disable-next-line
+// @ts-ignore: Unreachable code error
+export function IsAdsAreOver(x): x is AdsAreOver { return x.adsAreOver === true; }

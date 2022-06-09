@@ -30,7 +30,9 @@ const Message: React.FC<MessageProps> = ({
 
   useEffect(() => {
     // TODO: Добавить тип
-    const fn = (entries: any) => {
+    // eslint-disable-next-line
+    // @ts-ignore: Unreachable code error
+    const fn = (entries) => {
       if (!isYourMessage && status === Status.delivered && entries[0].isIntersecting) {
         const sendObj = {
           method: 'readMessage',

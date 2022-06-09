@@ -48,7 +48,9 @@ export const registration = createAsyncThunk(
 export const updateData = createAsyncThunk(
   'user/updateData',
   // TODO: Временно any
-  async (formData: any, thunkAPI) => {
+  // eslint-disable-next-line
+  // @ts-ignore: Unreachable code error
+  async (formData, thunkAPI) => {
     try {
       const { data, data: { token } } = await axios.post(`${process.env.REACT_APP_API_URL}user/update`, formData, {
         headers: { authorization: `Baber ${localStorage.getItem('JWT')}` },
