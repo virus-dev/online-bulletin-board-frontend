@@ -28,7 +28,7 @@ export enum VariantsFormsts {
 }
 
 interface DateFromZFormatParams {
-  date: string | undefined,
+  date: string | undefined | null,
   variantsFormsts: VariantsFormsts,
 }
 

@@ -1,4 +1,5 @@
 export interface Advertisement {
+  advertisementImages: string[],
   id: number,
   userId: number,
   title: string,

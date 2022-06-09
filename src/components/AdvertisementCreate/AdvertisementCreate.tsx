@@ -6,11 +6,12 @@ import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import Container from 'Storybook/Container/Container';
 import BrandsAPI from 'Services/BrandsAPI';
 import CategoriesAPI from 'Services/CategoriesAPI';
-import AdvertisementAPI from 'Services/AdvertisementAPI';
 import { checkFileForImgBB } from 'Utils/getCheckFileFunc';
+import { ErrorType } from 'Models/ResponseValidateError';
 import { RouteNames } from 'Models/Route';
 import getErrorValidationMessage from 'Utils/getErrorMessage';
 import Select from 'Components/storybook/Select/Select';
+import createAdvertisement from './helpers/createAdvertisement';
 
 import s from './AdvertisementCreate.module.scss';
 
@@ -25,6 +26,8 @@ interface AdvertisementData {
 
 const AdvertisementCreate = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState({});
+  const [isPendingAdvertisementCreate, setIsPendingAdvertisementCreate] = useState(false);
   const {
     data: dataCategories = [],
   } = CategoriesAPI.useGetCategoriesQuery();
@@ -32,10 +35,16 @@ const AdvertisementCreate = () => {
     trigger,
     { isLoading: isLoadingBrands, data: dataBrands = [] },
   ] = BrandsAPI.useLazyGetBrandsQuery();
-  const [
-    create,
-    { isLoading: isLoadingCreate, isSuccess, error },
-  ] = AdvertisementAPI.useCreateMutation();
+
+  const onSuccesAdvertisementCreate = () => {
+    setIsPendingAdvertisementCreate(false);
+    navigate(RouteNames.ADVERTISEMENT_MY_ADVERTISEMENTS);
+  };
+
+  const onErrorAdvertisementCreate = (e: ErrorType) => {
+    setIsPendingAdvertisementCreate(false);
+    setError(e);
+  };
 
   const optionsCategories = useMemo(() => (
     dataCategories.map(({ id, name }) => ({ value: id, mnemonic: name }))
@@ -44,12 +53,6 @@ const AdvertisementCreate = () => {
   const optionsBrands = useMemo(() => (
     dataBrands.map(({ id, name }) => ({ value: id, mnemonic: name }))
   ), [dataBrands]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      navigate(RouteNames.ADVERTISEMENT_MY_ADVERTISEMENTS);
-    }
-  }, [isSuccess, navigate]);
 
   const [advertisementData, setAdvertisementData] = useState<AdvertisementData>({
     categoryId: '0',
@@ -123,7 +126,8 @@ const AdvertisementCreate = () => {
       });
     }
 
-    create(formData);
+    setIsPendingAdvertisementCreate(true);
+    createAdvertisement(formData, onSuccesAdvertisementCreate, onErrorAdvertisementCreate);
   };
 
   const textInBrandsSelect = () => {
@@ -174,7 +178,7 @@ const AdvertisementCreate = () => {
         <div className={s.br} />
         <Button
           onClick={onClickButtonHandler}
-          isLoading={isLoadingCreate}
+          isLoading={isPendingAdvertisementCreate}
           variant={ButtonVariant.blue}
         >
           Создать

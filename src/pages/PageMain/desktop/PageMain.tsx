@@ -2,17 +2,29 @@ import React, { useEffect, useState } from 'react';
 import Header from 'Components/Header/Header';
 import AdvertisementsRibbon from 'Components/AdvertisementsRibbon/AdvertisementsRibbon';
 import MainSlider from 'Components/MainSlider/MainSlider';
-import { useAppSelector } from 'Hooks/redux';
-import AdvertisementAPI from 'Services/AdvertisementAPI';
+import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import isProduction from 'Utils/isProduction';
 import Container from 'Components/storybook/Container/Container';
 import Filters from 'Components/Filters/Filters';
+import { fetchAllAdvertisements } from 'Store/advertisements/advertisementsAsyncActions';
+import { selectorAdvertisementsData, selectorAdvertisementsIsLoading } from 'Store/advertisements/advertisementsSelectors';
+import { advertisementsSlice } from 'Store/advertisements/advertisementsSlice';
+import useDebounce from 'Hooks/useDebounce';
+import useIsFirstRender from 'Hooks/useIsFirstRender';
+import useInjectAsyncReducers from 'Hooks/useInjectReducer';
+import asyncReducers from './asyncReducers';
 
 import s from './PageMain.module.scss';
 
 const MainPage = () => {
+  useInjectAsyncReducers(asyncReducers);
+  const isFirstRender = useIsFirstRender();
+  const dispatch = useAppDispatch();
   const advertisementSearch = useAppSelector(({ inputs }) => inputs.inputs.advertisementSearch);
-  const [getAllQuery, setGetAllQuery] = useState({
+  const data = useAppSelector(selectorAdvertisementsData);
+  const isLoading = useAppSelector(selectorAdvertisementsIsLoading);
+
+  const [getAllParams, setGetAllParams] = useState({
     limit: 14,
     page: 1,
     title: '',
@@ -21,23 +33,34 @@ const MainPage = () => {
     sort: '',
   });
 
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(fetchAllAdvertisements({ params: getAllParams, prevAdvertisements: data }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, getAllParams]);
+
+  const searchNewAdvertisements = useDebounce(() => {
+    if (!isFirstRender) {
+      const { advertisementsClear } = advertisementsSlice.actions;
+      dispatch(advertisementsClear());
+      setGetAllParams((prev) => ({ ...prev, title: advertisementSearch, page: 1 }));
+    }
+  }, 500);
+
   const onChangeFilters = (value: unknown, field: string) => {
-    setGetAllQuery((prev) => ({ ...prev, [field]: value, page: 1 }));
+    const { advertisementsClear } = advertisementsSlice.actions;
+    dispatch(advertisementsClear());
+    setGetAllParams((prev) => ({ ...prev, [field]: value, page: 1 }));
   };
 
-  const {
-    data,
-    isLoading,
-  } = AdvertisementAPI.useGetAllQuery(getAllQuery);
-
   useEffect(() => {
-    (() => {
-      setGetAllQuery((prev) => ({ ...prev, title: advertisementSearch, page: 1 }));
-    })();
+    searchNewAdvertisements();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [advertisementSearch]);
 
   const callback = () => {
-    setGetAllQuery((prev) => ({ ...prev, page: prev.page + 1 }));
+    setGetAllParams((prev) => ({ ...prev, page: prev.page + 1 }));
   };
 
   return (
@@ -46,9 +69,9 @@ const MainPage = () => {
       {!isProduction() && <MainSlider />}
       <Container>
         <div className={s.title}>Все объявления</div>
-        <Filters onChange={onChangeFilters} categoryId={getAllQuery.categoryId} />
+        <Filters onChange={onChangeFilters} categoryId={getAllParams.categoryId} />
       </Container>
-      <AdvertisementsRibbon data={data} isLoading={isLoading} onScrollEnd={callback} />
+      <AdvertisementsRibbon onScrollEnd={callback} />
     </>
   );
 };

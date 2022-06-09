@@ -3,7 +3,7 @@ import AdvertisementOwnerLoading from './components/AdvertisementOwnerLoading/Ad
 import AdvertisementOwnerSuccess from './components/AdvertisementOwnerSuccess/AdvertisementOwnerSuccess';
 
 interface AdvertisementOwnerProps {
-  userId: number | undefined,
+  userId: number | undefined | null,
 }
 
 const AdvertisementOwner: React.FC<AdvertisementOwnerProps> = ({ userId }) => (

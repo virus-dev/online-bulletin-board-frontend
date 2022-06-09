@@ -1,4 +1,5 @@
-import { InitialStateMessages } from './messages/messagesTypes';
+import { InitialStateAdvertisement } from './advertisement/advertisementTypes';
+import { InitialStateAdvertisements } from './advertisements/advertisementsTypes';
 
 // TODO: Блин, а надо ли это?
 export enum Reducers {
@@ -6,5 +7,6 @@ export enum Reducers {
 }
 
 export interface AsyncReducersInRootState {
-  messages: InitialStateMessages,
+  advertisement: InitialStateAdvertisement,
+  advertisements: InitialStateAdvertisements,
 }

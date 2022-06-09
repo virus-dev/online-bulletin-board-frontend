@@ -25,11 +25,8 @@ const LoadTrigger: React.FC<LoadTriggerProps> = ({ callback }) => {
     }
   }, [callback, isIntersecting]);
 
+  // TODO: className
   return <div style={{ height: '1px' }} ref={lastElement} />;
-};
-
-LoadTrigger.defaultProps = {
-  callback: undefined,
 };
 
 export default LoadTrigger;

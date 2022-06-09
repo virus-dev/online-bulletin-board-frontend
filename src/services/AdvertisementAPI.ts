@@ -77,15 +77,12 @@ const AdvertisementAPI = createApi({
         limit, page, title, sort, categoryId, brandId,
       }) => ({
         url: '/getAll',
-        method: 'POST',
         params: {
           limit,
           page,
           sort,
           categoryId,
           brandId,
-        },
-        body: {
           title,
         },
       }),
