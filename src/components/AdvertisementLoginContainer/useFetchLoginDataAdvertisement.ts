@@ -9,14 +9,10 @@ const useFetchLoginDataAdvertisement = () => {
 
   const {
     data: {
-      brandId, categoryId, createdAt, description, price, status, title, userId, updatedAt,
+      categoryId,
     } = {},
     isLoading: isLoadingAdvertisement,
   } = AdvertisementAPI.useGetOneMaybeNotPublicQuery(Number(advertisementId));
-  const {
-    data: dataImagesAdvertisement = [],
-    isLoading: isLoadingImagesAdvertisement,
-  } = AdvertisementAPI.useGetImagesQuery(Number(advertisementId));
   const {
     data: dataCategories, isLoading: isLoadingCategories,
   } = CategoriesAPI.useGetCategoriesQuery();
@@ -32,24 +28,12 @@ const useFetchLoginDataAdvertisement = () => {
   }, [categoryId, target]);
 
   const res = {
-    brandId,
-    categoryId,
-    createdAt,
-    description,
-    price,
-    status,
-    title,
-    userId,
-    dataImagesAdvertisement,
     dataCategories,
     dataBrands,
-    isLoading: false,
-    updatedAt,
   };
 
   if (
     isLoadingAdvertisement
-    && isLoadingImagesAdvertisement
     && isSuccessBrands
     && isLoadingCategories
   ) {

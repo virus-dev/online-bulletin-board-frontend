@@ -6,11 +6,11 @@ import IconSearch from 'Storybook/Icons/IconSearch';
 import Container from 'Storybook/Container/Container';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import useIsAuth from 'Hooks/useIsAuth';
-import UserAPI from 'Services/UserAPI';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import { inputsSlice, Field } from 'Store/reducers/inputsSlice';
 import IconProfile, { IconProfileTypeEnum } from 'Components/IconProfile/IconProfile';
 import { RouteNames } from 'Models/Route';
+import { selectorUserData } from 'Store/user/userSelectors';
 import Links from './Links/Links';
 import NavBar from './NavBar/NavBar';
 import logo from './static/logo.png';
@@ -21,9 +21,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const advertisementSearch = useAppSelector(({ inputs }) => inputs.inputs.advertisementSearch);
-  const {
-    data: { image, firstName, secondName } = {},
-  } = UserAPI.useGetDataQuery();
+  const { image, firstName, secondName } = useAppSelector(selectorUserData);
   const { isAuth } = useIsAuth();
   const [isHeadeFixed, setIsHeaderFixed] = useState(false);
 

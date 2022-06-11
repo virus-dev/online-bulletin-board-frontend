@@ -12,5 +12,6 @@ export interface User {
   firstName?: string | null,
   secondName?: string | null,
   image?: string | null,
-  error?: string | null,
 }
+
+export type UserResponseData = User & { token: string };

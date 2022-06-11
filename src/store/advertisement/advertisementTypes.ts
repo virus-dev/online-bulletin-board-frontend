@@ -1,14 +1,10 @@
-export interface InitialStateAdvertisement {
-  advertisementImages: string[],
-  id: number | null,
-  userId: number | null,
-  title: string | null,
-  price: number | null,
-  categoryId: number | null,
-  brandId: number | null,
-  status: string | null,
-  description: string | null,
-  createdAt: string | null,
-  updatedAt: string | null,
-  isLoading: boolean,
-}
+import { Advertisement } from 'Models/Advertisement';
+import { InitialState } from 'Models/redux';
+import { Nullable } from 'Utils/typeScript';
+
+type AdvertisementWithoutOwner = Omit<Advertisement, 'owner'>;
+type AdvertisementUser = Pick<Advertisement, 'user'>;
+
+export type InitialStateAdvertisement = InitialState<
+Nullable<AdvertisementWithoutOwner> & AdvertisementUser
+>;

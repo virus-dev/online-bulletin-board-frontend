@@ -9,6 +9,7 @@ const sMessagesDialogIsLoading = ({ messages }: RootState) => messages.dialogs.i
 
 // chat
 const sMessagesChatWithUserId = ({ messages }: RootState) => messages.chat.chatWithUserId;
+const sMessagesChatUser = ({ messages }: RootState) => messages.chat.user;
 
 // unreadMessagesCount
 const sMessagesUnreadMessagesCount = ({ messages }: RootState) => messages.unreadMessagesCount;
@@ -16,4 +17,5 @@ const sMessagesUnreadMessagesCount = ({ messages }: RootState) => messages.unrea
 export const selectorMessagesDialogData = createSelector([sMessagesDialogData], (data) => data);
 export const selectorMessagesDialogIsLoading = createSelector([sMessagesDialogIsLoading], (data) => data);
 export const selectorMessagesUnreadMessagesCount = createSelector([sMessagesUnreadMessagesCount], (data) => data);
+export const selectorMessagesUser = createSelector([sMessagesChatUser], (data) => data);
 export const selectorMessagesChatWithUserId = createSelector([sMessagesChatWithUserId], (data) => data);

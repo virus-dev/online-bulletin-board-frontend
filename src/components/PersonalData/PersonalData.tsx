@@ -4,6 +4,8 @@ import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import useIsAuth from 'Hooks/useIsAuth';
 import { RouteNames } from 'Models/Route';
 import Loader from 'Components/storybook/Loader/Loader';
+import { selectorUser } from 'Store/user/userSelectors';
+import { useAppSelector } from 'Hooks/redux';
 import PersonalDataItem from './PersonalDataItem/PersonalDataItem';
 
 import s from './PersonalData.module.scss';
@@ -12,11 +14,11 @@ const PersonalData: React.FC = () => {
   const { isModeratorRole, isLoading: isLoadingAuth } = useIsAuth();
 
   const {
+    isLoading,
     data: {
       email, firstName, secondName, phone, role,
-    } = {},
-    isLoading,
-  } = UserAPI.useGetDataQuery();
+    },
+  } = useAppSelector(selectorUser);
 
   const [update] = UserAPI.useUpdateMutation();
 

@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { AxiosError, AxiosResponse } from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Input from 'Storybook/Input/Input';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
-import UserAPI from 'Services/UserAPI';
 import Label from 'Storybook/Label/Label';
 import StyledLink from 'Storybook/StyledLink/StyledLink';
-import getErrorValidationMessage from 'Utils/getErrorMessage';
+import { useAppDispatch } from 'Hooks/redux';
+import { userSlice } from 'Store/user/userSlice';
+import { RouteNames } from 'Models/Route';
+import { UserResponseData } from 'Models/User';
+import reqLogin from './helpers/reqLogin';
 
 import s from './Login.module.scss';
 
@@ -13,7 +18,10 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
-  const [login, { error, isLoading }] = UserAPI.useLoginMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<AxiosResponse<unknown, unknown> | undefined>(undefined);
 
   const [loginInputs, setLoginInputs] = useState({
     email: '',
@@ -24,18 +32,32 @@ const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
     setLoginInputs((prev) => ({ ...prev, [key]: target.value }));
   };
 
-  const onLogin = () => {
-    login(loginInputs);
+  const onSucces = ({ data }: AxiosResponse<UserResponseData, unknown>) => {
+    setIsLoading(false);
+    localStorage.setItem('JWT', data.token);
+    const { setUserData } = userSlice.actions;
+    dispatch(setUserData(data));
+    navigate(RouteNames.MAIN);
+  };
+
+  const onError = (data: AxiosError<unknown, unknown>) => {
+    setIsLoading(false);
+    setError(data.response);
+  };
+
+  const onLogin = async () => {
+    setIsLoading(true);
+    reqLogin(
+      loginInputs,
+      onSucces,
+      onError,
+    );
   };
 
   const errorJSX = () => {
-    // TODO: Разобраться
-    // eslint-disable-next-line
-    // @ts-ignore: Unreachable code error
     if (error && error.status && error.status !== 400) {
-      // eslint-disable-next-line
-      // @ts-ignore: Unreachable code error
-      return <div className={s.error}>{error.data}</div>;
+      const errorText = typeof error.data === 'string' && error.headers['content-type'] === 'application/json; charset=utf-8' ? error.data : 'Неизвестая ошибка';
+      return <div className={s.error}>{errorText}</div>;
     }
 
     return '';
@@ -53,7 +75,6 @@ const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
         placeholder="Введите почту"
         name="email"
         className={s.input}
-        error={getErrorValidationMessage(error, 'email')}
         fullWidth
       />
       <Label htmlFor="password" className={s.label}>
@@ -65,7 +86,6 @@ const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
         placeholder="Введите пароль"
         name="password"
         type="password"
-        error={getErrorValidationMessage(error, 'password')}
         className={s.input}
         fullWidth
       />

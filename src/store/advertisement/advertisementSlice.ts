@@ -4,32 +4,43 @@ import { fetchAdvertisement } from './advertisementAsyncActions';
 import { InitialStateAdvertisement } from './advertisementTypes';
 
 const initialState: InitialStateAdvertisement = {
-  advertisementImages: [],
-  id: null,
-  userId: null,
-  title: null,
-  price: null,
-  categoryId: null,
-  brandId: null,
-  status: null,
-  description: null,
-  createdAt: null,
-  updatedAt: null,
+  data: {
+    advertisementImages: [],
+    id: null,
+    title: null,
+    price: null,
+    categoryId: null,
+    brandId: null,
+    status: null,
+    description: null,
+    createdAt: null,
+    updatedAt: null,
+    user: {
+      id: null,
+      firstName: null,
+      email: null,
+      image: null,
+      phone: null,
+      role: null,
+      secondName: null,
+    },
+  },
   isLoading: false,
+  error: null,
 };
 
 const emptyTheState = (state: InitialStateAdvertisement) => {
-  state.brandId = null;
-  state.categoryId = null;
-  state.createdAt = null;
-  state.description = null;
-  state.id = null;
-  state.price = null;
-  state.status = null;
-  state.title = null;
-  state.updatedAt = null;
-  state.userId = null;
-  state.advertisementImages = [];
+  state.data.brandId = null;
+  state.data.categoryId = null;
+  state.data.createdAt = null;
+  state.data.description = null;
+  state.data.id = null;
+  state.data.price = null;
+  state.data.status = null;
+  state.data.title = null;
+  state.data.updatedAt = null;
+  state.data.advertisementImages = [];
+  state.data.user = {};
 };
 
 export const advertisementSlice = createSlice({
@@ -38,25 +49,19 @@ export const advertisementSlice = createSlice({
   reducers: {},
   extraReducers: {
     [fetchAdvertisement.fulfilled.type]: (state, { payload }: PayloadAction<Advertisement>) => {
-      state.brandId = payload.brandId;
-      state.categoryId = payload.categoryId;
-      state.createdAt = payload.createdAt;
-      state.description = payload.description;
-      state.id = payload.id;
-      state.price = payload.price;
-      state.status = payload.status;
-      state.title = payload.title;
-      state.updatedAt = payload.updatedAt;
-      state.userId = payload.userId;
-      state.advertisementImages = payload.advertisementImages;
+      state.data = payload;
+      state.error = null;
       state.isLoading = false;
     },
     [fetchAdvertisement.pending.type]: (state) => {
       emptyTheState(state);
       state.isLoading = true;
+      state.error = null;
     },
     [fetchAdvertisement.rejected.type]: (state) => {
       emptyTheState(state);
+      // TODO: Добавить ошибку
+      // state.error = null;
       state.isLoading = false;
     },
   },

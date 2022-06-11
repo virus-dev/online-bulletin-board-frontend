@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import UserAPI from 'Services/UserAPI';
 import { messagesSlice } from 'Store/messages/messagesSlice';
 import { fetchCountUnreadMessages } from 'Store/messages/messagesAsyncActions';
 import { selectorMessagesChatWithUserId, selectorMessagesDialogData } from 'Store/messages/messagesSelectors';
+import { selectorUserData } from 'Store/user/userSelectors';
 import { useAppDispatch, useAppSelector } from './redux';
 import useIsAuth from './useIsAuth';
 
 const useWebSocket = () => {
   const dispath = useAppDispatch();
   const { isAuth } = useIsAuth();
-  const { data: { id } = {} } = UserAPI.useGetDataQuery();
+  const { id } = useAppSelector(selectorUserData);
   const chatWithUserId = useAppSelector(selectorMessagesChatWithUserId);
   const dialogs = useAppSelector(selectorMessagesDialogData);
 
