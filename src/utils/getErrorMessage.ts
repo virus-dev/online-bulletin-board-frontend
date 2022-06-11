@@ -1,5 +1,4 @@
-import { SerializedError } from '@reduxjs/toolkit';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { AxiosError } from 'axios';
 
 interface ValidationErrors {
   param: string,
@@ -7,23 +6,28 @@ interface ValidationErrors {
 }
 
 const getErrorValidationMessage = (
-  error: FetchBaseQueryError | SerializedError | undefined,
+  error: AxiosError<unknown, unknown> | null,
   paramName: string,
 ): string => {
   if (!error) {
+    return '';
+  }
+  // debugger
+
+  if (!error.response) {
     return '';
   }
   // TODO: Разобраится
 
   // eslint-disable-next-line
   // @ts-ignore: Unreachable code error
-  if (error.status !== 400) {
+  if (error.response.status !== 400) {
     return '';
   }
 
   // eslint-disable-next-line
   // @ts-ignore: Unreachable code error
-  const { data } = error;
+  const { data } = error.response;
 
   if (Array.isArray(data)) {
     const findErr = data.find(({ param }: ValidationErrors) => param === paramName);

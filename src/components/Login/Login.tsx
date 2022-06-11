@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Input from 'Storybook/Input/Input';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
@@ -8,8 +7,8 @@ import StyledLink from 'Storybook/StyledLink/StyledLink';
 import { useAppDispatch } from 'Hooks/redux';
 import { userSlice } from 'Store/user/userSlice';
 import { RouteNames } from 'Models/Route';
-import { UserResponseData } from 'Models/User';
-import reqLogin from './helpers/reqLogin';
+import useCreateRequest, { OnSuccesParams } from 'Hooks/useCreateRequest';
+import requestLogin, { LoginReqData, LoginResponse } from 'Packages/api/rest/user/requestLogin';
 
 import s from './Login.module.scss';
 
@@ -20,47 +19,34 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<AxiosResponse<unknown, unknown> | undefined>(undefined);
 
-  const [loginInputs, setLoginInputs] = useState({
+  const [loginInputs, setLoginInputs] = useState<LoginReqData>({
     email: '',
     password: '',
   });
 
-  const inputHandler = ({ target }: React.ChangeEvent<HTMLInputElement>, key: string) => {
-    setLoginInputs((prev) => ({ ...prev, [key]: target.value }));
-  };
-
-  const onSucces = ({ data }: AxiosResponse<UserResponseData, unknown>) => {
-    setIsLoading(false);
+  const onSucces = ({ data }: OnSuccesParams<LoginResponse>) => {
     localStorage.setItem('JWT', data.token);
     const { setUserData } = userSlice.actions;
     dispatch(setUserData(data));
     navigate(RouteNames.MAIN);
   };
 
-  const onError = (data: AxiosError<unknown, unknown>) => {
-    setIsLoading(false);
-    setError(data.response);
+  const {
+    errorText,
+    isLoading,
+    func,
+  } = useCreateRequest<LoginResponse, LoginReqData>({
+    restReq: () => requestLogin(loginInputs),
+    onSucces,
+  });
+
+  const inputHandler = ({ target }: React.ChangeEvent<HTMLInputElement>, key: string) => {
+    setLoginInputs((prev) => ({ ...prev, [key]: target.value }));
   };
 
-  const onLogin = async () => {
-    setIsLoading(true);
-    reqLogin(
-      loginInputs,
-      onSucces,
-      onError,
-    );
-  };
-
-  const errorJSX = () => {
-    if (error && error.status && error.status !== 400) {
-      const errorText = typeof error.data === 'string' && error.headers['content-type'] === 'application/json; charset=utf-8' ? error.data : 'Неизвестая ошибка';
-      return <div className={s.error}>{errorText}</div>;
-    }
-
-    return '';
+  const onLogin = () => {
+    func();
   };
 
   return (
@@ -100,7 +86,9 @@ const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
       >
         Войти
       </Button>
-      {errorJSX()}
+      {errorText && (
+        <div className={s.error}>{errorText}</div>
+      )}
     </div>
   );
 };

@@ -13,5 +13,3 @@ export interface User {
   secondName?: string | null,
   image?: string | null,
 }
-
-export type UserResponseData = User & { token: string };
