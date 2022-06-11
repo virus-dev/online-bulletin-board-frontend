@@ -8,7 +8,7 @@ import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import s from './AdvertisementSlider.module.scss';
 
 interface AdvertisementSliderProps {
-  data: string[] | undefined,
+  data: string[] | null,
 }
 
 const getMaxTranslateX = (

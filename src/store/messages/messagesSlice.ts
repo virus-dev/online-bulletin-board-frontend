@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Message, Status } from 'Models/Message';
+import { User } from 'Models/User';
 import { ReadMessageResponse } from 'Models/WebSocket';
 import { Reducers } from 'Store/types';
 import getStateCopy from 'Utils/getStateCopy';
@@ -13,6 +14,15 @@ const initialState: InitialStateMessages = {
     isLoading: false,
   },
   chat: {
+    user: {
+      email: null,
+      firstName: null,
+      id: null,
+      image: null,
+      phone: null,
+      role: null,
+      secondName: null,
+    },
     chatWithUserId: null,
     messages: [],
     isLoading: false,
@@ -125,6 +135,9 @@ export const messagesSlice = createSlice({
       }: InitialStateMessages = getStateCopy(state);
 
       state.chat.messages = getNewMessages(messages, id, fromUserId, toUserId);
+    },
+    setChatUser: (state, { payload }: PayloadAction<User>) => {
+      state.chat.user = payload;
     },
   },
   extraReducers: {

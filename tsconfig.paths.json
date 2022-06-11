@@ -11,7 +11,8 @@
       "Styles/*": ["./src/styles/*"],
       "Utils/*": ["./src/utils/*"],
       "Services/*": ["./src/services/*"],
-      "Context/*": ["./src/context/*"]
+      "Context/*": ["./src/context/*"],
+      "Packages/*": ["./src/packages/*"]
     }
   }
 }

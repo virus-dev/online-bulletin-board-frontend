@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import classNames from 'classnames';
 import { Message as IMessage, Status } from 'Models/Message';
-import UserAPI from 'Services/UserAPI';
 import SocketContext from 'Context/SocketContext';
 import dateFromZFormat, { VariantsFormsts } from 'Utils/dateFromZFormat';
+import { useAppSelector } from 'Hooks/redux';
+import { selectorMessagesUser } from 'Store/messages/messagesSelectors';
+import { selectorUserData } from 'Store/user/userSelectors';
 import IconProfile from '../IconProfile/IconProfile';
 
 import s from './Message.module.scss';
@@ -22,9 +24,10 @@ const Message: React.FC<MessageProps> = ({
   const refMessage = useRef(null);
   const { socket } = useContext(SocketContext);
 
+  // TODO: Узнать, возможны ли перерисовки?
   const {
-    data: { image, firstName, secondName } = {},
-  } = UserAPI.useGetDataByIdQuery(fromUserId);
+    image, firstName, secondName,
+  } = useAppSelector(isYourMessage ? selectorUserData : selectorMessagesUser);
 
   const statusText = status === Status.read ? 'Прочитано' : 'Доставлено';
 

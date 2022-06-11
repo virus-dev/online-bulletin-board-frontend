@@ -34,17 +34,18 @@ const Advertisement: React.FC<AdvertisementProps> = ({
   const { advertisementId } = useParams();
   const dispatch = useAppDispatch();
   const {
-    advertisementImages,
-    brandId,
-    categoryId,
-    createdAt,
-    description,
+    data: {
+      advertisementImages,
+      brandId,
+      categoryId,
+      createdAt,
+      description,
+      price,
+      status,
+      title,
+      updatedAt,
+    },
     isLoading,
-    price,
-    status,
-    title,
-    updatedAt,
-    userId,
   } = useAppSelector(selectorAdvertisement);
 
   useEffect(() => {
@@ -118,7 +119,7 @@ const Advertisement: React.FC<AdvertisementProps> = ({
             <span>{description}</span>
           </div>
         </div>
-        <AdvertisementOwner userId={userId} />
+        <AdvertisementOwner />
         {isCanModerate && status !== 'open' && <ConfirmModerateButtons />}
       </div>
     </Container>

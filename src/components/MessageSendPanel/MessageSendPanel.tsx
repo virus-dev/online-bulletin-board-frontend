@@ -1,16 +1,16 @@
 import React, { useContext, useState } from 'react';
 import Button from 'Storybook/Button/Button';
 import SocketContext from 'Context/SocketContext';
-import UserAPI from 'Services/UserAPI';
 import { useAppSelector } from 'Hooks/redux';
 import { selectorMessagesChatWithUserId } from 'Store/messages/messagesSelectors';
+import { selectorUserData } from 'Store/user/userSelectors';
 
 import s from './MessageSendPanel.module.scss';
 
 const MessageSendPanel = () => {
   const { socket } = useContext(SocketContext);
   const [message, setMessage] = useState('');
-  const { data: { id } = {} } = UserAPI.useGetDataQuery();
+  const { id } = useAppSelector(selectorUserData);
   const chatWithUserId = useAppSelector(selectorMessagesChatWithUserId);
 
   const onChangeHandler = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {

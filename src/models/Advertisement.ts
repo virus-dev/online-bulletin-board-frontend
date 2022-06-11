@@ -1,7 +1,8 @@
+import { User } from './User';
+
 export interface Advertisement {
   advertisementImages: string[],
   id: number,
-  userId: number,
   title: string,
   price: number,
   categoryId: number,
@@ -10,4 +11,5 @@ export interface Advertisement {
   description: string,
   createdAt: string,
   updatedAt: string,
+  user: User,
 }

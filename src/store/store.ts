@@ -3,7 +3,7 @@ import UserAPI from 'Services/UserAPI';
 import AdvertisementAPI from 'Services/AdvertisementAPI';
 import CategoriesAPI from 'Services/CategoriesAPI';
 import BrandsAPI from 'Services/BrandsAPI';
-import userReducer from './reducers/UserSlice';
+import userReducer from './user/userSlice';
 import inputsReducer from './reducers/inputsSlice';
 import messagesReducer from './messages/messagesSlice';
 import { AsyncReducersInRootState } from './types';
