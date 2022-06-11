@@ -7,11 +7,11 @@ import Container from 'Storybook/Container/Container';
 import BrandsAPI from 'Services/BrandsAPI';
 import CategoriesAPI from 'Services/CategoriesAPI';
 import { checkFileForImgBB } from 'Utils/getCheckFileFunc';
-import { ErrorType } from 'Models/ResponseValidateError';
 import { RouteNames } from 'Models/Route';
 import getErrorValidationMessage from 'Utils/getErrorMessage';
 import Select from 'Components/storybook/Select/Select';
-import createAdvertisement from './helpers/createAdvertisement';
+import useCreateRequest from 'Hooks/useCreateRequest';
+import requestAdvertisementCreate, { AdvertisementReqData, AdvertisementResponse } from 'Packages/api/rest/advertisement/requestAdvertisementCreate';
 
 import s from './AdvertisementCreate.module.scss';
 
@@ -26,8 +26,6 @@ interface AdvertisementData {
 
 const AdvertisementCreate = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState({});
-  const [isPendingAdvertisementCreate, setIsPendingAdvertisementCreate] = useState(false);
   const {
     data: dataCategories = [],
   } = CategoriesAPI.useGetCategoriesQuery();
@@ -36,14 +34,8 @@ const AdvertisementCreate = () => {
     { isLoading: isLoadingBrands, data: dataBrands = [] },
   ] = BrandsAPI.useLazyGetBrandsQuery();
 
-  const onSuccesAdvertisementCreate = () => {
-    setIsPendingAdvertisementCreate(false);
+  const onSucces = () => {
     navigate(RouteNames.ADVERTISEMENT_MY_ADVERTISEMENTS);
-  };
-
-  const onErrorAdvertisementCreate = (e: ErrorType) => {
-    setIsPendingAdvertisementCreate(false);
-    setError(e);
   };
 
   const optionsCategories = useMemo(() => (
@@ -61,6 +53,15 @@ const AdvertisementCreate = () => {
     price: '',
     description: '',
     files: [],
+  });
+
+  const {
+    error,
+    func,
+    isLoading,
+  } = useCreateRequest<AdvertisementResponse, AdvertisementReqData>({
+    restReq: (formData) => requestAdvertisementCreate(formData || new FormData()),
+    onSucces,
   });
 
   useEffect(() => {
@@ -126,8 +127,7 @@ const AdvertisementCreate = () => {
       });
     }
 
-    setIsPendingAdvertisementCreate(true);
-    createAdvertisement(formData, onSuccesAdvertisementCreate, onErrorAdvertisementCreate);
+    func(formData);
   };
 
   const textInBrandsSelect = () => {
@@ -178,7 +178,7 @@ const AdvertisementCreate = () => {
         <div className={s.br} />
         <Button
           onClick={onClickButtonHandler}
-          isLoading={isPendingAdvertisementCreate}
+          isLoading={isLoading}
           variant={ButtonVariant.blue}
         >
           Создать

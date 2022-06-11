@@ -5,12 +5,11 @@ import Label from 'Storybook/Label/Label';
 import StyledLink from 'Storybook/StyledLink/StyledLink';
 import getErrorValidationMessage from 'Utils/getErrorMessage';
 import { RouteNames } from 'Models/Route';
-import { AxiosError, AxiosResponse } from 'axios';
-import { UserResponseData } from 'Models/User';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'Hooks/redux';
 import { userSlice } from 'Store/user/userSlice';
-import reqRegistration from './helpers/reqRegistration';
+import useCreateRequest, { OnSuccesParams } from 'Hooks/useCreateRequest';
+import requestRegistration, { RegistrationReqData, RegistrationResponse } from 'Packages/api/rest/user/requestRegistration';
 
 import s from './Registration.module.scss';
 
@@ -21,48 +20,36 @@ interface RegistrationProps {
 const Registration: React.FC<RegistrationProps> = ({ changeIsLogin }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<AxiosResponse<unknown, unknown> | undefined>(undefined);
 
-  const [registrationInputs, setRegistrationInputs] = useState({
+  const [registrationInputs, setRegistrationInputs] = useState<RegistrationReqData>({
     firstName: '',
     email: '',
     password: '',
   });
 
-  const inputHandler = ({ target }: React.ChangeEvent<HTMLInputElement>, key: string) => {
-    setRegistrationInputs((prev) => ({ ...prev, [key]: target.value }));
-  };
-
-  const onSucces = ({ data }: AxiosResponse<UserResponseData, unknown>) => {
-    setIsLoading(false);
+  const onSucces = ({ data }: OnSuccesParams<RegistrationResponse>) => {
     localStorage.setItem('JWT', data.token);
     const { setUserData } = userSlice.actions;
     dispatch(setUserData(data));
     navigate(RouteNames.MAIN);
   };
 
-  const onError = (data: AxiosError<unknown, unknown>) => {
-    setIsLoading(false);
-    setError(data.response);
+  const {
+    error,
+    errorText,
+    func,
+    isLoading,
+  } = useCreateRequest<RegistrationResponse, RegistrationReqData>({
+    restReq: () => requestRegistration(registrationInputs),
+    onSucces,
+  });
+
+  const inputHandler = ({ target }: React.ChangeEvent<HTMLInputElement>, key: string) => {
+    setRegistrationInputs((prev) => ({ ...prev, [key]: target.value }));
   };
 
-  const onRegistration = async () => {
-    setIsLoading(true);
-    reqRegistration(
-      registrationInputs,
-      onSucces,
-      onError,
-    );
-  };
-
-  const errorJSX = () => {
-    if (error && error.status && error.status !== 400) {
-      const errorText = typeof error.data === 'string' && error.headers['content-type'] === 'application/json; charset=utf-8' ? error.data : 'Неизвестая ошибка';
-      return <div className={s.error}>{errorText}</div>;
-    }
-
-    return '';
+  const onRegistration = () => {
+    func();
   };
 
   return (
@@ -110,7 +97,7 @@ const Registration: React.FC<RegistrationProps> = ({ changeIsLogin }) => {
       >
         Зарегистрироваться
       </Button>
-      {errorJSX()}
+      {errorText}
     </div>
   );
 };

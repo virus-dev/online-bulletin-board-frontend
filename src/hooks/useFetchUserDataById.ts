@@ -1,33 +1,37 @@
-import { useEffect, useState } from 'react';
-import { User } from 'Models/User';
-import userGetDataById from '../packages/api/rest/userGetDataById';
+/* eslint-disable */
+// @ts-nocheck
+export {};
 
-export default (id: number) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [userData, setUserData] = useState<User>({
-    email: null,
-    firstName: null,
-    id: null,
-    image: null,
-    phone: null,
-    role: null,
-    secondName: null,
-  });
+// import { useEffect, useState } from 'react';
+// import { User } from 'Models/User';
+// import userGetDataById from '../packages/api/rest/userGetDataById';
 
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      const response = await userGetDataById(id);
-      setIsLoading(false);
+// export default (id: number) => {
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [userData, setUserData] = useState<User>({
+//     email: null,
+//     firstName: null,
+//     id: null,
+//     image: null,
+//     phone: null,
+//     role: null,
+//     secondName: null,
+//   });
 
-      if (response.status === 200) {
-        setUserData(response.data);
-      }
-    })();
-  }, [id]);
+//   useEffect(() => {
+//     (async () => {
+//       setIsLoading(true);
+//       const response = await userGetDataById(id);
+//       setIsLoading(false);
 
-  return {
-    userData,
-    isLoading,
-  };
-};
+//       if (response.status === 200) {
+//         setUserData(response.data);
+//       }
+//     })();
+//   }, [id]);
+
+//   return {
+//     userData,
+//     isLoading,
+//   };
+// };
