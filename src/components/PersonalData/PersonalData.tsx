@@ -7,7 +7,7 @@ import Loader from 'Components/storybook/Loader/Loader';
 import { selectorUser } from 'Store/user/userSelectors';
 import { userSlice } from 'Store/user/userSlice';
 import { useAppSelector } from 'Hooks/redux';
-import requestUpdate, { UserResponse, UserReqData } from 'Packages/api/rest/user/requestUpdate';
+import requestUpdate, { UpdateResponse, UpdateReqData } from 'Packages/api/rest/user/requestUpdate';
 import useCreateRequest, { OnSuccesParams } from 'Hooks/useCreateRequest';
 import PersonalDataItem from './PersonalDataItem/PersonalDataItem';
 
@@ -24,14 +24,14 @@ const PersonalData: React.FC = () => {
     },
   } = useAppSelector(selectorUser);
 
-  const onSucces = ({ data }: OnSuccesParams<UserResponse>) => {
+  const onSucces = ({ data }: OnSuccesParams<UpdateResponse>) => {
     const { setUserData } = userSlice.actions;
     dispatch(setUserData(data));
   };
 
   const {
     fetchReq,
-  } = useCreateRequest<UserResponse, UserReqData>({
+  } = useCreateRequest<UpdateResponse, UpdateReqData>({
     restReq: (formData) => requestUpdate(formData || new FormData()),
     onSucces,
   });

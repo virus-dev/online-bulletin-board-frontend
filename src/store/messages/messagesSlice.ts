@@ -52,11 +52,10 @@ export const messagesSlice = createSlice({
     },
     updateDialog(
       state,
-      { payload: { isYouSendMessage, message } }: PayloadAction<UpdateDialogAction>,
+      { payload: { message, user, unreadMessagesCount } }: PayloadAction<UpdateDialogAction>,
     ) {
       const {
         dialogs: { data: newStateDialogs },
-        unreadMessagesCount,
       }: InitialStateMessages = getStateCopy(state);
 
       const dialogIndex = newStateDialogs.findIndex((dialog) => (
@@ -74,30 +73,13 @@ export const messagesSlice = createSlice({
         // @ts-ignore: Unreachable code error
         {
           ...message,
-          unreadMessagesCount: isYouSendMessage ? 0 : unreadMessagesCount + 1,
+          user,
+          unreadMessagesCount,
         },
         // eslint-disable-next-line
         // @ts-ignore: Unreachable code error
         ...newStateDialogs,
       ];
-
-      // TODO: 1. Что это? Удалить?
-      // TODO: 2. Не, пока оставим
-      // state.dialogs = JSON.parse(JSON.stringify(state.dialogs)).map((dialog: Message) => {
-      //   if (
-      //     (action.payload.fromUserId === dialog.fromUserId
-      //     && action.payload.toUserId === dialog.toUserId)
-      //     || (action.payload.toUserId === dialog.fromUserId
-      //     && action.payload.fromUserId === dialog.toUserId)
-      //   ) {
-      //     return {
-      //       ...action.payload,
-      //       unreadMessagesCount: 0,
-      //     };
-      //   }
-
-      //   return dialog;
-      // });
     },
     youReadedMessage: (
       state,
@@ -148,11 +130,11 @@ export const messagesSlice = createSlice({
       state.dialogs.data = action.payload;
       state.dialogs.isLoading = false;
     },
-    [fetchDialogs.rejected.type]: (state) => {
-      state.dialogs.isLoading = false;
-    },
     [fetchDialogs.pending.type]: (state) => {
       state.dialogs.isLoading = true;
+    },
+    [fetchDialogs.rejected.type]: (state) => {
+      state.dialogs.isLoading = false;
     },
     [fetchChat.fulfilled.type]: (state, action: PayloadAction<Message[]>) => {
       state.chat.messages = action.payload;

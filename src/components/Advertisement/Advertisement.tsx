@@ -7,7 +7,6 @@ import Price from 'Components/Price/Price';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import { fetchAdvertisement } from 'Store/advertisement/advertisementAsyncActions';
 import { selectorAdvertisement } from 'Store/advertisement/advertisementSelectors';
-import useInjectAsyncReducers from 'Hooks/useInjectReducer';
 import { selectorCategoriesData } from 'Store/categories/categoriesSelectors';
 import { selectorBrandsData } from 'Store/brands/brandsSelectors';
 import dateFromZFormat, { VariantsFormsts } from 'Utils/dateFromZFormat';
@@ -15,12 +14,10 @@ import useIsAuth from 'Hooks/useIsAuth';
 import AdvertisementSlider from '../AdvertisementSlider/AdvertisementSlider';
 import AdvertisementOwner from '../AdvertisementOwner/AdvertisementOwner';
 import ConfirmModerateButtons from './components/ConfirmModerateButtons/ConfirmModerateButtons';
-import asyncReducers from './asyncReducers';
 
 import s from './Advertisement.module.scss';
 
 const Advertisement = () => {
-  useInjectAsyncReducers(asyncReducers);
   const { isAdminRole, isModeratorRole } = useIsAuth();
   const isCanModerate = isAdminRole || isModeratorRole;
   const { advertisementId } = useParams();

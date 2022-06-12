@@ -1,6 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import requestLogin, { LoginReqData } from 'Packages/api/rest/user/requestLogin';
+import requestRegistration, { RegistrationReqData } from 'Packages/api/rest/user/requestRegistration';
+import requestUpdate, { UpdateReqData } from 'Packages/api/rest/user/requestUpdate';
+import requestGetData from 'Packages/api/rest/user/requestGetData';
+import { UserResponseData } from 'Packages/api/rest/user/types';
 
 export const login = createAsyncThunk(
   'user/login',
@@ -15,50 +18,52 @@ export const login = createAsyncThunk(
   },
 );
 
-// export const registration = createAsyncThunk(
-//   'user/registration',
-//   async ({ email, password, firstName }: RegistrationData, thunkAPI) => {
-//     try {
-//       const { data, data: { token } } =
-// await axios.post(`${process.env.REACT_APP_API_URL}user/registration`, {
-//         email,
-//         password,
-//         firstName,
-//       });
-//       localStorage.setItem('JWT', token);
-//       return data;
-//     } catch (e) {
-//       return thunkAPI.rejectWithValue('error');
-//     }
-//   },
-// );
+export const registration = createAsyncThunk(
+  'user/registration',
+  async (registrationReqData: RegistrationReqData, thunkAPI) => {
+    try {
+      const { data, data: { token } } = await requestRegistration(registrationReqData);
+      localStorage.setItem('JWT', token);
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue('error');
+    }
+  },
+);
 
-// export const updateData = createAsyncThunk(
-//   'user/updateData',
-//   // TODO: Временно any
-//   // eslint-disable-next-line
-//   // @ts-ignore: Unreachable code error
-//   async (formData, thunkAPI) => {
-//     try {
-//       const { data, data: { token } } =
-// await axios.post(`${process.env.REACT_APP_API_URL}user/update`, formData, {
-//         headers: { authorization: `Baber ${localStorage.getItem('JWT')}` },
-//       });
-//       localStorage.setItem('JWT', token);
-//       return data;
-//     } catch (e) {
-//       return thunkAPI.rejectWithValue('error');
-//     }
-//   },
-// );
+export const updateData = createAsyncThunk(
+  'user/updateData',
+  async (formData: UpdateReqData, thunkAPI) => {
+    try {
+      const { data, data: { token } } = await requestUpdate(formData);
+      localStorage.setItem('JWT', token);
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue('error');
+    }
+  },
+);
 
 export const getData = createAsyncThunk(
   'user/getData',
-  async (token: string, thunkAPI) => {
+  async (_, thunkAPI) => {
+    const token = localStorage.getItem('JWT');
+
+    if (!token) {
+      return {
+        token: '',
+        email: null,
+        firstName: null,
+        id: null,
+        image: null,
+        phone: null,
+        role: null,
+        secondName: null,
+      } as UserResponseData;
+    }
+
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}user/getData`, {
-        headers: { authorization: `Baber ${token}` },
-      });
+      const { data } = await requestGetData();
       return data;
     } catch (e) {
       return thunkAPI.rejectWithValue('error');

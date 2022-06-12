@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from 'Models/User';
 import {
   login, registration, updateData, getData,
-} from '../actionCreators/user';
+} from './userAsyncActions';
 import { InitialStateUser } from './userTypes';
 
 const initialState: InitialStateUser = {

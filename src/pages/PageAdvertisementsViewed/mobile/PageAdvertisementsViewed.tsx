@@ -8,13 +8,10 @@ import { useAppSelector } from 'Hooks/redux';
 import { selectorAdvertisements } from 'Store/advertisements/advertisementsSelectors';
 import { advertisementsSlice } from 'Store/advertisements/advertisementsSlice';
 import { fetchAllAdvertisements } from 'Store/advertisements/advertisementsAsyncActions';
-import useInjectAsyncReducers from 'Hooks/useInjectReducer';
-import asyncReducers from './asyncReducers';
 
 import s from './PageAdvertisementsViewed.module.scss';
 
 const PageAdvertisementsViewed = () => {
-  useInjectAsyncReducers(asyncReducers);
   const dispatch = useDispatch();
   const {
     data,
