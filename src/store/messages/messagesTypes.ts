@@ -30,5 +30,6 @@ export interface InitialStateMessages {
 
 export interface UpdateDialogAction {
   message: Message,
-  isYouSendMessage: boolean,
+  unreadMessagesCount: number,
+  user: User,
 }

@@ -2,11 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import Container from 'Storybook/Container/Container';
 import { useAppSelector } from 'Hooks/redux';
 import { selectorAdvertisements } from 'Store/advertisements/advertisementsSelectors';
-import useInjectAsyncReducers from 'Hooks/useInjectReducer';
 import Loader from 'Components/storybook/Loader/Loader';
 import AdvertisementItem from '../AdvertisementItem/AdvertisementItem';
 import LoadTrigger from './LoadTrigger/LoadTrigger';
-import asyncReducers from './asyncReducers';
 
 import s from './AdvertisementsRibbon.module.scss';
 
@@ -17,7 +15,6 @@ interface AdvertisementsRibbonProps {
 const AdvertisementsRibbon: React.FC<AdvertisementsRibbonProps> = ({
   onScrollEnd,
 }) => {
-  useInjectAsyncReducers(asyncReducers);
   const {
     data,
     isLoading,

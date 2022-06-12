@@ -54,7 +54,8 @@ const useWebSocket = () => {
           if (dialogs.length) {
             dispath(updateDialog({
               message: data.message,
-              isYouSendMessage: true,
+              unreadMessagesCount: data.unreadMessagesCount,
+              user: data.user,
             }));
           }
           dispath(fetchCountUnreadMessages());
@@ -66,7 +67,8 @@ const useWebSocket = () => {
           if (dialogs.length) {
             dispath(updateDialog({
               message: data.message,
-              isYouSendMessage: false,
+              unreadMessagesCount: data.unreadMessagesCount,
+              user: data.user,
             }));
           }
           dispath(fetchCountUnreadMessages());

@@ -10,17 +10,15 @@ import { fetchAllAdvertisements } from 'Store/advertisements/advertisementsAsync
 import { selectorAdvertisementsData, selectorAdvertisementsIsLoading } from 'Store/advertisements/advertisementsSelectors';
 import { advertisementsSlice } from 'Store/advertisements/advertisementsSlice';
 import useDebounce from 'Hooks/useDebounce';
+import { selectorInputsAdvertisementSearch } from 'Store/inputs/inputsSelector';
 import useIsFirstRender from 'Hooks/useIsFirstRender';
-import useInjectAsyncReducers from 'Hooks/useInjectReducer';
-import asyncReducers from './asyncReducers';
 
 import s from './PageMain.module.scss';
 
 const MainPage = () => {
-  useInjectAsyncReducers(asyncReducers);
   const isFirstRender = useIsFirstRender();
   const dispatch = useAppDispatch();
-  const advertisementSearch = useAppSelector(({ inputs }) => inputs.inputs.advertisementSearch);
+  const advertisementSearch = useAppSelector(selectorInputsAdvertisementSearch);
   const data = useAppSelector(selectorAdvertisementsData);
   const isLoading = useAppSelector(selectorAdvertisementsIsLoading);
 

@@ -1,4 +1,5 @@
 import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
+import errorHandler from './errorHandler';
 
 export enum HTTPMethods {
   GET = 'GET',
@@ -29,7 +30,7 @@ const makeRequest = <T>({
     ...(withHeaderAutorization ? { authorization: `Bearer ${localStorage.getItem('JWT')}` } : {}),
   };
 
-  return axios({
+  const axiosReq = axios({
     url: `${process.env.REACT_APP_API_URL}${url}`,
     method,
     params,
@@ -37,6 +38,13 @@ const makeRequest = <T>({
     headers: newHeaders,
   })
     .then((res: AxiosResponse<T>) => res);
+
+  axiosReq.catch((e) => {
+    errorHandler(e);
+    return e;
+  });
+
+  return axiosReq;
 };
 
 export default makeRequest;

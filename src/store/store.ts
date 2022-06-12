@@ -1,9 +1,11 @@
 import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
 import userReducer from './user/userSlice';
-import inputsReducer from './reducers/inputsSlice';
+import inputsReducer from './inputs/inputsSlice';
 import messagesReducer from './messages/messagesSlice';
 import categoriesReducer from './categories/categoriesSlice';
 import brandsReducer from './brands/brandsSlice';
+import advertisementReducer from './advertisement/advertisementSlice';
+import advertisementsReducer from './advertisements/advertisementsSlice';
 import { AsyncReducersInRootState } from './types';
 
 const staticReducers = {
@@ -12,6 +14,8 @@ const staticReducers = {
   messages: messagesReducer,
   categories: categoriesReducer,
   brands: brandsReducer,
+  advertisement: advertisementReducer,
+  advertisements: advertisementsReducer,
   // [UserAPI.reducerPath]: UserAPI.reducer,
   // [AdvertisementAPI.reducerPath]: AdvertisementAPI.reducer,
   // [CategoriesAPI.reducerPath]: CategoriesAPI.reducer,

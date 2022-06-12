@@ -13,10 +13,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchCategories());
-    const token = localStorage.getItem('JWT');
-    if (token) {
-      dispatch(getData(token));
-    }
+    dispatch(getData());
   }, [dispatch]);
 
   return (

@@ -33,13 +33,7 @@ export const useCreateRequest = <Response, ReqData>({
   const fetchReq = async (dataReq?: ReqData) => {
     try {
       setIsLoading(true);
-      let dataRes;
-      if (dataReq) {
-        dataRes = await restReq(dataReq);
-      } else {
-        dataRes = await restReq();
-      }
-      // const dataRes = await (dataReq ? restReq(dataReq) : restReq());
+      const dataRes = await restReq(dataReq);
       setResData(dataRes);
       setIsLoading(false);
       onSucces?.(dataRes);
