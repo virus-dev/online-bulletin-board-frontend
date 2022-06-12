@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Select from 'Components/storybook/Select/Select';
-import BrandsAPI from 'Services/BrandsAPI';
-import CategoriesAPI from 'Services/CategoriesAPI';
+import { selectorCategoriesData } from 'Store/categories/categoriesSelectors';
+import { useAppSelector } from 'Hooks/redux';
+import { selectorBrandsData } from 'Store/brands/brandsSelectors';
 
 import s from './Filters.module.scss';
 
@@ -12,20 +13,13 @@ interface FiltersProps {
 }
 
 const Filters: React.FC<FiltersProps> = ({ onChange, categoryId, withoutSort }) => {
-  const {
-    data: dataCategories = [],
-  } = CategoriesAPI.useGetCategoriesQuery();
-
-  const [trigger, { data: dataBrands = [] }] = BrandsAPI.useLazyGetBrandsQuery();
+  const dataCategories = useAppSelector(selectorCategoriesData);
+  const dataBrands = useAppSelector(selectorBrandsData);
 
   const optionsBrands = useMemo(() => ([
     { value: 0, mnemonic: 'Все бренды' },
     ...dataBrands.map(({ id, name }) => ({ value: id, mnemonic: name })),
   ]), [dataBrands]);
-
-  useEffect(() => {
-    trigger(categoryId);
-  }, [categoryId, trigger]);
 
   const optionsCategories = useMemo(() => ([
     { value: 0, mnemonic: 'Все категории' },

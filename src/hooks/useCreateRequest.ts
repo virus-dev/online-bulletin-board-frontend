@@ -2,21 +2,21 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { useState } from 'react';
 import { isAxiosError } from 'Utils/typeScript';
 
-export type OnSuccesParams<P> = AxiosResponse<P, unknown>;
+export type OnSuccesParams<Response> = AxiosResponse<Response, unknown>;
 export type OnErrorFunc = (e: unknown) => void;
 
-interface UseCreateRequestParams<D, B> {
-  restReq: (data?: B) => Promise<AxiosResponse<D, unknown>>,
-  onSucces?: (data: OnSuccesParams<D>) => void,
+interface UseCreateRequestParams<Response, ReqData> {
+  restReq: (data?: ReqData) => Promise<AxiosResponse<Response, unknown>>,
+  onSucces?: (data: OnSuccesParams<Response>) => void,
   onError?: (e: unknown) => void,
 }
 
-export const useCreateRequest = <T, B>({
+export const useCreateRequest = <Response, ReqData>({
   restReq,
   onSucces,
   onError,
-}: UseCreateRequestParams<T, B>) => {
-  const [resData, setResData] = useState<AxiosResponse<T, unknown> | null>(null);
+}: UseCreateRequestParams<Response, ReqData>) => {
+  const [resData, setResData] = useState<AxiosResponse<Response, unknown> | null>(null);
   const [error, setError] = useState<AxiosError<unknown, unknown> | null>(null);
   const [errorText, setErrorText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -30,10 +30,16 @@ export const useCreateRequest = <T, B>({
     }
   };
 
-  const func = async (dataReq?: B) => {
+  const fetchReq = async (dataReq?: ReqData) => {
     try {
       setIsLoading(true);
-      const dataRes = await restReq(dataReq as B);
+      let dataRes;
+      if (dataReq) {
+        dataRes = await restReq(dataReq);
+      } else {
+        dataRes = await restReq();
+      }
+      // const dataRes = await (dataReq ? restReq(dataReq) : restReq());
       setResData(dataRes);
       setIsLoading(false);
       onSucces?.(dataRes);
@@ -52,7 +58,7 @@ export const useCreateRequest = <T, B>({
     error,
     errorText,
     isLoading,
-    func,
+    fetchReq,
   };
 };
 

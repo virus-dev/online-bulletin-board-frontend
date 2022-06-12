@@ -1,17 +1,17 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useParams } from 'react-router-dom';
 import Container from 'Storybook/Container/Container';
-import { Brands } from 'Models/Brands';
-import { Categories } from 'Models/Categories';
 import i18 from 'Utils/i18';
 import Price from 'Components/Price/Price';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import { fetchAdvertisement } from 'Store/advertisement/advertisementAsyncActions';
 import { selectorAdvertisement } from 'Store/advertisement/advertisementSelectors';
 import useInjectAsyncReducers from 'Hooks/useInjectReducer';
-import { Undefineable } from 'Utils/typeScript';
+import { selectorCategoriesData } from 'Store/categories/categoriesSelectors';
+import { selectorBrandsData } from 'Store/brands/brandsSelectors';
 import dateFromZFormat, { VariantsFormsts } from 'Utils/dateFromZFormat';
+import useIsAuth from 'Hooks/useIsAuth';
 import AdvertisementSlider from '../AdvertisementSlider/AdvertisementSlider';
 import AdvertisementOwner from '../AdvertisementOwner/AdvertisementOwner';
 import ConfirmModerateButtons from './components/ConfirmModerateButtons/ConfirmModerateButtons';
@@ -19,18 +19,10 @@ import asyncReducers from './asyncReducers';
 
 import s from './Advertisement.module.scss';
 
-type AdvertisementProps = Undefineable<{
-  dataCategories: Categories[],
-  dataBrands: Brands[],
-  isCanModerate: boolean,
-}>;
-
-const Advertisement: React.FC<AdvertisementProps> = ({
-  dataCategories,
-  dataBrands,
-  isCanModerate,
-}) => {
+const Advertisement = () => {
   useInjectAsyncReducers(asyncReducers);
+  const { isAdminRole, isModeratorRole } = useIsAuth();
+  const isCanModerate = isAdminRole || isModeratorRole;
   const { advertisementId } = useParams();
   const dispatch = useAppDispatch();
   const {
@@ -47,6 +39,8 @@ const Advertisement: React.FC<AdvertisementProps> = ({
     },
     isLoading,
   } = useAppSelector(selectorAdvertisement);
+  const dataCategories = useAppSelector(selectorCategoriesData);
+  const dataBrands = useAppSelector(selectorBrandsData);
 
   useEffect(() => {
     if (advertisementId) {
@@ -70,7 +64,7 @@ const Advertisement: React.FC<AdvertisementProps> = ({
     }
   }, [advertisementId]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(fetchAdvertisement(Number(advertisementId)));
   }, [advertisementId, dispatch]);
 

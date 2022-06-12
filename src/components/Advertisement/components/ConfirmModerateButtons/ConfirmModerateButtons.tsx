@@ -1,41 +1,57 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import useCreateRequest from 'Hooks/useCreateRequest';
 import { useNavigate, useParams } from 'react-router-dom';
-import AdvertisementAPI from 'Services/AdvertisementAPI';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
+import requestAdvertisementDisconfirm,
+{
+  AdvertisementDisconfirmResponse,
+  AdvertisementDisconfirmReqData,
+} from 'Packages/api/rest/advertisement/requestAdvertisementDisconfirm';
+import requestAdvertisementConfirm,
+{
+  AdvertisementConfirmResponse,
+  AdvertisementConfirmReqData,
+} from 'Packages/api/rest/advertisement/requestAdvertisementConfirm';
+import { RouteNames } from 'Models/Route';
 
 const ConfirmModerateButtons = () => {
   const { advertisementId } = useParams();
   const navigate = useNavigate();
-  const [
-    confirm,
-    { isSuccess: isSuccessConfirm },
-  ] = AdvertisementAPI.useConfirmModerationMutation();
-  const [
-    disconfirm,
-    { isSuccess: isSuccessDisonfirm },
-  ] = AdvertisementAPI.useDisconfirmModerationMutation();
 
-  const onClickConfirmHandler = async () => {
-    try {
-      confirm(Number(advertisementId));
-    } catch (e) {
-      // empty
+  const onSucces = () => {
+    navigate(RouteNames.ADVERTISEMENT_MODERATION);
+  };
+
+  const {
+    fetchReq: fetchReqConfirm,
+  } = useCreateRequest<AdvertisementConfirmResponse, AdvertisementConfirmReqData>({
+    restReq: (adId) => requestAdvertisementConfirm({ advertisementId: Number(adId) }),
+    onSucces,
+  });
+
+  const onClickConfirmHandler = () => {
+    if (advertisementId) {
+      fetchReqConfirm({
+        advertisementId: Number(advertisementId),
+      });
     }
   };
+
+  const {
+    fetchReq: fetchReqDisconfirm,
+  } = useCreateRequest<AdvertisementDisconfirmResponse, AdvertisementDisconfirmReqData>({
+    // TODO: Как TS объяснить, что если я передаю сюда параметр, то он уже точно не undefined?
+    restReq: (reqData) => requestAdvertisementDisconfirm(reqData as AdvertisementDisconfirmReqData),
+    onSucces,
+  });
 
   const onClickDisconfirmHandler = async () => {
-    try {
-      disconfirm(Number(advertisementId));
-    } catch (e) {
-      // empty
+    if (advertisementId) {
+      fetchReqDisconfirm({
+        advertisementId: Number(advertisementId),
+      });
     }
   };
-
-  useEffect(() => {
-    if (isSuccessConfirm || isSuccessDisonfirm) {
-      navigate('/advertisement/moderation');
-    }
-  }, [isSuccessConfirm, isSuccessDisonfirm, navigate]);
 
   return (
     <div>

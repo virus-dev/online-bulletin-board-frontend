@@ -37,7 +37,7 @@ const Registration: React.FC<RegistrationProps> = ({ changeIsLogin }) => {
   const {
     error,
     errorText,
-    func,
+    fetchReq,
     isLoading,
   } = useCreateRequest<RegistrationResponse, RegistrationReqData>({
     restReq: () => requestRegistration(registrationInputs),
@@ -49,7 +49,7 @@ const Registration: React.FC<RegistrationProps> = ({ changeIsLogin }) => {
   };
 
   const onRegistration = () => {
-    func();
+    fetchReq();
   };
 
   return (

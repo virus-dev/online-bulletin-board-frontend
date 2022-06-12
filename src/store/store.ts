@@ -1,21 +1,21 @@
 import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
-import UserAPI from 'Services/UserAPI';
-import AdvertisementAPI from 'Services/AdvertisementAPI';
-import CategoriesAPI from 'Services/CategoriesAPI';
-import BrandsAPI from 'Services/BrandsAPI';
 import userReducer from './user/userSlice';
 import inputsReducer from './reducers/inputsSlice';
 import messagesReducer from './messages/messagesSlice';
+import categoriesReducer from './categories/categoriesSlice';
+import brandsReducer from './brands/brandsSlice';
 import { AsyncReducersInRootState } from './types';
 
 const staticReducers = {
   user: userReducer,
   inputs: inputsReducer,
   messages: messagesReducer,
-  [UserAPI.reducerPath]: UserAPI.reducer,
-  [AdvertisementAPI.reducerPath]: AdvertisementAPI.reducer,
-  [CategoriesAPI.reducerPath]: CategoriesAPI.reducer,
-  [BrandsAPI.reducerPath]: BrandsAPI.reducer,
+  categories: categoriesReducer,
+  brands: brandsReducer,
+  // [UserAPI.reducerPath]: UserAPI.reducer,
+  // [AdvertisementAPI.reducerPath]: AdvertisementAPI.reducer,
+  // [CategoriesAPI.reducerPath]: CategoriesAPI.reducer,
+  // [BrandsAPI.reducerPath]: BrandsAPI.reducer,
 };
 
 const rootReducer = combineReducers({
@@ -36,10 +36,10 @@ const asyncReducers: AsyncReducers = {};
 const setupStore = () => configureStore({
   reducer: createReducer(asyncReducers),
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([
-    UserAPI.middleware,
-    AdvertisementAPI.middleware,
-    CategoriesAPI.middleware,
-    BrandsAPI.middleware,
+    // UserAPI.middleware,
+    // AdvertisementAPI.middleware,
+    // CategoriesAPI.middleware,
+    // BrandsAPI.middleware,
   ]),
 });
 

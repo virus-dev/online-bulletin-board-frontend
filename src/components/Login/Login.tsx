@@ -35,7 +35,7 @@ const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
   const {
     errorText,
     isLoading,
-    func,
+    fetchReq,
   } = useCreateRequest<LoginResponse, LoginReqData>({
     restReq: () => requestLogin(loginInputs),
     onSucces,
@@ -46,7 +46,7 @@ const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
   };
 
   const onLogin = () => {
-    func();
+    fetchReq();
   };
 
   return (

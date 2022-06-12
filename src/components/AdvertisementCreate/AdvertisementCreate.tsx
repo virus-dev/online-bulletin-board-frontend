@@ -1,16 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from 'Storybook/Input/Input';
 import ValidationError from 'Storybook/ValidationError/ValidationError';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import Container from 'Storybook/Container/Container';
-import BrandsAPI from 'Services/BrandsAPI';
-import CategoriesAPI from 'Services/CategoriesAPI';
 import { checkFileForImgBB } from 'Utils/getCheckFileFunc';
 import { RouteNames } from 'Models/Route';
 import getErrorValidationMessage from 'Utils/getErrorMessage';
+import { useAppSelector } from 'Hooks/redux';
+import { selectorCategoriesData } from 'Store/categories/categoriesSelectors';
 import Select from 'Components/storybook/Select/Select';
 import useCreateRequest from 'Hooks/useCreateRequest';
+import { selectorBrands } from 'Store/brands/brandsSelectors';
 import requestAdvertisementCreate, { AdvertisementReqData, AdvertisementResponse } from 'Packages/api/rest/advertisement/requestAdvertisementCreate';
 
 import s from './AdvertisementCreate.module.scss';
@@ -26,13 +27,11 @@ interface AdvertisementData {
 
 const AdvertisementCreate = () => {
   const navigate = useNavigate();
+  const dataCategories = useAppSelector(selectorCategoriesData);
   const {
-    data: dataCategories = [],
-  } = CategoriesAPI.useGetCategoriesQuery();
-  const [
-    trigger,
-    { isLoading: isLoadingBrands, data: dataBrands = [] },
-  ] = BrandsAPI.useLazyGetBrandsQuery();
+    data: dataBrands,
+    isLoading: isLoadingBrands,
+  } = useAppSelector(selectorBrands);
 
   const onSucces = () => {
     navigate(RouteNames.ADVERTISEMENT_MY_ADVERTISEMENTS);
@@ -57,20 +56,12 @@ const AdvertisementCreate = () => {
 
   const {
     error,
-    func,
+    fetchReq,
     isLoading,
   } = useCreateRequest<AdvertisementResponse, AdvertisementReqData>({
     restReq: (formData) => requestAdvertisementCreate(formData || new FormData()),
     onSucces,
   });
-
-  useEffect(() => {
-    if (!advertisementData.categoryId) {
-      return;
-    }
-
-    trigger(Number(advertisementData.categoryId));
-  }, [advertisementData.categoryId, trigger]);
 
   const onChangeSelecthandler = (
     value: unknown,
@@ -127,7 +118,7 @@ const AdvertisementCreate = () => {
       });
     }
 
-    func(formData);
+    fetchReq(formData);
   };
 
   const textInBrandsSelect = () => {
