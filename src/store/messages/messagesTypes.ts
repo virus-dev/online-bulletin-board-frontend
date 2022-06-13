@@ -6,7 +6,7 @@ export interface Dialog {
   toUserId: number,
   message: string,
   unreadMessagesCount: number,
-  createdAt: Date,
+  createdAt: string,
   user: User,
 }
 

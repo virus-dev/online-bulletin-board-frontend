@@ -10,8 +10,8 @@ import { fetchAllAdvertisements } from 'Store/advertisements/advertisementsAsync
 import { selectorAdvertisementsData, selectorAdvertisementsIsLoading } from 'Store/advertisements/advertisementsSelectors';
 import { advertisementsSlice } from 'Store/advertisements/advertisementsSlice';
 import useDebounce from 'Hooks/useDebounce';
-import useIsFirstRender from 'Hooks/useIsFirstRender';
 import { selectorInputsAdvertisementSearch } from 'Store/inputs/inputsSelector';
+import useIsFirstRender from 'Hooks/useIsFirstRender';
 
 import s from './PageMain.module.scss';
 
@@ -32,7 +32,12 @@ const MainPage = () => {
   });
 
   useEffect(() => {
-    if (!isLoading) {
+    dispatch(fetchAllAdvertisements({ params: getAllParams, prevAdvertisements: [] }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!isLoading && !isFirstRender) {
       dispatch(fetchAllAdvertisements({ params: getAllParams, prevAdvertisements: data }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,9 +74,7 @@ const MainPage = () => {
         <div className={s.title}>Все объявления</div>
         <Filters onChange={onChangeFilters} categoryId={getAllParams.categoryId} />
       </Container>
-      <AdvertisementsRibbon
-        onScrollEnd={callback}
-      />
+      <AdvertisementsRibbon onScrollEnd={callback} />
     </>
   );
 };

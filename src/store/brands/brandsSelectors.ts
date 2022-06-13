@@ -4,9 +4,9 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'Store/store';
 
-const sBrands = ({ categories }: RootState) => categories;
-const sBrandsData = ({ categories }: RootState) => categories.data;
-const sBrandsIsLoading = ({ categories }: RootState) => categories.isLoading;
+const sBrands = ({ brands }: RootState) => brands;
+const sBrandsData = ({ brands }: RootState) => brands.data;
+const sBrandsIsLoading = ({ brands }: RootState) => brands.isLoading;
 
 export const selectorBrands = createSelector([sBrands], (data) => data);
 export const selectorBrandsData = createSelector([sBrandsData], (data) => data);

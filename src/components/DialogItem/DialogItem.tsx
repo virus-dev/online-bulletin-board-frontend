@@ -1,5 +1,6 @@
 import React from 'react';
 import { User } from 'Models/User';
+import dateFromZFormat, { VariantsFormsts } from 'Utils/dateFromZFormat';
 import IconProfile from '../IconProfile/IconProfile';
 
 import s from './DialogItem.module.scss';
@@ -7,7 +8,7 @@ import s from './DialogItem.module.scss';
 interface DialogItemProps {
   lastMessage: string,
   unreadMessagesCount: number,
-  createdAt: Date,
+  createdAt: string,
   onClick: (user: User) => void,
   user: User,
 }
@@ -36,7 +37,7 @@ const DialogItem: React.FC<DialogItemProps> = ({
           </div>
         )}
         <div className={s.date}>
-          {createdAt}
+          {dateFromZFormat({ date: createdAt, variantsFormsts: VariantsFormsts.time })}
         </div>
       </button>
     </div>
