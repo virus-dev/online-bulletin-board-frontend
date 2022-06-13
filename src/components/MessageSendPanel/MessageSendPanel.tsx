@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import Button from 'Storybook/Button/Button';
+import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import SocketContext from 'Context/SocketContext';
 import { useAppSelector } from 'Hooks/redux';
 import { selectorMessagesChatWithUserId } from 'Store/messages/messagesSelectors';
@@ -32,7 +32,7 @@ const MessageSendPanel = () => {
   return (
     <div className={s.messageSendPanel}>
       <textarea className={s.textarea} onChange={onChangeHandler} />
-      <Button onClick={onClickHandler}>Отправить</Button>
+      <Button onClick={onClickHandler} variant={ButtonVariant.blue}>Отправить</Button>
     </div>
   );
 };

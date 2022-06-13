@@ -32,7 +32,12 @@ const MainPage = () => {
   });
 
   useEffect(() => {
-    if (!isLoading) {
+    dispatch(fetchAllAdvertisements({ params: getAllParams, prevAdvertisements: [] }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!isLoading && !isFirstRender) {
       dispatch(fetchAllAdvertisements({ params: getAllParams, prevAdvertisements: data }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

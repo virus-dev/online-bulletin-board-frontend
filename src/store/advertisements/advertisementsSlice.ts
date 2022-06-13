@@ -14,6 +14,9 @@ export const advertisementsSlice = createSlice({
   name: 'advertisements',
   initialState,
   reducers: {
+    advertisementsLoading: (state) => {
+      state.isLoading = true;
+    },
     advertisementsClear: (state) => {
       state.data = [];
       state.error = null;

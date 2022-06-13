@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
 import Select from 'Components/storybook/Select/Select';
 import { selectorCategoriesData } from 'Store/categories/categoriesSelectors';
-import { useAppSelector } from 'Hooks/redux';
+import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import { selectorBrandsData } from 'Store/brands/brandsSelectors';
+import { fetchBrands } from 'Store/brands/brandsAsyncActions';
 
 import s from './Filters.module.scss';
 
@@ -13,6 +14,7 @@ interface FiltersProps {
 }
 
 const Filters: React.FC<FiltersProps> = ({ onChange, categoryId, withoutSort }) => {
+  const dispatch = useAppDispatch();
   const dataCategories = useAppSelector(selectorCategoriesData);
   const dataBrands = useAppSelector(selectorBrandsData);
 
@@ -27,6 +29,7 @@ const Filters: React.FC<FiltersProps> = ({ onChange, categoryId, withoutSort }) 
   ]), [dataCategories]);
 
   const onChangeSelectCategoriesHandler = (val: unknown) => {
+    dispatch(fetchBrands({ categoryId: val as number }));
     onChange(val, 'categoryId');
     onChange(0, 'brandId');
   };

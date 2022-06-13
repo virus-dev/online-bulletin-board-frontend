@@ -88,7 +88,7 @@ const dateFromZFormat = ({ date, variantsFormsts }: DateFromZFormatParams): stri
     }
   }
 
-  return 'шо?';
+  return 'Очень давно';
 };
 
 export default dateFromZFormat;

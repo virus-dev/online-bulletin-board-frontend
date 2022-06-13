@@ -8,10 +8,12 @@ import { useAppSelector } from 'Hooks/redux';
 import { selectorAdvertisements } from 'Store/advertisements/advertisementsSelectors';
 import { advertisementsSlice } from 'Store/advertisements/advertisementsSlice';
 import { fetchAllAdvertisements } from 'Store/advertisements/advertisementsAsyncActions';
+import useIsFirstRender from 'Hooks/useIsFirstRender';
 
 import s from './PageAdvertisementsViewed.module.scss';
 
 const PageAdvertisementsViewed = () => {
+  const isFirstRender = useIsFirstRender();
   const dispatch = useDispatch();
   const {
     data,
@@ -27,7 +29,12 @@ const PageAdvertisementsViewed = () => {
   });
 
   useEffect(() => {
-    if (!isLoading) {
+    dispatch(fetchAllAdvertisements({ params: getAllParams, prevAdvertisements: [] }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!isLoading && !isFirstRender) {
       dispatch(fetchAllAdvertisements({ params: getAllParams, prevAdvertisements: data }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

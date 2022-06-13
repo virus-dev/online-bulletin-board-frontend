@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from 'Storybook/Input/Input';
 import ValidationError from 'Storybook/ValidationError/ValidationError';
@@ -7,12 +7,14 @@ import Container from 'Storybook/Container/Container';
 import { checkFileForImgBB } from 'Utils/getCheckFileFunc';
 import { RouteNames } from 'Models/Route';
 import getErrorValidationMessage from 'Utils/getErrorMessage';
-import { useAppSelector } from 'Hooks/redux';
+import { useAppDispatch, useAppSelector } from 'Hooks/redux';
 import { selectorCategoriesData } from 'Store/categories/categoriesSelectors';
 import Select from 'Components/storybook/Select/Select';
 import useCreateRequest from 'Hooks/useCreateRequest';
 import { selectorBrands } from 'Store/brands/brandsSelectors';
 import requestAdvertisementCreate, { AdvertisementReqData, AdvertisementResponse } from 'Packages/api/rest/advertisement/requestAdvertisementCreate';
+import { fetchBrands } from 'Store/brands/brandsAsyncActions';
+import useIsFirstRender from 'Hooks/useIsFirstRender';
 
 import s from './AdvertisementCreate.module.scss';
 
@@ -26,6 +28,8 @@ interface AdvertisementData {
 }
 
 const AdvertisementCreate = () => {
+  const isFirstRender = useIsFirstRender();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const dataCategories = useAppSelector(selectorCategoriesData);
   const {
@@ -62,6 +66,14 @@ const AdvertisementCreate = () => {
     restReq: (formData) => requestAdvertisementCreate(formData || new FormData()),
     onSucces,
   });
+
+  useEffect(() => {
+    if (!isFirstRender) {
+      dispatch(fetchBrands({ categoryId: Number(advertisementData.categoryId) }));
+      setAdvertisementData((prev) => ({ ...prev, brandId: '0' }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [advertisementData.categoryId, dispatch]);
 
   const onChangeSelecthandler = (
     value: unknown,
