@@ -28,7 +28,7 @@ export enum VariantsFormsts {
 }
 
 interface DateFromZFormatParams {
-  date: string | undefined,
+  date: string | undefined | null,
   variantsFormsts: VariantsFormsts,
 }
 
@@ -88,7 +88,7 @@ const dateFromZFormat = ({ date, variantsFormsts }: DateFromZFormatParams): stri
     }
   }
 
-  return 'шо?';
+  return 'Очень давно';
 };
 
 export default dateFromZFormat;

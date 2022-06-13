@@ -4,13 +4,17 @@ import Input from 'Storybook/Input/Input';
 import ValidationError from 'Storybook/ValidationError/ValidationError';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import Container from 'Storybook/Container/Container';
-import BrandsAPI from 'Services/BrandsAPI';
-import CategoriesAPI from 'Services/CategoriesAPI';
-import AdvertisementAPI from 'Services/AdvertisementAPI';
 import { checkFileForImgBB } from 'Utils/getCheckFileFunc';
 import { RouteNames } from 'Models/Route';
 import getErrorValidationMessage from 'Utils/getErrorMessage';
+import { useAppDispatch, useAppSelector } from 'Hooks/redux';
+import { selectorCategoriesData } from 'Store/categories/categoriesSelectors';
 import Select from 'Components/storybook/Select/Select';
+import useCreateRequest from 'Hooks/useCreateRequest';
+import { selectorBrands } from 'Store/brands/brandsSelectors';
+import requestAdvertisementCreate, { AdvertisementReqData, AdvertisementResponse } from 'Packages/api/rest/advertisement/requestAdvertisementCreate';
+import { fetchBrands } from 'Store/brands/brandsAsyncActions';
+import useIsFirstRender from 'Hooks/useIsFirstRender';
 
 import s from './AdvertisementCreate.module.scss';
 
@@ -24,18 +28,18 @@ interface AdvertisementData {
 }
 
 const AdvertisementCreate = () => {
+  const isFirstRender = useIsFirstRender();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const dataCategories = useAppSelector(selectorCategoriesData);
   const {
-    data: dataCategories = [],
-  } = CategoriesAPI.useGetCategoriesQuery();
-  const [
-    trigger,
-    { isLoading: isLoadingBrands, data: dataBrands = [] },
-  ] = BrandsAPI.useLazyGetBrandsQuery();
-  const [
-    create,
-    { isLoading: isLoadingCreate, isSuccess, error },
-  ] = AdvertisementAPI.useCreateMutation();
+    data: dataBrands,
+    isLoading: isLoadingBrands,
+  } = useAppSelector(selectorBrands);
+
+  const onSucces = () => {
+    navigate(RouteNames.ADVERTISEMENT_MY_ADVERTISEMENTS);
+  };
 
   const optionsCategories = useMemo(() => (
     dataCategories.map(({ id, name }) => ({ value: id, mnemonic: name }))
@@ -44,12 +48,6 @@ const AdvertisementCreate = () => {
   const optionsBrands = useMemo(() => (
     dataBrands.map(({ id, name }) => ({ value: id, mnemonic: name }))
   ), [dataBrands]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      navigate(RouteNames.ADVERTISEMENT_MY_ADVERTISEMENTS);
-    }
-  }, [isSuccess, navigate]);
 
   const [advertisementData, setAdvertisementData] = useState<AdvertisementData>({
     categoryId: '0',
@@ -60,13 +58,22 @@ const AdvertisementCreate = () => {
     files: [],
   });
 
-  useEffect(() => {
-    if (!advertisementData.categoryId) {
-      return;
-    }
+  const {
+    error,
+    fetchReq,
+    isLoading,
+  } = useCreateRequest<AdvertisementResponse, AdvertisementReqData>({
+    restReq: (formData) => requestAdvertisementCreate(formData || new FormData()),
+    onSucces,
+  });
 
-    trigger(Number(advertisementData.categoryId));
-  }, [advertisementData.categoryId, trigger]);
+  useEffect(() => {
+    if (!isFirstRender) {
+      dispatch(fetchBrands({ categoryId: Number(advertisementData.categoryId) }));
+      setAdvertisementData((prev) => ({ ...prev, brandId: '0' }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [advertisementData.categoryId, dispatch]);
 
   const onChangeSelecthandler = (
     value: unknown,
@@ -123,7 +130,7 @@ const AdvertisementCreate = () => {
       });
     }
 
-    create(formData);
+    fetchReq(formData);
   };
 
   const textInBrandsSelect = () => {
@@ -174,7 +181,7 @@ const AdvertisementCreate = () => {
         <div className={s.br} />
         <Button
           onClick={onClickButtonHandler}
-          isLoading={isLoadingCreate}
+          isLoading={isLoading}
           variant={ButtonVariant.blue}
         >
           Создать

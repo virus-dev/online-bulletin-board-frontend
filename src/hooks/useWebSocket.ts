@@ -1,19 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
-import UserAPI from 'Services/UserAPI';
-import { messagesSlice } from 'Store/reducers/messagesSlice';
-import { getCountUnreadMessages } from 'Store/actionCreators/messagesActionCreators';
+import { messagesSlice } from 'Store/messages/messagesSlice';
+import { fetchCountUnreadMessages } from 'Store/messages/messagesAsyncActions';
+import { selectorMessagesChatWithUserId, selectorMessagesDialogData } from 'Store/messages/messagesSelectors';
+import { selectorUserData } from 'Store/user/userSelectors';
 import { useAppDispatch, useAppSelector } from './redux';
 import useIsAuth from './useIsAuth';
 
 const useWebSocket = () => {
   const dispath = useAppDispatch();
   const { isAuth } = useIsAuth();
-  const { data: { id } = {} } = UserAPI.useGetDataQuery();
-
-  const {
-    chat,
-    dialogs: { data: dialogs },
-  } = useAppSelector(({ messages }) => messages);
+  const { id } = useAppSelector(selectorUserData);
+  const chatWithUserId = useAppSelector(selectorMessagesChatWithUserId);
+  const dialogs = useAppSelector(selectorMessagesDialogData);
 
   const socket = useRef<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
@@ -50,28 +48,30 @@ const useWebSocket = () => {
 
       switch (data.method) {
         case 'youSendMessage':
-          if (chat.chatWithUserId === data.message.toUserId) {
+          if (chatWithUserId === data.message.toUserId) {
             dispath(pushMessage(data.message));
           }
           if (dialogs.length) {
             dispath(updateDialog({
               message: data.message,
-              isYouSendMessage: true,
+              unreadMessagesCount: data.unreadMessagesCount,
+              user: data.user,
             }));
           }
-          dispath(getCountUnreadMessages());
+          dispath(fetchCountUnreadMessages());
           break;
         case 'toYouSendMessage':
-          if (chat.chatWithUserId === data.message.fromUserId) {
+          if (chatWithUserId === data.message.fromUserId) {
             dispath(pushMessage(data.message));
           }
           if (dialogs.length) {
             dispath(updateDialog({
               message: data.message,
-              isYouSendMessage: false,
+              unreadMessagesCount: data.unreadMessagesCount,
+              user: data.user,
             }));
           }
-          dispath(getCountUnreadMessages());
+          dispath(fetchCountUnreadMessages());
           break;
         case 'youReadedMessage':
           dispath(youReadedMessage(data));
@@ -92,7 +92,7 @@ const useWebSocket = () => {
       setIsConnected(false);
       // TODO: Добавить ошибку
     };
-  }, [chat.chatWithUserId, dialogs.length, dispath, id, isAuth, webSocketURL]);
+  }, [chatWithUserId, dialogs.length, dispath, id, isAuth, webSocketURL]);
 
   if (!isAuth) {
     return {

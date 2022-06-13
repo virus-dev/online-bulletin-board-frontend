@@ -2,51 +2,42 @@ import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useParams } from 'react-router-dom';
 import Container from 'Storybook/Container/Container';
-import { Brands } from 'Models/Brands';
-import { Categories } from 'Models/Categories';
 import i18 from 'Utils/i18';
 import Price from 'Components/Price/Price';
+import { useAppDispatch, useAppSelector } from 'Hooks/redux';
+import { fetchAdvertisement } from 'Store/advertisement/advertisementAsyncActions';
+import { selectorAdvertisement } from 'Store/advertisement/advertisementSelectors';
+import { selectorCategoriesData } from 'Store/categories/categoriesSelectors';
+import { selectorBrandsData } from 'Store/brands/brandsSelectors';
 import dateFromZFormat, { VariantsFormsts } from 'Utils/dateFromZFormat';
+import useIsAuth from 'Hooks/useIsAuth';
 import AdvertisementSlider from '../AdvertisementSlider/AdvertisementSlider';
 import AdvertisementOwner from '../AdvertisementOwner/AdvertisementOwner';
 import ConfirmModerateButtons from './components/ConfirmModerateButtons/ConfirmModerateButtons';
 
 import s from './Advertisement.module.scss';
 
-interface AdvertisementProps {
-  isLoading: boolean | undefined,
-  brandId: number | undefined,
-  categoryId: number | undefined,
-  createdAt: string | undefined,
-  updatedAt: string | undefined,
-  description: string | undefined,
-  price: number | undefined,
-  status: string | undefined,
-  title: string | undefined,
-  userId: number | undefined,
-  dataImagesAdvertisement: string[] | undefined,
-  dataCategories: Categories[] | undefined,
-  dataBrands: Brands[] | undefined,
-  isCanModerate: boolean | undefined,
-}
-
-const Advertisement: React.FC<AdvertisementProps> = ({
-  isLoading,
-  brandId,
-  categoryId,
-  createdAt,
-  updatedAt,
-  description,
-  price,
-  status,
-  title,
-  userId,
-  dataImagesAdvertisement,
-  dataCategories,
-  dataBrands,
-  isCanModerate,
-}) => {
+const Advertisement = () => {
+  const { isAdminRole, isModeratorRole } = useIsAuth();
+  const isCanModerate = isAdminRole || isModeratorRole;
   const { advertisementId } = useParams();
+  const dispatch = useAppDispatch();
+  const {
+    data: {
+      advertisementImages,
+      brandId,
+      categoryId,
+      createdAt,
+      description,
+      price,
+      status,
+      title,
+      updatedAt,
+    },
+    isLoading,
+  } = useAppSelector(selectorAdvertisement);
+  const dataCategories = useAppSelector(selectorCategoriesData);
+  const dataBrands = useAppSelector(selectorBrandsData);
 
   useEffect(() => {
     if (advertisementId) {
@@ -70,6 +61,10 @@ const Advertisement: React.FC<AdvertisementProps> = ({
     }
   }, [advertisementId]);
 
+  useEffect(() => {
+    dispatch(fetchAdvertisement(Number(advertisementId)));
+  }, [advertisementId, dispatch]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -81,7 +76,7 @@ const Advertisement: React.FC<AdvertisementProps> = ({
         <div className={s.status}>{status === 'close' && 'Объявление не прошло модерацию'}</div>
         <div className={s.title}>{title}</div>
         <AdvertisementSlider
-          data={dataImagesAdvertisement}
+          data={advertisementImages}
         />
         {price && (
           <div className={s.priceBlock}>
@@ -115,7 +110,7 @@ const Advertisement: React.FC<AdvertisementProps> = ({
             <span>{description}</span>
           </div>
         </div>
-        <AdvertisementOwner userId={userId} />
+        <AdvertisementOwner />
         {isCanModerate && status !== 'open' && <ConfirmModerateButtons />}
       </div>
     </Container>

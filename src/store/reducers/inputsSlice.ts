@@ -1,37 +1,41 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+/* eslint-disable */
+// @ts-nocheck
+export {};
 
-export enum Field {
-  advertisementSearch = 'advertisementSearch',
-}
+// import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface InputPayload {
-  field: Field,
-  value: string,
-}
+// export enum Field {
+//   advertisementSearch = 'advertisementSearch',
+// }
 
-interface Inputs {
-  advertisementSearch: string,
-}
+// interface InputPayload {
+//   field: Field,
+//   value: string,
+// }
 
-interface InitialState {
-  inputs: Inputs,
-}
+// interface Inputs {
+//   advertisementSearch: string,
+// }
 
-const initialState: InitialState = {
-  inputs: {
-    advertisementSearch: '',
-  },
-};
+// interface InitialState {
+//   inputs: Inputs,
+// }
 
-export const inputsSlice = createSlice({
-  name: 'inputs',
-  initialState,
-  reducers: {
-    setChangeInput(state, { payload: { field, value } }: PayloadAction<InputPayload>) {
-      state.inputs[field] = value;
-    },
-  },
-  extraReducers: {},
-});
+// const initialState: InitialState = {
+//   inputs: {
+//     advertisementSearch: '',
+//   },
+// };
 
-export default inputsSlice.reducer;
+// export const inputsSlice = createSlice({
+//   name: 'inputs',
+//   initialState,
+//   reducers: {
+//     setChangeInput(state, { payload: { field, value } }: PayloadAction<InputPayload>) {
+//       state.inputs[field] = value;
+//     },
+//   },
+//   extraReducers: {},
+// });
+
+// export default inputsSlice.reducer;

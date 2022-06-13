@@ -1,9 +1,10 @@
 import Price from 'Components/Price/Price';
-import Loader from 'Components/storybook/Loader/Loader';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import AdvertisementAPI from 'Services/AdvertisementAPI';
+import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import IconNoFoto from 'Storybook/Icons/IconNoFoto';
+import ButtonIcon from 'Storybook/ButtonIcon/ButtonIcon';
+import IconFavorite from 'Icons/IconFavorite';
+import isProduction from 'Utils/isProduction';
 
 import s from './AdvertisementItem.module.scss';
 
@@ -11,38 +12,51 @@ interface AdvertisementItemProps {
   id: number,
   title: string,
   price: number,
+  advertisementImages: string[],
 }
 
-const AdvertisementItem: React.FC<AdvertisementItemProps> = ({ id, price, title }) => {
-  const navigate = useNavigate();
-  const { data, isLoading } = AdvertisementAPI.useGetImagesQuery(id);
+const AdvertisementItem: React.FC<AdvertisementItemProps> = ({
+  id,
+  price,
+  title,
+  advertisementImages,
+}) => {
+  const [buttonIconActive, setButtonIconActive] = useState(false);
 
-  const onClickHandler = () => {
-    navigate(`/advertisement/${id}`);
+  const onClickHandler = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setButtonIconActive((prevState) => !prevState);
+    e.preventDefault();
   };
-
   return (
-    <button
+    <Link
       type="button"
       className={s.advertisementItem}
-      onClick={onClickHandler}
+      to={`/advertisement/${id}`}
     >
       <div className={s.advertisementItemImg}>
-        {isLoading ? <div><Loader /></div> : (
-          <div>
-            {data?.length ? (
-              <img src={data[0]} alt="*" />
-            ) : (
-              <IconNoFoto size="100px" />
-            )}
-          </div>
-        )}
+        <div>
+          {advertisementImages?.length ? (
+            <img src={advertisementImages[0]} alt="*" />
+          ) : (
+            <IconNoFoto size="100px" />
+          )}
+        </div>
+        {
+          !isProduction() && (
+            <div className={s.advertisementItemFavorite}>
+              <ButtonIcon
+                onClick={onClickHandler}
+                icon={<IconFavorite color={buttonIconActive ? 'red' : 'white'} />}
+              />
+            </div>
+          )
+        }
       </div>
       <div className={s.advertisementItemInfo}>
         <Price price={price} />
         <div className={s.title}>{title}</div>
       </div>
-    </button>
+    </Link>
   );
 };
 

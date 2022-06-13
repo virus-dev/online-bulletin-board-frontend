@@ -1,16 +1,17 @@
 import React, { useContext, useState } from 'react';
-import Button from 'Storybook/Button/Button';
+import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import SocketContext from 'Context/SocketContext';
-import UserAPI from 'Services/UserAPI';
 import { useAppSelector } from 'Hooks/redux';
+import { selectorMessagesChatWithUserId } from 'Store/messages/messagesSelectors';
+import { selectorUserData } from 'Store/user/userSelectors';
 
 import s from './MessageSendPanel.module.scss';
 
 const MessageSendPanel = () => {
   const { socket } = useContext(SocketContext);
   const [message, setMessage] = useState('');
-  const { data: { id } = {} } = UserAPI.useGetDataQuery();
-  const chatWithUserId = useAppSelector(({ messages }) => messages.chat.chatWithUserId);
+  const { id } = useAppSelector(selectorUserData);
+  const chatWithUserId = useAppSelector(selectorMessagesChatWithUserId);
 
   const onChangeHandler = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(target.value);
@@ -31,7 +32,7 @@ const MessageSendPanel = () => {
   return (
     <div className={s.messageSendPanel}>
       <textarea className={s.textarea} onChange={onChangeHandler} />
-      <Button onClick={onClickHandler}>Отправить</Button>
+      <Button onClick={onClickHandler} variant={ButtonVariant.blue}>Отправить</Button>
     </div>
   );
 };

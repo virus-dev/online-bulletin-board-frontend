@@ -6,11 +6,13 @@ import IconSearch from 'Storybook/Icons/IconSearch';
 import Container from 'Storybook/Container/Container';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import useIsAuth from 'Hooks/useIsAuth';
-import UserAPI from 'Services/UserAPI';
 import { useAppDispatch, useAppSelector } from 'Hooks/redux';
-import { inputsSlice, Field } from 'Store/reducers/inputsSlice';
 import IconProfile, { IconProfileTypeEnum } from 'Components/IconProfile/IconProfile';
 import { RouteNames } from 'Models/Route';
+import { selectorUserData } from 'Store/user/userSelectors';
+import { selectorInputsAdvertisementSearch } from 'Store/inputs/inputsSelector';
+import { Field } from 'Store/inputs/inputsTypes';
+import { inputsSlice } from 'Store/inputs/inputsSlice';
 import Links from './Links/Links';
 import NavBar from './NavBar/NavBar';
 import logo from './static/logo.png';
@@ -20,10 +22,8 @@ import s from './Header.module.scss';
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const advertisementSearch = useAppSelector(({ inputs }) => inputs.inputs.advertisementSearch);
-  const {
-    data: { image, firstName, secondName } = {},
-  } = UserAPI.useGetDataQuery();
+  const advertisementSearch = useAppSelector(selectorInputsAdvertisementSearch);
+  const { image, firstName, secondName } = useAppSelector(selectorUserData);
   const { isAuth } = useIsAuth();
   const [isHeadeFixed, setIsHeaderFixed] = useState(false);
 
@@ -39,7 +39,8 @@ const Header: React.FC = () => {
   }, []);
 
   const InputHandler = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(inputsSlice.actions.setChangeInput({ field: Field.advertisementSearch, value }));
+    const { setChangeInput } = inputsSlice.actions;
+    dispatch(setChangeInput({ field: Field.advertisementSearch, value }));
   };
 
   const onClickButtonHandler = () => {

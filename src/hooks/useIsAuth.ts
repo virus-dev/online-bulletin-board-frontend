@@ -1,8 +1,12 @@
-import UserAPI from 'Services/UserAPI';
 import { Role } from 'Models/User';
+import { selectorUser } from 'Store/user/userSelectors';
+import { useAppSelector } from 'Hooks/redux';
 
 const useIsAuth = () => {
-  const { data: { email, role } = {}, isLoading } = UserAPI.useGetDataQuery();
+  const {
+    isLoading,
+    data: { role, email },
+  } = useAppSelector(selectorUser);
 
   if (!localStorage.getItem('JWT')) {
     return {
@@ -15,7 +19,7 @@ const useIsAuth = () => {
     };
   }
 
-  const isAuth = email;
+  const isAuth = !!email;
 
   const isAdminRole = isLoading || Role.ADMIN === role;
   const isModeratorRole = isLoading || Role.MODERATOR === role || isAdminRole;

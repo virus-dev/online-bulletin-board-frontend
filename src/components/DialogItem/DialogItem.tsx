@@ -1,31 +1,28 @@
 import React from 'react';
-import UserAPI from 'Services/UserAPI';
+import { User } from 'Models/User';
+import dateFromZFormat, { VariantsFormsts } from 'Utils/dateFromZFormat';
 import IconProfile from '../IconProfile/IconProfile';
 
 import s from './DialogItem.module.scss';
 
 interface DialogItemProps {
-  yourId: number,
-  fromUserId: number,
-  toUserId: number,
   lastMessage: string,
   unreadMessagesCount: number,
-  createdAt: Date,
-  onClick: () => void,
+  createdAt: string,
+  onClick: (user: User) => void,
+  user: User,
 }
 
 const DialogItem: React.FC<DialogItemProps> = ({
-  yourId, fromUserId, toUserId, lastMessage, unreadMessagesCount, createdAt, onClick,
+  lastMessage, unreadMessagesCount, createdAt, onClick, user,
 }) => {
-  const isYourMessageTheLastOne = yourId === fromUserId;
-
   const {
-    data: { firstName, secondName, image } = {},
-  } = UserAPI.useGetDataByIdQuery(isYourMessageTheLastOne ? toUserId : fromUserId);
+    firstName, secondName, image,
+  } = user;
 
   return (
     <div className={s.dialogItemWrapper}>
-      <button className={s.dialogItem} type="button" onClick={onClick}>
+      <button className={s.dialogItem} type="button" onClick={() => onClick(user)}>
         <div className={s.iconAndName}>
           <IconProfile firstName={firstName} secondName={secondName} image={image} />
           <span className={s.firstName}>{firstName}</span>
@@ -40,7 +37,7 @@ const DialogItem: React.FC<DialogItemProps> = ({
           </div>
         )}
         <div className={s.date}>
-          {createdAt}
+          {dateFromZFormat({ date: createdAt, variantsFormsts: VariantsFormsts.time })}
         </div>
       </button>
     </div>

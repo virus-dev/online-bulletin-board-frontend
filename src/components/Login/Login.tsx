@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Input from 'Storybook/Input/Input';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
-import UserAPI from 'Services/UserAPI';
 import Label from 'Storybook/Label/Label';
 import StyledLink from 'Storybook/StyledLink/StyledLink';
-import getErrorValidationMessage from 'Utils/getErrorMessage';
+import { useAppDispatch } from 'Hooks/redux';
+import { userSlice } from 'Store/user/userSlice';
+import { RouteNames } from 'Models/Route';
+import useCreateRequest, { OnSuccesParams } from 'Hooks/useCreateRequest';
+import requestLogin, { LoginReqData, LoginResponse } from 'Packages/api/rest/user/requestLogin';
 
 import s from './Login.module.scss';
 
@@ -13,11 +17,28 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
-  const [login, { error, isLoading }] = UserAPI.useLoginMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const [loginInputs, setLoginInputs] = useState({
+  const [loginInputs, setLoginInputs] = useState<LoginReqData>({
     email: '',
     password: '',
+  });
+
+  const onSucces = ({ data }: OnSuccesParams<LoginResponse>) => {
+    localStorage.setItem('JWT', data.token);
+    const { setUserData } = userSlice.actions;
+    dispatch(setUserData(data));
+    navigate(RouteNames.MAIN);
+  };
+
+  const {
+    errorText,
+    isLoading,
+    fetchReq,
+  } = useCreateRequest<LoginResponse, LoginReqData>({
+    restReq: () => requestLogin(loginInputs),
+    onSucces,
   });
 
   const inputHandler = ({ target }: React.ChangeEvent<HTMLInputElement>, key: string) => {
@@ -25,20 +46,7 @@ const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
   };
 
   const onLogin = () => {
-    login(loginInputs);
-  };
-
-  const errorJSX = () => {
-    // TODO: Разобраться
-    // eslint-disable-next-line
-    // @ts-ignore: Unreachable code error
-    if (error && error.status && error.status !== 400) {
-      // eslint-disable-next-line
-      // @ts-ignore: Unreachable code error
-      return <div className={s.error}>{error.data}</div>;
-    }
-
-    return '';
+    fetchReq();
   };
 
   return (
@@ -53,7 +61,6 @@ const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
         placeholder="Введите почту"
         name="email"
         className={s.input}
-        error={getErrorValidationMessage(error, 'email')}
         fullWidth
       />
       <Label htmlFor="password" className={s.label}>
@@ -65,7 +72,6 @@ const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
         placeholder="Введите пароль"
         name="password"
         type="password"
-        error={getErrorValidationMessage(error, 'password')}
         className={s.input}
         fullWidth
       />
@@ -80,7 +86,9 @@ const Login: React.FC<LoginProps> = ({ changeIsLogin }) => {
       >
         Войти
       </Button>
-      {errorJSX()}
+      {errorText && (
+        <div className={s.error}>{errorText}</div>
+      )}
     </div>
   );
 };

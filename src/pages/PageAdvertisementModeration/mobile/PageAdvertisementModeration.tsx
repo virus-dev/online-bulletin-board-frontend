@@ -1,29 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AdvertisementsRibbon from 'Components/AdvertisementsRibbon/AdvertisementsRibbon';
 import Header from 'Components/Header/Header';
 import Container from 'Storybook/Container/Container';
-import { useAppSelector } from 'Hooks/redux';
-import AdvertisementAPI from 'Services/AdvertisementAPI';
+import { useAppDispatch } from 'Hooks/redux';
+import { fetchAllAdvertisements } from 'Store/advertisements/advertisementsAsyncActions';
 
 const PageAdvertisementModeration = () => {
-  const advertisementSearch = useAppSelector(({ inputs }) => inputs.inputs.advertisementSearch);
-  const {
-    data,
-    isLoading,
-  } = AdvertisementAPI.useGetAllOnModerationQuery({
-    limit: 12,
-    page: 1,
-    title: advertisementSearch,
-    brandId: 0,
-    categoryId: 0,
-    sort: '',
-  });
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllAdvertisements({
+      params: {
+        limit: 20,
+        page: 1,
+        moderation: true,
+      },
+      prevAdvertisements: [],
+    }));
+  }, [dispatch]);
 
   return (
     <div>
       <Header />
       <Container>
-        <AdvertisementsRibbon data={data} isLoading={isLoading} />
+        <AdvertisementsRibbon />
       </Container>
     </div>
   );

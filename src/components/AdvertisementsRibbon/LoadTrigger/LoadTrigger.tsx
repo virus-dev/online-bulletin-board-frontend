@@ -11,7 +11,9 @@ const LoadTrigger: React.FC<LoadTriggerProps> = ({ callback }) => {
 
   useEffect(() => {
     // TODO: Добавить тип
-    const fn = (entries: any) => {
+    // eslint-disable-next-line
+    // @ts-ignore: Unreachable code error
+    const fn = (entries) => {
       if (entries[0].isIntersecting && !isIntersecting.current) {
         isIntersecting.current = true;
         callback?.();
@@ -25,11 +27,8 @@ const LoadTrigger: React.FC<LoadTriggerProps> = ({ callback }) => {
     }
   }, [callback, isIntersecting]);
 
+  // TODO: className
   return <div style={{ height: '1px' }} ref={lastElement} />;
-};
-
-LoadTrigger.defaultProps = {
-  callback: undefined,
 };
 
 export default LoadTrigger;

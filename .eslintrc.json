@@ -37,6 +37,7 @@
         "react/prop-types": 0,
         "react/require-default-props": 0,
         "no-console": "error",
-        "no-unused-vars": "error"
+        "no-unused-vars": "error",
+        "spaced-comment": [2, "always"]
     }
 }

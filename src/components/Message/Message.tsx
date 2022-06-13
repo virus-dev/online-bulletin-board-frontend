@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import classNames from 'classnames';
 import { Message as IMessage, Status } from 'Models/Message';
-import UserAPI from 'Services/UserAPI';
 import SocketContext from 'Context/SocketContext';
 import dateFromZFormat, { VariantsFormsts } from 'Utils/dateFromZFormat';
+import { useAppSelector } from 'Hooks/redux';
+import { selectorMessagesUser } from 'Store/messages/messagesSelectors';
+import { selectorUserData } from 'Store/user/userSelectors';
 import IconProfile from '../IconProfile/IconProfile';
 
 import s from './Message.module.scss';
@@ -22,15 +24,18 @@ const Message: React.FC<MessageProps> = ({
   const refMessage = useRef(null);
   const { socket } = useContext(SocketContext);
 
+  // TODO: Узнать, возможны ли перерисовки?
   const {
-    data: { image, firstName, secondName } = {},
-  } = UserAPI.useGetDataByIdQuery(fromUserId);
+    image, firstName, secondName,
+  } = useAppSelector(isYourMessage ? selectorUserData : selectorMessagesUser);
 
   const statusText = status === Status.read ? 'Прочитано' : 'Доставлено';
 
   useEffect(() => {
     // TODO: Добавить тип
-    const fn = (entries: any) => {
+    // eslint-disable-next-line
+    // @ts-ignore: Unreachable code error
+    const fn = (entries) => {
       if (!isYourMessage && status === Status.delivered && entries[0].isIntersecting) {
         const sendObj = {
           method: 'readMessage',

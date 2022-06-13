@@ -1,24 +1,40 @@
 import React from 'react';
-import UserAPI from 'Services/UserAPI';
+import { useDispatch } from 'react-redux';
 import Button, { ButtonVariant } from 'Storybook/Button/Button';
 import useIsAuth from 'Hooks/useIsAuth';
 import { RouteNames } from 'Models/Route';
 import Loader from 'Components/storybook/Loader/Loader';
+import { selectorUser } from 'Store/user/userSelectors';
+import { userSlice } from 'Store/user/userSlice';
+import { useAppSelector } from 'Hooks/redux';
+import requestUpdate, { UpdateResponse, UpdateReqData } from 'Packages/api/rest/user/requestUpdate';
+import useCreateRequest, { OnSuccesParams } from 'Hooks/useCreateRequest';
 import PersonalDataItem from './PersonalDataItem/PersonalDataItem';
 
 import s from './PersonalData.module.scss';
 
 const PersonalData: React.FC = () => {
+  const dispatch = useDispatch();
   const { isModeratorRole, isLoading: isLoadingAuth } = useIsAuth();
 
   const {
+    isLoading,
     data: {
       email, firstName, secondName, phone, role,
-    } = {},
-    isLoading,
-  } = UserAPI.useGetDataQuery();
+    },
+  } = useAppSelector(selectorUser);
 
-  const [update] = UserAPI.useUpdateMutation();
+  const onSucces = ({ data }: OnSuccesParams<UpdateResponse>) => {
+    const { setUserData } = userSlice.actions;
+    dispatch(setUserData(data));
+  };
+
+  const {
+    fetchReq,
+  } = useCreateRequest<UpdateResponse, UpdateReqData>({
+    restReq: (formData) => requestUpdate(formData || new FormData()),
+    onSucces,
+  });
 
   const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -26,7 +42,7 @@ const PersonalData: React.FC = () => {
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
-      update(formData);
+      fetchReq(formData);
     }
   };
 
