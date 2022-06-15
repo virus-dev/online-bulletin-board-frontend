@@ -58,22 +58,24 @@ const Select: React.FC<SelectProps> = ({ placeholder = 'Выберите вар�
 
   return (
     <div className={s.selectWrapper}>
-      <button type="button" className={classNames(s.select, selectOpen && s.selectOpen)} onClick={onClickButtonHandler} ref={refButton}>
+      <button type="button" className={classNames(s.select, selectOpen && s.selectOpen)} onClick={onClickButtonHandler} ref={refButton} data-testid="select">
         <span className={s.selectText}>{activeVariant || placeholder}</span>
         <span className={s.triangle} />
       </button>
-      <div className={classNames(s.absolute, !selectOpen && s.selectClose)} ref={refOptionsWrapper}>
-        {options.map(({ mnemonic, value }) => (
-          <button
-            className={s.option}
-            key={mnemonic}
-            onClick={() => onClickOptionHandler({ value, mnemonic })}
-            type="button"
-          >
-            {i18(mnemonic)}
-          </button>
-        ))}
-      </div>
+      {selectOpen && (
+        <div className={classNames(s.absolute)} ref={refOptionsWrapper} data-testid="selectMenu">
+          {options.map(({ mnemonic, value }) => (
+            <button
+              className={s.option}
+              key={mnemonic}
+              onClick={() => onClickOptionHandler({ value, mnemonic })}
+              type="button"
+            >
+              {i18(mnemonic)}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,8 +1,5 @@
 import { Advertisements } from 'Models/Advertisements';
-
-export interface AdsAreOver {
-  adsAreOver: boolean,
-}
+import { AdsAreOver } from 'Packages/api/rest/advertisements/requestGetAllAdvertisements';
 
 export interface InitialStateAdvertisements extends AdsAreOver {
   data: Advertisements[],

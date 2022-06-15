@@ -35,6 +35,7 @@ const Button: React.FC<ButtonProps> = ({
   href,
   isLoading,
   loadingRenderProps = loadingRenderPropsInitial,
+  ...other
 }) => {
   const navigate = useNavigate();
 
@@ -61,6 +62,7 @@ const Button: React.FC<ButtonProps> = ({
         variant === ButtonVariant.green && s.green,
         variant === ButtonVariant.gray && s.gray,
       )}
+      {...other}
     >
       {
         isLoading && loadingRenderProps ? loadingRenderProps() : (

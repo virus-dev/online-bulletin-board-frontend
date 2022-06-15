@@ -38,6 +38,7 @@
         "react/require-default-props": 0,
         "no-console": "error",
         "no-unused-vars": "error",
-        "spaced-comment": [2, "always"]
+        "spaced-comment": [2, "always"],
+        "react/jsx-props-no-spreading": "off"
     }
 }

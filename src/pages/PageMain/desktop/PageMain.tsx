@@ -23,7 +23,7 @@ const MainPage = () => {
   const isLoading = useAppSelector(selectorAdvertisementsIsLoading);
 
   const [getAllParams, setGetAllParams] = useState({
-    limit: 14,
+    limit: 3,
     page: 1,
     title: '',
     categoryId: 0,
