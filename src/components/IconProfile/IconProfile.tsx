@@ -20,7 +20,7 @@ type IconProfileProps = Pick<User, 'image'> & Pick<User, 'firstName'> & Pick<Use
 const IconProfile: React.FC<IconProfileProps> = ({
   image, firstName, type = IconProfileTypeEnum.div,
 }) => (type === IconProfileTypeEnum.link ? (
-  <Link className={s.iconProfile} to="/profile">
+  <Link className={s.iconProfile} to="/profile" data-testid="headerIconProfile">
     {image ? (
       <img className={s.iconProfileImage} src={image} alt="*" />
     ) : (
@@ -28,7 +28,7 @@ const IconProfile: React.FC<IconProfileProps> = ({
     )}
   </Link>
 ) : (
-  <div className={s.iconProfile}>
+  <div className={s.iconProfile} data-testid="headerIconProfile">
     {image ? (
       <img className={s.iconProfileImage} src={image} alt="*" />
     ) : (

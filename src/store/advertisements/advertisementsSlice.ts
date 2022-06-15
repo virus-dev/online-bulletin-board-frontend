@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Advertisements } from 'Models/Advertisements';
+import { AdsAreOver } from 'Packages/api/rest/advertisements/requestGetAllAdvertisements';
 import { fetchAllAdvertisements } from './advertisementsAsyncActions';
-import { InitialStateAdvertisements, AdsAreOver, IsAdsAreOver } from './advertisementsTypes';
+import { InitialStateAdvertisements, IsAdsAreOver } from './advertisementsTypes';
 
 const initialState: InitialStateAdvertisements = {
   data: [],

@@ -8,7 +8,7 @@ export type BrandsReqData = {
 export type BrandsResponse = BrandsResponseData;
 
 export default (params: BrandsReqData) => makeRequest<BrandsResponse>({
-  url: 'Brands/getBrands',
+  url: 'brands/getBrands',
   method: HTTPMethods.GET,
   params,
 });

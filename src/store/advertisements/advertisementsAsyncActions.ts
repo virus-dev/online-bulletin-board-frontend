@@ -1,24 +1,12 @@
 /* eslint import/prefer-default-export: ["off"] */
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { Advertisements } from 'Models/Advertisements';
-import { AdsAreOver, IsAdsAreOver } from './advertisementsTypes';
-
-interface Params {
-  limit: number,
-  page: number,
-  title?: string,
-  sort?: string,
-  categoryId?: number,
-  brandId?: number,
-  currentAdvertisements?: string,
-  myAdvertisements?: boolean,
-  moderation?: boolean,
-}
+import requestGetAllAdvertisements, { AdvertisementsGetAllReqParams } from 'Packages/api/rest/advertisements/requestGetAllAdvertisements';
+import { IsAdsAreOver } from './advertisementsTypes';
 
 interface Arg {
-  params: Params,
+  params: AdvertisementsGetAllReqParams,
   prevAdvertisements: Advertisements[],
 }
 
@@ -26,11 +14,9 @@ interface AdvertisementImages {
   imageUrl: string,
 }
 
-interface AdvertisementsResponse extends Omit<Advertisements, 'advertisementImages'> {
+export interface AdvertisementsResponse extends Omit<Advertisements, 'advertisementImages'> {
   advertisementImages: AdvertisementImages[];
 }
-
-type FetchAllAdvertisementsResponse = AdvertisementsResponse[] | AdsAreOver;
 
 export const fetchAllAdvertisements = createAsyncThunk(
   'advertisement/fetchAllAdvertisements',
@@ -39,12 +25,7 @@ export const fetchAllAdvertisements = createAsyncThunk(
     thunkAPI,
   ) => {
     try {
-      const { data } = await axios.get<FetchAllAdvertisementsResponse>(`${process.env.REACT_APP_API_URL}advertisement/getAll`, {
-        params,
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('JWT')}`,
-        },
-      });
+      const { data } = await requestGetAllAdvertisements(params);
 
       if (IsAdsAreOver(data)) {
         return data;

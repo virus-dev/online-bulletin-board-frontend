@@ -93,6 +93,7 @@ const Header: React.FC = () => {
                   <Button
                     variant={ButtonVariant.gray}
                     href="/auth"
+                    data-testid="headerAuthButton"
                   >
                     Войти
                   </Button>

@@ -32,6 +32,7 @@ const AdvertisementItem: React.FC<AdvertisementItemProps> = ({
       type="button"
       className={s.advertisementItem}
       to={`/advertisement/${id}`}
+      data-testid="advertisementItem"
     >
       <div className={s.advertisementItemImg}>
         <div>
