@@ -8,6 +8,8 @@
 - TypeScript
 - React
 - Redux (Redux toolkit)
+- JEST
+- React Testing Library 
 
 # Backend
 - Express
